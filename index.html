@@ -15,7 +15,7 @@
   --text:#f0f0f0;--muted:rgba(240,240,240,0.5);--muted2:rgba(240,240,240,0.75);
 }
 body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
+ 
 /* NAV */
 nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;}
@@ -32,12 +32,12 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .mobile-menu button{background:none;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;padding:12px 0;cursor:pointer;text-align:left;border-bottom:1px solid var(--border);transition:color .2s;}
 .mobile-menu button:last-child{border-bottom:none;}
 .mobile-menu button:hover{color:#fff;}
-
+ 
 /* PAGES */
-.page{display:none;animation:fadeIn .3s ease;}
+.page{display:none;animation:fadeIn .25s ease;}
 .page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+ 
 /* SHARED */
 .section-tag{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:2px;color:#fff;line-height:1.05;}
@@ -50,13 +50,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .badge-open{background:rgba(29,158,117,.15);color:#5DCAA5;border:1px solid rgba(29,158,117,.25);}
 .badge-soon{background:rgba(239,159,39,.12);color:#FAC775;border:1px solid rgba(239,159,39,.2);}
 .badge-closed{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);}
-
-/* LOADING */
 .loading-state{text-align:center;padding:3rem 1rem;color:var(--muted);}
 .loading-spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.error-state{text-align:center;padding:2rem;background:rgba(226,75,74,.08);border:1px solid rgba(226,75,74,.2);border-radius:10px;color:#f0a0a0;font-size:.88rem;font-weight:600;}
-
+.error-state{text-align:center;padding:2rem;background:rgba(226,75,74,.08);border:1px solid rgba(226,75,74,.2);border-radius:10px;color:#f0a0a0;font-size:.88rem;font-weight:600;margin:1rem 0;}
+ 
 /* HOME */
 .hero{position:relative;min-height:86vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:4rem 1.5rem 3rem;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(226,75,74,.13) 0%,transparent 70%),radial-gradient(ellipse 40% 30% at 20% 80%,rgba(29,158,117,.07) 0%,transparent 60%);}
@@ -118,7 +116,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .cta-main-btn{background:var(--red);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;padding:14px 38px;border-radius:9px;border:none;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;}
 .cta-main-btn:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(226,75,74,.35);}
 .cta-main-btn::after{content:'↗';margin-left:8px;}
-
+ 
 /* TOURNAMENTS */
 .tour-page{padding:3rem 1.5rem 5rem;}
 .page-header{margin-bottom:2.5rem;}
@@ -141,18 +139,20 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .slots-label{font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
 .slots-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
 .slots-fill{height:100%;background:var(--red);border-radius:2px;}
-.tour-detail{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin-bottom:2rem;}
-.tour-detail.show{display:block;animation:fadeIn .3s ease;}
-.detail-back{background:transparent;border:none;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:1.5rem;padding:0;}
-.detail-back:hover{color:#fff;}
-.detail-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:2px;color:#fff;margin-bottom:.8rem;}
+ 
+/* TOUR DETAIL — full page */
+.detail-page{padding:2rem 1.5rem 5rem;max-width:700px;margin:0 auto;}
+.detail-back-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:none;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;padding:0;margin-bottom:1.8rem;transition:color .2s;}
+.detail-back-btn:hover{color:#fff;}
+.detail-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:2px;color:#fff;margin-bottom:.8rem;line-height:1.05;}
 .detail-meta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:1.2rem;}
-.detail-meta span{font-size:.8rem;color:var(--muted);font-weight:500;}
+.detail-meta span{font-size:.82rem;color:var(--muted);font-weight:500;}
+.detail-desc{font-size:.9rem;color:var(--muted2);font-weight:500;line-height:1.75;margin-bottom:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.4rem;}
-.detail-box{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:.9rem 1rem;}
+.detail-box{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:.9rem 1rem;}
 .detail-box-label{font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
 .detail-box-val{font-size:1rem;font-weight:700;color:#fff;}
-
+ 
 /* RANKINGS */
 .rank-page{padding:3rem 1.5rem 5rem;}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:580px;margin:0 auto 2.5rem;}
@@ -178,11 +178,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .rank-change{font-size:.7rem;font-weight:700;}
 .rank-change.up{color:#5DCAA5;}.rank-change.down{color:#f0a0a0;}.rank-change.same{color:var(--muted);}
 .last-updated{font-size:.72rem;color:var(--muted);font-weight:500;text-align:right;margin-bottom:.8rem;}
-
+ 
 footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.5rem;text-align:center;}
 .foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:.3rem;}
 .foot-copy{font-size:.72rem;color:rgba(255,255,255,.18);font-weight:500;}
-
+ 
 @media(max-width:640px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
@@ -197,27 +197,27 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 </style>
 </head>
 <body>
-
+ 
 <nav>
-  <div class="nav-logo" onclick="showPage('home')"><div class="logo-dot"></div>BLADERSBD</div>
+  <div class="nav-logo" onclick="goTo('home')"><div class="logo-dot"></div>BLADERSBD</div>
   <ul class="nav-links">
-    <li><button class="active" id="nb-home" onclick="showPage('home',this)">Home</button></li>
-    <li><button id="nb-tournaments" onclick="showPage('tournaments',this)">Tournaments</button></li>
-    <li><button id="nb-rankings" onclick="showPage('rankings',this)">Rankings</button></li>
+    <li><button id="nb-home"        onclick="goTo('home')">Home</button></li>
+    <li><button id="nb-tournaments" onclick="goTo('tournaments')">Tournaments</button></li>
+    <li><button id="nb-rankings"    onclick="goTo('rankings')">Rankings</button></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
-
+ 
 <div class="mobile-menu" id="mobile-menu">
-  <button onclick="showPage('home');closeMenu()">Home</button>
-  <button onclick="showPage('tournaments');closeMenu()">Tournaments</button>
-  <button onclick="showPage('rankings');closeMenu()">Rankings</button>
+  <button onclick="goTo('home');closeMenu()">Home</button>
+  <button onclick="goTo('tournaments');closeMenu()">Tournaments</button>
+  <button onclick="goTo('rankings');closeMenu()">Rankings</button>
 </div>
-
-<!-- ===== HOME ===== -->
-<div id="page-home" class="page active">
+ 
+<!-- HOME -->
+<div id="page-home" class="page">
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-ring r1"></div>
@@ -228,19 +228,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <h1>BLADERS<br><span>BANGLADESH</span></h1>
       <p class="hero-sub">Compete. Rank. Rise. Join the official community for Beyblade X players across Bangladesh.</p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="showPage('tournaments')">View Tournaments</button>
-        <button class="btn-ghost" onclick="showPage('rankings')">See Rankings</button>
+        <button class="btn-primary" onclick="goTo('tournaments')">View Tournaments</button>
+        <button class="btn-ghost"   onclick="goTo('rankings')">See Rankings</button>
       </div>
     </div>
   </section>
-
   <div class="stats-bar">
     <div class="stat-item"><div class="stat-num" id="home-blader-count">—</div><div class="stat-label">Registered Bladers</div></div>
     <div class="stat-item"><div class="stat-num" id="home-tour-count">—</div><div class="stat-label">Tournaments Held</div></div>
     <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Active Organizers</div></div>
     <div class="stat-item"><div class="stat-num">6<span>+</span></div><div class="stat-label">Partner Shops</div></div>
   </div>
-
   <section class="features-section">
     <div class="section-header">
       <div class="section-tag">What We Offer</div>
@@ -255,7 +253,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <div class="feat-card"><div class="feat-icon">🏪</div><h3>Best Price Shops</h3><p>Find verified shops offering the best deals on Beyblade X gear near you.</p></div>
     </div>
   </section>
-
   <section class="home-section dark">
     <div class="section-header">
       <div class="section-tag">Upcoming Events</div>
@@ -265,7 +262,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <div class="loading-state"><div class="loading-spinner"></div>Loading tournaments...</div>
     </div>
   </section>
-
   <section class="home-section">
     <div class="section-header">
       <div class="section-tag">National Leaderboard</div>
@@ -275,26 +271,21 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <table class="rank-table">
         <thead><tr><th>#</th><th>Blader</th><th>Best Bey</th><th>Points</th></tr></thead>
         <tbody id="home-rank-tbody">
-          <tr><td colspan="4"><div class="loading-state"><div class="loading-spinner"></div>Loading rankings...</div></td></tr>
+          <tr><td colspan="4"><div class="loading-state"><div class="loading-spinner"></div>Loading...</div></td></tr>
         </tbody>
       </table>
     </div>
   </section>
-
   <div class="cta-band">
     <div class="cta-band-bg"></div>
     <h2>READY TO <span>LET IT RIP?</span></h2>
     <p>Check upcoming tournaments and start your journey to #1 in Bangladesh.</p>
-    <button class="cta-main-btn" onclick="showPage('tournaments')">View Tournaments</button>
+    <button class="cta-main-btn" onclick="goTo('tournaments')">View Tournaments</button>
   </div>
-
-  <footer>
-    <div class="foot-logo">⚡ BLADERS BANGLADESH</div>
-    <div class="foot-copy">© 2025 Bladers Bangladesh · Bladersbd · Official Beyblade X Community of Bangladesh</div>
-  </footer>
+  <footer><div class="foot-logo">⚡ BLADERS BANGLADESH</div><div class="foot-copy">© 2025 Bladers Bangladesh · Bladersbd · Official Beyblade X Community of Bangladesh</div></footer>
 </div>
-
-<!-- ===== TOURNAMENTS ===== -->
+ 
+<!-- TOURNAMENTS LIST -->
 <div id="page-tournaments" class="page">
   <div class="tour-page">
     <div class="page-header">
@@ -302,26 +293,29 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <h1 class="section-title">Tournaments</h1>
       <p>Find and follow official Bladers Bangladesh events across the country</p>
     </div>
-    <div id="tour-detail-panel" class="tour-detail"></div>
-    <div id="tour-list-section">
-      <div class="filters">
-        <button class="filter-btn active" onclick="filterTour('all',this)">All</button>
-        <button class="filter-btn" onclick="filterTour('open',this)">Open</button>
-        <button class="filter-btn" onclick="filterTour('soon',this)">Coming Soon</button>
-        <button class="filter-btn" onclick="filterTour('closed',this)">Past</button>
-      </div>
-      <div id="tour-grid" class="tour-grid">
-        <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>Loading tournaments...</div>
-      </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterTour('all',this)">All</button>
+      <button class="filter-btn" onclick="filterTour('open',this)">Open</button>
+      <button class="filter-btn" onclick="filterTour('soon',this)">Coming Soon</button>
+      <button class="filter-btn" onclick="filterTour('closed',this)">Past</button>
+    </div>
+    <div id="tour-grid" class="tour-grid">
+      <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>Loading tournaments...</div>
     </div>
   </div>
-  <footer>
-    <div class="foot-logo">⚡ BLADERS BANGLADESH</div>
-    <div class="foot-copy">© 2025 Bladers Bangladesh</div>
-  </footer>
+  <footer><div class="foot-logo">⚡ BLADERS BANGLADESH</div><div class="foot-copy">© 2025 Bladers Bangladesh</div></footer>
 </div>
-
-<!-- ===== RANKINGS ===== -->
+ 
+<!-- TOURNAMENT DETAIL (separate page with back button) -->
+<div id="page-tour-detail" class="page">
+  <div class="detail-page">
+    <button class="detail-back-btn" onclick="goTo('tournaments')">← Back to Tournaments</button>
+    <div id="tour-detail-content"></div>
+  </div>
+  <footer><div class="foot-logo">⚡ BLADERS BANGLADESH</div><div class="foot-copy">© 2025 Bladers Bangladesh</div></footer>
+</div>
+ 
+<!-- RANKINGS -->
 <div id="page-rankings" class="page">
   <div class="rank-page">
     <div class="page-header">
@@ -342,27 +336,67 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       </table>
     </div>
   </div>
-  <footer>
-    <div class="foot-logo">⚡ BLADERS BANGLADESH</div>
-    <div class="foot-copy">© 2025 Bladers Bangladesh</div>
-  </footer>
+  <footer><div class="foot-logo">⚡ BLADERS BANGLADESH</div><div class="foot-copy">© 2025 Bladers Bangladesh</div></footer>
 </div>
-
+ 
 <script>
-// ============================================================
-//  GOOGLE SHEET CSV URLs — UPDATE THESE IF YOU CHANGE SHEETS
-// ============================================================
+// ── GOOGLE SHEET CSV URLS ──────────────────────────────────
 const RANKINGS_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv';
 const EVENTS_CSV   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv';
-
-// ============================================================
-//  CSV PARSER
-// ============================================================
+ 
+// ── STATE ─────────────────────────────────────────────────
+let rankingsData = [];
+let eventsData   = [];
+let tourFilter   = 'all';
+ 
+// ── HASH-BASED ROUTING (makes back button work) ───────────
+const PAGES = ['home','tournaments','tour-detail','rankings'];
+ 
+function goTo(page, pushState = true) {
+  // hide all
+  PAGES.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.remove('active');
+  });
+  // show target
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  // update nav highlight
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('nb-' + page);
+  if (nb) nb.classList.add('active');
+  else {
+    // tour-detail highlights tournaments
+    const nb2 = document.getElementById('nb-tournaments');
+    if (nb2) nb2.classList.add('active');
+  }
+  // push to browser history so back button works
+  if (pushState) {
+    history.pushState({ page }, '', '#' + page);
+  }
+  window.scrollTo(0, 0);
+}
+ 
+// Handle browser back/forward button
+window.addEventListener('popstate', (e) => {
+  const page = e.state?.page || 'home';
+  goTo(page, false);
+});
+ 
+// On load, read hash
+function initRoute() {
+  const hash = window.location.hash.replace('#', '') || 'home';
+  const page = PAGES.includes(hash) ? hash : 'home';
+  goTo(page, false);
+}
+ 
+// ── CSV PARSER ────────────────────────────────────────────
 function parseCSV(text) {
   const lines = text.trim().split('\n');
-  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase().replace(/\s+/g,'_'));
+  const headers = lines[0].split(',').map(h =>
+    h.trim().replace(/^"|"$/g,'').toLowerCase().replace(/\s+/g,'_')
+  );
   return lines.slice(1).filter(l => l.trim()).map(line => {
-    // handle quoted fields with commas inside
     const vals = [];
     let cur = '', inQ = false;
     for (let i = 0; i < line.length; i++) {
@@ -373,36 +407,25 @@ function parseCSV(text) {
     }
     vals.push(cur.trim());
     const obj = {};
-    headers.forEach((h, i) => obj[h] = (vals[i] || '').replace(/^"|"$/g, '').trim());
+    headers.forEach((h, i) => obj[h] = (vals[i]||'').replace(/^"|"$/g,'').trim());
     return obj;
   });
 }
-
-// ============================================================
-//  FETCH DATA
-// ============================================================
-let rankingsData = [];
-let eventsData   = [];
-let tourFilter   = 'all';
-
+ 
+// ── FETCH ─────────────────────────────────────────────────
 async function fetchAll() {
   try {
-    const [rRes, eRes] = await Promise.all([
-      fetch(RANKINGS_CSV),
-      fetch(EVENTS_CSV)
-    ]);
-    const rText = await rRes.text();
-    const eText = await eRes.text();
-    rankingsData = parseCSV(rText);
-    eventsData   = parseCSV(eText);
+    const [rRes, eRes] = await Promise.all([fetch(RANKINGS_CSV), fetch(EVENTS_CSV)]);
+    rankingsData = parseCSV(await rRes.text());
+    eventsData   = parseCSV(await eRes.text());
     renderAll();
-  } catch (err) {
+  } catch(err) {
     document.querySelectorAll('.loading-state').forEach(el => {
-      el.innerHTML = '<div class="error-state">⚠ Could not load data. Make sure your Google Sheet is published to the web.</div>';
+      el.innerHTML = '<div class="error-state">⚠ Could not load data. Check that your Google Sheet is published to the web.</div>';
     });
   }
 }
-
+ 
 function renderAll() {
   renderHomeRankings();
   renderHomeTournaments();
@@ -410,258 +433,219 @@ function renderAll() {
   renderTours();
   updateStats();
 }
-
-// ============================================================
-//  HELPERS
-// ============================================================
+ 
+// ── HELPERS ───────────────────────────────────────────────
 function initials(name) {
-  return name ? name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase() : '??';
+  return (name||'').split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase() || '??';
 }
-
 function rankClass(r) {
-  if (r == 1) return 'g';
-  if (r == 2) return 's';
-  if (r == 3) return 'b';
-  return '';
+  if (r==1) return 'g'; if (r==2) return 's'; if (r==3) return 'b'; return '';
 }
-
 function changeHTML(c) {
-  if (!c) return '';
-  const v = c.toLowerCase();
-  if (v === 'up')   return '<span class="rank-change up">▲</span>';
-  if (v === 'down') return '<span class="rank-change down">▼</span>';
+  const v = (c||'').toLowerCase();
+  if (v==='up')   return '<span class="rank-change up">▲</span>';
+  if (v==='down') return '<span class="rank-change down">▼</span>';
   return '<span class="rank-change same">—</span>';
 }
-
-function badgeClass(status) {
-  if (!status) return 'badge-closed';
-  const s = status.toLowerCase();
-  if (s === 'open') return 'badge-open';
-  if (s === 'soon') return 'badge-soon';
+function badgeClass(s) {
+  const v = (s||'').toLowerCase();
+  if (v==='open') return 'badge-open';
+  if (v==='soon') return 'badge-soon';
   return 'badge-closed';
 }
-function badgeLabel(status) {
-  if (!status) return 'Past';
-  const s = status.toLowerCase();
-  if (s === 'open') return 'Open';
-  if (s === 'soon') return 'Coming Soon';
+function badgeLabel(s) {
+  const v = (s||'').toLowerCase();
+  if (v==='open') return 'Open';
+  if (v==='soon') return 'Coming Soon';
   return 'Completed';
 }
-
-// ============================================================
-//  HOME — RANKINGS (top 5)
-// ============================================================
+ 
+// ── HOME RANKINGS (top 5) ─────────────────────────────────
 function renderHomeRankings() {
   const tbody = document.getElementById('home-rank-tbody');
-  const top5 = rankingsData.slice(0, 5);
-  if (!top5.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="error-state">No rankings data found.</div></td></tr>'; return; }
+  const top5  = rankingsData.slice(0,5);
+  if (!top5.length) {
+    tbody.innerHTML = '<tr><td colspan="4"><div class="error-state">No rankings data found. Check your sheet columns.</div></td></tr>';
+    return;
+  }
   tbody.innerHTML = top5.map(r => `
-    <tr onclick="showPage('rankings')">
+    <tr onclick="goTo('rankings')" style="cursor:pointer;">
       <td><span class="rn ${rankClass(r.rank)}">${r.rank}</span></td>
-      <td><div class="pcell"><div class="av">${initials(r.name)}</div>${r.name || '—'}</div></td>
-      <td>${r.best_bey || '—'}</td>
+      <td><div class="pcell"><div class="av">${initials(r.name)}</div>${r.name||'—'}</div></td>
+      <td>${r.best_bey||'—'}</td>
       <td><span class="pts">${Number(r.points||0).toLocaleString()}</span></td>
     </tr>`).join('');
 }
-
-// ============================================================
-//  HOME — TOURNAMENTS (upcoming 3)
-// ============================================================
+ 
+// ── HOME TOURNAMENTS (upcoming 3) ─────────────────────────
 function renderHomeTournaments() {
-  const list = document.getElementById('home-tour-list');
+  const list     = document.getElementById('home-tour-list');
   const upcoming = eventsData.filter(e => {
     const s = (e.status||'').toLowerCase();
-    return s === 'open' || s === 'soon';
-  }).slice(0, 3);
-
+    return s==='open' || s==='soon';
+  }).slice(0,3);
+ 
   if (!upcoming.length) {
-    list.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:.9rem;">No upcoming tournaments right now. Check back soon!</p>';
+    list.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:.9rem;padding:1rem;">No upcoming tournaments right now. Check back soon!</p>';
     return;
   }
-  list.innerHTML = upcoming.map(e => `
-    <div class="t-card" onclick="showPage('tournaments')">
+  list.innerHTML = upcoming.map((e,i) => `
+    <div class="t-card" onclick="openTourDetail(${eventsData.indexOf(e)})">
       <div class="t-date-box">
-        <div class="t-date-day">${e.date || '?'}</div>
-        <div class="t-date-mon">${e.month || ''}</div>
+        <div class="t-date-day">${e.date||'?'}</div>
+        <div class="t-date-mon">${e.month||''}</div>
       </div>
       <div class="t-info">
-        <div class="t-name">${e.name || 'Unnamed Event'}</div>
-        <div class="t-meta">📍 ${e.location || '—'} · ${e.slots || '?'} Slots</div>
+        <div class="t-name">${e.name||'Unnamed Event'}</div>
+        <div class="t-meta">📍 ${e.location||'—'} · ${e.slots||'?'} Slots</div>
       </div>
       <span class="badge ${badgeClass(e.status)}">${badgeLabel(e.status)}</span>
     </div>`).join('');
 }
-
-// ============================================================
-//  FULL RANKINGS PAGE
-// ============================================================
+ 
+// ── FULL RANKINGS PAGE ────────────────────────────────────
 function renderFullRankings() {
-  // Podium
-  const top3 = rankingsData.slice(0, 3);
+  const top3  = rankingsData.slice(0,3);
   const podium = document.getElementById('podium-section');
+ 
   if (top3.length >= 3) {
-    const [first, second, third] = top3;
+    const [f,s,t] = top3;
     podium.innerHTML = `
       <div class="podium-card second" style="margin-top:2rem;">
         <div class="podium-rank-num">2</div>
-        <div class="podium-av">${initials(second.name)}</div>
-        <div class="podium-name">${second.name}</div>
-        <div class="podium-pts">${Number(second.points||0).toLocaleString()} pts</div>
+        <div class="podium-av">${initials(s.name)}</div>
+        <div class="podium-name">${s.name}</div>
+        <div class="podium-pts">${Number(s.points||0).toLocaleString()} pts</div>
       </div>
       <div class="podium-card first">
         <div style="font-size:1.3rem;margin-bottom:.2rem;">👑</div>
         <div class="podium-rank-num">1</div>
-        <div class="podium-av">${initials(first.name)}</div>
-        <div class="podium-name">${first.name}</div>
-        <div class="podium-pts">${Number(first.points||0).toLocaleString()} pts</div>
+        <div class="podium-av">${initials(f.name)}</div>
+        <div class="podium-name">${f.name}</div>
+        <div class="podium-pts">${Number(f.points||0).toLocaleString()} pts</div>
       </div>
       <div class="podium-card third" style="margin-top:2rem;">
         <div class="podium-rank-num">3</div>
-        <div class="podium-av">${initials(third.name)}</div>
-        <div class="podium-name">${third.name}</div>
-        <div class="podium-pts">${Number(third.points||0).toLocaleString()} pts</div>
+        <div class="podium-av">${initials(t.name)}</div>
+        <div class="podium-name">${t.name}</div>
+        <div class="podium-pts">${Number(t.points||0).toLocaleString()} pts</div>
       </div>`;
   } else {
-    podium.innerHTML = '';
+    podium.style.display = 'none';
   }
-
-  // Full table
+ 
   const tbody = document.getElementById('rank-full-tbody');
-  if (!rankingsData.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="error-state">No rankings data found.</div></td></tr>'; return; }
+  if (!rankingsData.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="error-state">No rankings data found. Check your sheet columns.</div></td></tr>';
+    return;
+  }
   tbody.innerHTML = rankingsData.map(r => `
     <tr>
       <td><span class="rn ${rankClass(r.rank)}">${r.rank}</span></td>
-      <td><div class="pcell"><div class="av">${initials(r.name)}</div>${r.name || '—'}</div></td>
-      <td>${r.city || '—'}</td>
-      <td>${r.best_bey || '—'}</td>
-      <td>${r.tournaments || '0'}</td>
+      <td><div class="pcell"><div class="av">${initials(r.name)}</div>${r.name||'—'}</div></td>
+      <td>${r.city||'—'}</td>
+      <td>${r.best_bey||'—'}</td>
+      <td>${r.tournaments||'0'}</td>
       <td><span class="pts">${Number(r.points||0).toLocaleString()}</span> ${changeHTML(r.change)}</td>
     </tr>`).join('');
-
+ 
   document.getElementById('last-updated-label').textContent =
-    'Last updated: ' + new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+    'Last updated: ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 }
-
-// ============================================================
-//  TOURNAMENTS PAGE
-// ============================================================
+ 
+// ── TOURNAMENTS LIST ──────────────────────────────────────
 function filterTour(f, btn) {
   tourFilter = f;
   document.querySelectorAll('#page-tournaments .filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderTours();
 }
-
+ 
 function renderTours() {
   const grid = document.getElementById('tour-grid');
-  if (!eventsData.length) {
-    grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>Loading...</div>';
-    return;
-  }
-  const filtered = tourFilter === 'all'
+  if (!eventsData.length) return;
+ 
+  const filtered = tourFilter==='all'
     ? eventsData
-    : eventsData.filter(e => (e.status||'').toLowerCase() === tourFilter);
-
+    : eventsData.filter(e => (e.status||'').toLowerCase()===tourFilter);
+ 
   if (!filtered.length) {
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:2rem;font-size:.9rem;">No tournaments in this category right now.</div>';
     return;
   }
-
-  grid.innerHTML = filtered.map((e, i) => {
-    const slots  = parseInt(e.slots) || 0;
-    const filled = parseInt(e.filled) || 0;
-    const pct    = slots ? Math.round((filled / slots) * 100) : 0;
-    return `<div class="tour-card-big" onclick="openTour(${i})">
+ 
+  grid.innerHTML = filtered.map(e => {
+    const idx    = eventsData.indexOf(e);
+    const slots  = parseInt(e.slots)||0;
+    const filled = parseInt(e.filled)||0;
+    const pct    = slots ? Math.round((filled/slots)*100) : 0;
+    return `<div class="tour-card-big" onclick="openTourDetail(${idx})">
       <div class="tour-card-top">
         <div>
-          <div class="tour-card-date">${e.date || '?'}</div>
-          <div class="tour-card-mon">${e.month || ''}</div>
+          <div class="tour-card-date">${e.date||'?'}</div>
+          <div class="tour-card-mon">${e.month||''}</div>
         </div>
         <span class="badge ${badgeClass(e.status)}">${badgeLabel(e.status)}</span>
       </div>
       <div class="tour-card-body">
-        <h3>${e.name || 'Unnamed Event'}</h3>
-        <span class="tour-meta-item">📍 ${e.location || '—'}</span>
-        <span class="tour-meta-item">⚔️ ${e.format || '—'} &nbsp;·&nbsp; 🏆 ${e.prize || '—'}</span>
+        <h3>${e.name||'Unnamed Event'}</h3>
+        <span class="tour-meta-item">📍 ${e.location||'—'}</span>
+        <span class="tour-meta-item">⚔️ ${e.format||'—'} &nbsp;·&nbsp; 🏆 ${e.prize||'—'}</span>
       </div>
       <div class="tour-card-footer">
         <div class="slots-bar-wrap">
           <div class="slots-label">${filled} / ${slots} slots</div>
           <div class="slots-bar"><div class="slots-fill" style="width:${pct}%"></div></div>
         </div>
-        ${(e.status||'').toLowerCase() === 'open' ? '<span class="badge badge-open" style="font-size:.6rem;flex-shrink:0;">Registering</span>' : ''}
+        ${(e.status||'').toLowerCase()==='open'?'<span class="badge badge-open" style="font-size:.6rem;flex-shrink:0;">Registering</span>':''}
       </div>
     </div>`;
   }).join('');
-
-  // store filtered for openTour reference
-  window._filteredTours = filtered;
 }
-
-function openTour(i) {
-  const e = window._filteredTours[i];
-  if (!e) return;
-  const panel  = document.getElementById('tour-detail-panel');
-  const slots  = parseInt(e.slots) || 0;
-  const filled = parseInt(e.filled) || 0;
-  const pct    = slots ? Math.round((filled / slots) * 100) : 0;
-
-  panel.innerHTML = `
-    <button class="detail-back" onclick="closeTour()">← Back to Tournaments</button>
+ 
+// ── TOURNAMENT DETAIL PAGE ────────────────────────────────
+function openTourDetail(idx) {
+  const e      = eventsData[idx];
+  const slots  = parseInt(e.slots)||0;
+  const filled = parseInt(e.filled)||0;
+  const pct    = slots ? Math.round((filled/slots)*100) : 0;
+ 
+  document.getElementById('tour-detail-content').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:.8rem;">
-      <h2 class="detail-title">${e.name || 'Unnamed Event'}</h2>
-      <span class="badge ${badgeClass(e.status)}">${badgeLabel(e.status)}</span>
+      <h1 class="detail-title">${e.name||'Unnamed Event'}</h1>
+      <span class="badge ${badgeClass(e.status)}" style="flex-shrink:0;">${badgeLabel(e.status)}</span>
     </div>
     <div class="detail-meta">
-      <span>📍 ${e.location || '—'}</span>
-      <span>📅 ${e.date || '?'} ${e.month || ''}</span>
-      <span>⚔️ ${e.format || '—'}</span>
+      <span>📍 ${e.location||'—'}</span>
+      <span>📅 ${e.date||'?'} ${e.month||''}</span>
+      <span>⚔️ ${e.format||'—'}</span>
     </div>
-    <p style="font-size:.88rem;color:var(--muted);font-weight:500;line-height:1.7;margin-bottom:1.3rem;">${e.description || 'No description available.'}</p>
+    <div class="detail-desc">${e.description||'No description available.'}</div>
     <div class="detail-grid">
-      <div class="detail-box"><div class="detail-box-label">Prize Pool</div><div class="detail-box-val">${e.prize || '—'}</div></div>
-      <div class="detail-box"><div class="detail-box-label">Points on Offer</div><div class="detail-box-val">${e.points || '—'}</div></div>
-      <div class="detail-box"><div class="detail-box-label">Slots Filled</div><div class="detail-box-val">${filled} / ${slots} (${pct}%)</div></div>
-      <div class="detail-box"><div class="detail-box-label">Format</div><div class="detail-box-val">${e.format || '—'}</div></div>
+      <div class="detail-box"><div class="detail-box-label">Prize Pool</div><div class="detail-box-val">${e.prize||'—'}</div></div>
+      <div class="detail-box"><div class="detail-box-label">Points on Offer</div><div class="detail-box-val">${e.points||'—'}</div></div>
+      <div class="detail-box"><div class="detail-box-label">Slots Filled</div><div class="detail-box-val">${filled} / ${slots} &nbsp;(${pct}%)</div></div>
+      <div class="detail-box"><div class="detail-box-label">Format</div><div class="detail-box-val">${e.format||'—'}</div></div>
     </div>`;
-
-  panel.classList.add('show');
-  document.getElementById('tour-list-section').style.display = 'none';
-  window.scrollTo(0, 0);
+ 
+  goTo('tour-detail');
 }
-
-function closeTour() {
-  document.getElementById('tour-detail-panel').classList.remove('show');
-  document.getElementById('tour-list-section').style.display = 'block';
-}
-
-// ============================================================
-//  STATS BAR (home)
-// ============================================================
+ 
+// ── STATS BAR ─────────────────────────────────────────────
 function updateStats() {
   document.getElementById('home-blader-count').innerHTML = rankingsData.length + '<span>+</span>';
-  const closed = eventsData.filter(e => (e.status||'').toLowerCase() === 'closed').length;
+  const closed = eventsData.filter(e=>(e.status||'').toLowerCase()==='closed').length;
   document.getElementById('home-tour-count').textContent = closed || eventsData.length;
 }
-
-// ============================================================
-//  PAGE NAV
-// ============================================================
-function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  window.scrollTo(0, 0);
-}
-
+ 
+// ── MOBILE MENU ───────────────────────────────────────────
 function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
 function closeMenu()  { document.getElementById('mobile-menu').classList.remove('open'); }
-
-// ============================================================
-//  INIT
-// ============================================================
+ 
+// ── BOOT ──────────────────────────────────────────────────
 fetchAll();
+initRoute();
 </script>
 </body>
 </html>
+ 
