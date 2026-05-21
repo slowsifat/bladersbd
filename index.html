@@ -372,40 +372,57 @@ function chHTML(c){var v=(c||"").toLowerCase();if(v==="up")return"<span class='r
 function bdgCls(s){var v=(s||"").toLowerCase();if(v==="open")return"badge-open";if(v==="soon")return"badge-soon";return"badge-closed";}
 function bdgLbl(s){var v=(s||"").toLowerCase();if(v==="open")return"Open";if(v==="soon")return"Coming Soon";return"Completed";}
 
+function makeRow(cells, clickPage){
+  var tr=document.createElement("tr");
+  if(clickPage){tr.style.cursor="pointer";tr.addEventListener("click",function(){goTo(clickPage);});}
+  for(var i=0;i<cells.length;i++){
+    var td=document.createElement("td");
+    td.innerHTML=cells[i];
+    tr.appendChild(td);
+  }
+  return tr;
+}
+
 function renderHomeRankings(){
   var tbody=document.getElementById("home-rank-tbody");
+  tbody.innerHTML="";
   var top5=RD.slice(0,5);
-  if(!top5.length){tbody.innerHTML="<tr><td colspan='4'><div class='error-state'>No rankings data. Check columns: rank,name,city,best_bey,tournaments,points,change</div></td></tr>";return;}
-  var html="";
+  if(!top5.length){
+    var tr=document.createElement("tr");
+    tr.innerHTML="<td colspan='4'><div class='error-state'>No rankings data. Check columns: rank, name, city, best_bey, tournaments, points, change</div></td>";
+    tbody.appendChild(tr);
+    return;
+  }
   for(var i=0;i<top5.length;i++){
     var r=top5[i];
-    html+="<tr onclick="goTo('rankings')" style='cursor:pointer'>";
-    html+="<td><span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span></td>";
-    html+="<td><div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div></td>";
-    html+="<td>"+(r.best_bey||"-")+"</td>";
-    html+="<td><span class='pts'>"+Number(r.points||0).toLocaleString()+"</span></td>";
-    html+="</tr>";
+    var tr=makeRow([
+      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+      r.best_bey||"-",
+      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
+    ],"rankings");
+    tbody.appendChild(tr);
   }
-  tbody.innerHTML=html;
 }
 
 function renderHomeTournaments(){
   var list=document.getElementById("home-tour-list");
+  list.innerHTML="";
   var upcoming=[];
   for(var i=0;i<ED.length;i++){var s=(ED[i].status||"").toLowerCase();if(s==="open"||s==="soon")upcoming.push(ED[i]);}
   upcoming=upcoming.slice(0,3);
   if(!upcoming.length){list.innerHTML="<p style='text-align:center;color:var(--muted);font-size:.9rem;padding:1rem'>No upcoming tournaments right now.</p>";return;}
-  var html="";
   for(var i=0;i<upcoming.length;i++){
     var e=upcoming[i];
     var idx=ED.indexOf(e);
-    html+="<div class='t-card' onclick='openTourDetail("+idx+")'>";
-    html+="<div class='t-date-box'><div class='t-date-day'>"+(e.date||"?")+"</div><div class='t-date-mon'>"+(e.month||"")+"</div></div>";
-    html+="<div class='t-info'><div class='t-name'>"+(e.name||"Unnamed")+"</div><div class='t-meta'>&#128205; "+(e.location||"-")+" &middot; "+(e.slots||"?")+" Slots</div></div>";
-    html+="<span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span>";
-    html+="</div>";
+    var div=document.createElement("div");
+    div.className="t-card";
+    div.innerHTML="<div class='t-date-box'><div class='t-date-day'>"+(e.date||"?")+"</div><div class='t-date-mon'>"+(e.month||"")+"</div></div>"
+      +"<div class='t-info'><div class='t-name'>"+(e.name||"Unnamed")+"</div><div class='t-meta'>&#128205; "+(e.location||"-")+" &middot; "+(e.slots||"?")+" Slots</div></div>"
+      +"<span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span>";
+    (function(index){div.addEventListener("click",function(){openTourDetail(index);});})(idx);
+    list.appendChild(div);
   }
-  list.innerHTML=html;
 }
 
 function renderFullRankings(){
@@ -413,21 +430,32 @@ function renderFullRankings(){
   var podium=document.getElementById("podium-section");
   if(top3.length>=3){
     var f=top3[0],s=top3[1],t=top3[2];
-    podium.innerHTML="<div class='podium-card second' style='margin-top:2rem'><div class='podium-rank-num'>2</div><div class='podium-av'>"+initials(s.name)+"</div><div class='podium-name'>"+s.name+"</div><div class='podium-pts'>"+Number(s.points||0).toLocaleString()+" pts</div></div>"
-    +"<div class='podium-card first'><div style='font-size:1.3rem;margin-bottom:.2rem'>&#128081;</div><div class='podium-rank-num'>1</div><div class='podium-av'>"+initials(f.name)+"</div><div class='podium-name'>"+f.name+"</div><div class='podium-pts'>"+Number(f.points||0).toLocaleString()+" pts</div></div>"
-    +"<div class='podium-card third' style='margin-top:2rem'><div class='podium-rank-num'>3</div><div class='podium-av'>"+initials(t.name)+"</div><div class='podium-name'>"+t.name+"</div><div class='podium-pts'>"+Number(t.points||0).toLocaleString()+" pts</div></div>";
+    podium.innerHTML=
+      "<div class='podium-card second' style='margin-top:2rem'><div class='podium-rank-num'>2</div><div class='podium-av'>"+initials(s.name)+"</div><div class='podium-name'>"+s.name+"</div><div class='podium-pts'>"+Number(s.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card first'><div style='font-size:1.3rem;margin-bottom:.2rem'>&#128081;</div><div class='podium-rank-num'>1</div><div class='podium-av'>"+initials(f.name)+"</div><div class='podium-name'>"+f.name+"</div><div class='podium-pts'>"+Number(f.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card third' style='margin-top:2rem'><div class='podium-rank-num'>3</div><div class='podium-av'>"+initials(t.name)+"</div><div class='podium-name'>"+t.name+"</div><div class='podium-pts'>"+Number(t.points||0).toLocaleString()+" pts</div></div>";
   } else {podium.style.display="none";}
+
   var tbody=document.getElementById("rank-full-tbody");
-  if(!RD.length){tbody.innerHTML="<tr><td colspan='6'><div class='error-state'>No rankings data found.</div></td></tr>";return;}
-  var html="";
+  tbody.innerHTML="";
+  if(!RD.length){
+    var tr=document.createElement("tr");
+    tr.innerHTML="<td colspan='6'><div class='error-state'>No rankings data found.</div></td>";
+    tbody.appendChild(tr);
+    return;
+  }
   for(var i=0;i<RD.length;i++){
     var r=RD[i];
-    html+="<tr><td><span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span></td>";
-    html+="<td><div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div></td>";
-    html+="<td>"+(r.city||"-")+"</td><td>"+(r.best_bey||"-")+"</td><td>"+(r.tournaments||"0")+"</td>";
-    html+="<td><span class='pts'>"+Number(r.points||0).toLocaleString()+"</span> "+chHTML(r.change)+"</td></tr>";
+    var tr=makeRow([
+      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+      r.city||"-",
+      r.best_bey||"-",
+      r.tournaments||"0",
+      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span> "+chHTML(r.change)
+    ],null);
+    tbody.appendChild(tr);
   }
-  tbody.innerHTML=html;
   document.getElementById("last-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
 
@@ -443,8 +471,8 @@ function renderTours(){
   var grid=document.getElementById("tour-grid");
   if(!ED.length)return;
   var filtered=TF==="all"?ED:ED.filter(function(e){return(e.status||"").toLowerCase()===TF;});
+  grid.innerHTML="";
   if(!filtered.length){grid.innerHTML="<div style='grid-column:1/-1;text-align:center;color:var(--muted);padding:2rem'>No tournaments in this category.</div>";return;}
-  var html="";
   for(var i=0;i<filtered.length;i++){
     var e=filtered[i];
     var idx=ED.indexOf(e);
@@ -453,16 +481,23 @@ function renderTours(){
     var status=(e.status||"").toLowerCase();
     var fl=(e.form_link||"").trim();
     var rb="";
-    if(status==="open"&&fl){rb="<a href='"+fl+"' target='_blank' class='reg-btn' onclick='event.stopPropagation()'>Register &#8599;</a>";}
+    if(status==="open"&&fl){rb="<a href='"+fl+"' target='_blank' class='reg-btn' id='regbtn"+i+"'>Register &#8599;</a>";}
     else if(status==="open"){rb="<span class='reg-btn-muted'>Link Soon</span>";}
     else if(status==="soon"){rb="<span class='reg-btn-muted'>Not Open</span>";}
-    html+="<div class='tour-card-big' onclick='openTourDetail("+idx+")'>";
-    html+="<div class='tour-card-top'><div><div class='tour-card-date'>"+(e.date||"?")+"</div><div class='tour-card-mon'>"+(e.month||"")+"</div></div><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span></div>";
-    html+="<div class='tour-card-body'><h3>"+(e.name||"Unnamed")+"</h3><span class='tour-meta-item'>&#128205; "+(e.location||"-")+"</span><span class='tour-meta-item'>&#9876; "+(e.format||"-")+" &middot; &#127942; "+(e.prize||"-")+"</span></div>";
-    html+="<div class='tour-card-footer'><div class='slots-bar-wrap'><div class='slots-label'>"+filled+" / "+slots+" slots</div><div class='slots-bar'><div class='slots-fill' style='width:"+pct+"%'></div></div></div>"+rb+"</div>";
-    html+="</div>";
+    var card=document.createElement("div");
+    card.className="tour-card-big";
+    card.innerHTML=
+      "<div class='tour-card-top'><div><div class='tour-card-date'>"+(e.date||"?")+"</div><div class='tour-card-mon'>"+(e.month||"")+"</div></div><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span></div>"
+      +"<div class='tour-card-body'><h3>"+(e.name||"Unnamed")+"</h3><span class='tour-meta-item'>&#128205; "+(e.location||"-")+"</span><span class='tour-meta-item'>&#9876; "+(e.format||"-")+" &middot; &#127942; "+(e.prize||"-")+"</span></div>"
+      +"<div class='tour-card-footer'><div class='slots-bar-wrap'><div class='slots-label'>"+filled+" / "+slots+" slots</div><div class='slots-bar'><div class='slots-fill' style='width:"+pct+"%'></div></div></div>"+rb+"</div>";
+    (function(index, regId, hasLink){
+      card.addEventListener("click",function(ev){
+        if(hasLink && ev.target && ev.target.id===regId)return;
+        openTourDetail(index);
+      });
+    })(idx, "regbtn"+i, !!(status==="open"&&fl));
+    grid.appendChild(card);
   }
-  grid.innerHTML=html;
 }
 
 function openTourDetail(idx){
@@ -475,17 +510,18 @@ function openTourDetail(idx){
   if(status==="open"&&fl){regSec="<a href='"+fl+"' target='_blank' class='detail-reg-btn'>&#9889; Register for This Tournament &#8599;</a>";}
   else if(status==="open"){regSec="<div class='detail-reg-soon'>Registration link coming soon</div>";}
   else if(status==="soon"){regSec="<div class='detail-reg-soon'>Registration not open yet - check back soon!</div>";}
-  var html="<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:.8rem'>";
-  html+="<h1 class='detail-title'>"+(e.name||"Unnamed")+"</h1>";
-  html+="<span class='badge "+bdgCls(e.status)+"' style='flex-shrink:0'>"+bdgLbl(e.status)+"</span></div>";
-  html+="<div class='detail-meta'><span>&#128205; "+(e.location||"-")+"</span><span>&#128197; "+(e.date||"?")+" "+(e.month||"")+"</span><span>&#9876; "+(e.format||"-")+"</span></div>";
-  html+="<div class='detail-desc'>"+(e.description||"No description available.")+"</div>";
-  html+="<div class='detail-grid'>";
-  html+="<div class='detail-box'><div class='detail-box-label'>Prize Pool</div><div class='detail-box-val'>"+(e.prize||"-")+"</div></div>";
-  html+="<div class='detail-box'><div class='detail-box-label'>Points on Offer</div><div class='detail-box-val'>"+(e.points||"-")+"</div></div>";
-  html+="<div class='detail-box'><div class='detail-box-label'>Slots Filled</div><div class='detail-box-val'>"+filled+" / "+slots+" ("+pct+"%)</div></div>";
-  html+="<div class='detail-box'><div class='detail-box-label'>Format</div><div class='detail-box-val'>"+(e.format||"-")+"</div></div>";
-  html+="</div>"+regSec;
+  var html=
+    "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:.8rem'>"
+    +"<h1 class='detail-title'>"+(e.name||"Unnamed")+"</h1>"
+    +"<span class='badge "+bdgCls(e.status)+"' style='flex-shrink:0'>"+bdgLbl(e.status)+"</span></div>"
+    +"<div class='detail-meta'><span>&#128205; "+(e.location||"-")+"</span><span>&#128197; "+(e.date||"?")+" "+(e.month||"")+"</span><span>&#9876; "+(e.format||"-")+"</span></div>"
+    +"<div class='detail-desc'>"+(e.description||"No description available.")+"</div>"
+    +"<div class='detail-grid'>"
+    +"<div class='detail-box'><div class='detail-box-label'>Prize Pool</div><div class='detail-box-val'>"+(e.prize||"-")+"</div></div>"
+    +"<div class='detail-box'><div class='detail-box-label'>Points on Offer</div><div class='detail-box-val'>"+(e.points||"-")+"</div></div>"
+    +"<div class='detail-box'><div class='detail-box-label'>Slots Filled</div><div class='detail-box-val'>"+filled+" / "+slots+" ("+pct+"%)</div></div>"
+    +"<div class='detail-box'><div class='detail-box-label'>Format</div><div class='detail-box-val'>"+(e.format||"-")+"</div></div>"
+    +"</div>"+regSec;
   document.getElementById("tour-detail-content").innerHTML=html;
   goTo("tour-detail");
 }
