@@ -202,6 +202,58 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .shop-link-none{display:block;width:100%;background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px;border-radius:7px;border:1px dashed var(--border);text-align:center;}
 .shops-count{font-size:.8rem;color:var(--muted);font-weight:500;margin-bottom:1.5rem;}
 
+.player-page{padding:2rem 1.5rem 5rem;max-width:760px;margin:0 auto;}
+.pp-hero{display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.pp-avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,rgba(226,75,74,.4),rgba(226,75,74,.1));border:2px solid rgba(226,75,74,.4);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#fff;flex-shrink:0;}
+.pp-info{flex:1;min-width:180px;}
+.pp-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:2px;color:#fff;line-height:1;}
+.pp-meta{font-size:.85rem;color:var(--muted);font-weight:600;margin-top:.3rem;display:flex;gap:12px;flex-wrap:wrap;}
+.pp-rank-badge{display:inline-block;background:rgba(239,159,39,.12);color:#FAC775;border:1px solid rgba(239,159,39,.25);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;}
+.pp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.pp-stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
+.pp-stat-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:#fff;}
+.pp-stat-num.green{color:#5DCAA5;}
+.pp-stat-num.red{color:#f0a0a0;}
+.pp-stat-num.gold{color:var(--gold);}
+.pp-stat-label{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
+.pp-section-title{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin:2rem 0 1rem;}
+.pp-winbar-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.3rem;margin-bottom:1.5rem;}
+.pp-winbar-top{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:.6rem;}
+.pp-winbar-top .w{color:#5DCAA5;}
+.pp-winbar-top .l{color:#f0a0a0;}
+.pp-winbar{height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--bg3);}
+.pp-winbar-fill{height:100%;background:linear-gradient(90deg,#1D9E75,#5DCAA5);}
+.pp-winrate{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#fff;letter-spacing:1px;margin-top:.8rem;}
+.pp-winrate span{font-size:.85rem;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.pp-badges{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:.5rem;}
+.pp-badge{border-radius:12px;padding:1.3rem 1rem;text-align:center;border:1px solid;position:relative;overflow:hidden;}
+.pp-badge-icon{font-size:2.2rem;margin-bottom:.4rem;}
+.pp-badge-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1px;}
+.pp-badge-sub{font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.bg-gold{background:rgba(239,159,39,.08);border-color:rgba(239,159,39,.3);}
+.bg-gold .pp-badge-title{color:#FAC775;}
+.bg-purple{background:rgba(127,119,221,.08);border-color:rgba(127,119,221,.3);}
+.bg-purple .pp-badge-title{color:#AFA9EC;}
+.bg-red{background:rgba(226,75,74,.08);border-color:rgba(226,75,74,.3);}
+.bg-red .pp-badge-title{color:#f0a0a0;}
+.bg-blue{background:rgba(55,138,221,.08);border-color:rgba(55,138,221,.3);}
+.bg-blue .pp-badge-title{color:#85B7EB;}
+.bg-green{background:rgba(29,158,117,.08);border-color:rgba(29,158,117,.3);}
+.bg-green .pp-badge-title{color:#5DCAA5;}
+.bg-orange{background:rgba(239,120,39,.08);border-color:rgba(239,120,39,.3);}
+.bg-orange .pp-badge-title{color:#F0A055;}
+.bg-cyan{background:rgba(45,200,210,.08);border-color:rgba(45,200,210,.3);}
+.bg-cyan .pp-badge-title{color:#6FD8E0;}
+.bg-steel{background:rgba(140,150,170,.08);border-color:rgba(140,150,170,.3);}
+.bg-steel .pp-badge-title{color:#AEB6C7;}
+.pp-beys{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.pp-bey{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1rem;text-align:center;position:relative;}
+.pp-bey.best{border-color:rgba(239,159,39,.35);background:rgba(239,159,39,.04);}
+.pp-bey-icon{font-size:2rem;margin-bottom:.5rem;}
+.pp-bey-name{font-size:.85rem;font-weight:700;color:#fff;line-height:1.3;}
+.pp-bey-tag{font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;}
+.pp-bey.best .pp-bey-tag{color:#FAC775;}
+.pp-empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
 footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.5rem;text-align:center;}
 .foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:.3rem;}
 .foot-copy{font-size:.72rem;color:rgba(255,255,255,.18);font-weight:500;}
@@ -213,6 +265,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   .stat-item:nth-child(2){border-right:none;}
   .stat-item:nth-child(3),.stat-item:nth-child(4){border-top:1px solid var(--border);}
   .detail-grid{grid-template-columns:1fr;}
+  .pp-stats{grid-template-columns:repeat(2,1fr);}
+  .pp-beys{grid-template-columns:1fr;}
   .podium{gap:8px;}
   .rank-big-table th:nth-child(4),.rank-big-table td:nth-child(4),
   .rank-big-table th:nth-child(5),.rank-big-table td:nth-child(5){display:none;}
@@ -358,6 +412,15 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
 </div>
 
+<!-- PLAYER PROFILE -->
+<div id="page-player" class="page">
+  <div class="player-page">
+    <button class="detail-back-btn" id="player-back-btn">&#8592; Back to Rankings</button>
+    <div id="player-content"></div>
+  </div>
+  <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
+</div>
+
 <!-- SHOPS -->
 <div id="page-shops" class="page">
   <div class="shops-page">
@@ -381,7 +444,7 @@ var SCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRCmz6KUPs-OmQ9e1-V
 var NCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVrKIzB0K2E1eeQ1D6ChW1J_kCW1hheoYPqlHvMwGU0sWB_CfhZH7Uu0ivupfxcoSy_xjEZuEM3xgx/pub?output=csv";
 
 var RD=[],ED=[],SD=[],ND=[],TF="all",RANKVIEW="local";
-var PAGES=["home","tournaments","tour-detail","rankings","shops"];
+var PAGES=["home","tournaments","tour-detail","rankings","shops","player"];
 
 // ── ROUTING ──────────────────────────────────────────────
 function goTo(page,push){
@@ -428,6 +491,7 @@ function bindNav(){
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
   document.getElementById("rt-local").addEventListener("click",function(){switchRankView("local");});
   document.getElementById("rt-national").addEventListener("click",function(){switchRankView("national");});
+  document.getElementById("player-back-btn").addEventListener("click",function(){goTo("rankings");});
 }
 
 // ── CSV PARSER ────────────────────────────────────────────
@@ -488,12 +552,14 @@ function renderHomeRankings(){
   if(!top5.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='4'><div class='error-state'>No rankings data. Columns needed: rank, name, city, best_bey, tournaments, points, change</div></td>";tbody.appendChild(tr);return;}
   for(var i=0;i<top5.length;i++){
     var r=top5[i];
-    tbody.appendChild(makeRow([
-      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
-      r.best_bey||"-",
-      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
-    ],function(){goTo("rankings");}));
+    (function(playerName){
+      tbody.appendChild(makeRow([
+        "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+        "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+        r.best_bey||"-",
+        "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
+      ],function(){openPlayer(playerName);}));
+    })(r.name);
   }
 }
 
@@ -534,12 +600,14 @@ function renderFullRankings(){
   if(!RD.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='6'><div class='error-state'>No rankings data found.</div></td>";tbody.appendChild(tr);return;}
   for(var i=0;i<RD.length;i++){
     var r=RD[i];
-    tbody.appendChild(makeRow([
-      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
-      r.city||"-",r.best_bey||"-",r.tournaments||"0",
-      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span> "+chHTML(r.change)
-    ],null));
+    (function(playerName){
+      tbody.appendChild(makeRow([
+        "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+        "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+        r.city||"-",r.best_bey||"-",r.tournaments||"0",
+        "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span> "+chHTML(r.change)
+      ],function(){openPlayer(playerName);}));
+    })(r.name);
   }
   document.getElementById("last-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
@@ -644,6 +712,97 @@ function renderShops(){
   }
 }
 
+// -- PLAYER PROFILE --
+var BADGES={
+  champion:{icon:"&#129351;",title:"Champion",sub:"Title Winner",cls:"bg-gold"},
+  podium:{icon:"&#127942;",title:"Podium Finisher",sub:"Top 3",cls:"bg-gold"},
+  dominator:{icon:"&#128081;",title:"Dominator",sub:"Crushing Wins",cls:"bg-purple"},
+  powerhouse:{icon:"&#9889;",title:"Power House",sub:"Raw Power",cls:"bg-red"},
+  consistent:{icon:"&#127919;",title:"Consistent",sub:"Reliable",cls:"bg-blue"},
+  rising:{icon:"&#128200;",title:"Rising Star",sub:"On The Rise",cls:"bg-green"},
+  veteran:{icon:"&#128737;",title:"Veteran",sub:"Experienced",cls:"bg-steel"},
+  streak:{icon:"&#128293;",title:"Win Streak",sub:"On Fire",cls:"bg-orange"},
+  mvp:{icon:"&#11088;",title:"Tournament MVP",sub:"Most Valuable",cls:"bg-gold"},
+  undefeated:{icon:"&#128142;",title:"Undefeated",sub:"Flawless",cls:"bg-cyan"}
+};
+
+function badgeHTML(code){
+  var key=(code||"").trim().toLowerCase();
+  if(!key)return"";
+  var b=BADGES[key];
+  if(!b){b={icon:"&#127942;",title:code,sub:"Achievement",cls:"bg-gold"};}
+  return "<div class='pp-badge "+b.cls+"'><div class='pp-badge-icon'>"+b.icon+"</div><div class='pp-badge-title'>"+b.title+"</div><div class='pp-badge-sub'>"+b.sub+"</div></div>";
+}
+
+function findPlayer(name){
+  var target=(name||"").trim().toLowerCase();
+  for(var i=0;i<RD.length;i++){
+    if((RD[i].name||"").trim().toLowerCase()===target)return RD[i];
+  }
+  return null;
+}
+
+function openPlayer(name){
+  var p=findPlayer(name);
+  var box=document.getElementById("player-content");
+  if(!p){
+    box.innerHTML="<div class='pp-empty'><div style='font-size:2.5rem;margin-bottom:.6rem'>&#129529;</div><div style='font-family:Bebas Neue,sans-serif;font-size:1.5rem;letter-spacing:1px;color:#fff;margin-bottom:.4rem'>"+(name||"Unknown Blader")+"</div><p style='font-weight:500'>Profile details coming soon.</p></div>";
+    goTo("player");
+    return;
+  }
+  var wins=parseInt(p.wins)||0;
+  var losses=parseInt(p.losses)||0;
+  var total=wins+losses;
+  var winrate=total?Math.round((wins/total)*100):0;
+  var winPct=total?Math.round((wins/total)*100):50;
+
+  // achievements
+  var badges="";
+  var b1=badgeHTML(p.achievement_1);
+  var b2=badgeHTML(p.achievement_2);
+  if(b1||b2){badges="<div class='pp-section-title'>Achievements</div><div class='pp-badges'>"+b1+b2+"</div>";}
+
+  // beys (best + 2 owned)
+  var beyIcons=["&#9889;","&#128293;","&#127754;","&#128162;","&#128302;","&#129501;"];
+  var beyHTML="";
+  var beyList=[];
+  if((p.best_bey||"").trim())beyList.push({name:p.best_bey,best:true});
+  if((p.owned_bey_1||"").trim())beyList.push({name:p.owned_bey_1,best:false});
+  if((p.owned_bey_2||"").trim())beyList.push({name:p.owned_bey_2,best:false});
+  if(beyList.length){
+    var cards="";
+    for(var i=0;i<beyList.length;i++){
+      var bx=beyList[i];
+      cards+="<div class='pp-bey"+(bx.best?" best":"")+"'><div class='pp-bey-icon'>"+beyIcons[i%beyIcons.length]+"</div><div class='pp-bey-name'>"+bx.name+"</div><div class='pp-bey-tag'>"+(bx.best?"&#11088; Best Bey":"Owned")+"</div></div>";
+    }
+    beyHTML="<div class='pp-section-title'>Beyblade Arsenal</div><div class='pp-beys'>"+cards+"</div>";
+  }
+
+  var rankBadge=p.rank?"<span class='pp-rank-badge'>&#127942; Rank #"+p.rank+"</span>":"";
+
+  box.innerHTML=
+    "<div class='pp-hero'>"
+    +"<div class='pp-avatar'>"+initials(p.name)+"</div>"
+    +"<div class='pp-info'><div class='pp-name'>"+(p.name||"Unknown")+"</div>"
+    +"<div class='pp-meta'><span>&#128205; "+(p.city||"-")+"</span>"+rankBadge+"</div></div>"
+    +"</div>"
+    +"<div class='pp-stats'>"
+    +"<div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div>"
+    +"<div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div>"
+    +"<div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div>"
+    +"<div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div>"
+    +"</div>"
+    +"<div class='pp-winbar-wrap'>"
+    +"<div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div>"
+    +"<div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winPct+"%'></div></div>"
+    +"<div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div>"
+    +"</div>"
+    +badges
+    +beyHTML;
+
+  goTo("player");
+}
+
 // -- NATIONAL RANKING --
 function renderNational(){
   var podium=document.getElementById("national-podium");
@@ -663,11 +822,13 @@ function renderNational(){
   if(!ND.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3'><div class='error-state'>No national ranking data found. Columns needed: rank, name, points</div></td>";tbody.appendChild(tr);return;}
   for(var i=0;i<ND.length;i++){
     var r=ND[i];
-    tbody.appendChild(makeRow([
-      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
-      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
-    ],null));
+    (function(playerName){
+      tbody.appendChild(makeRow([
+        "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+        "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+        "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
+      ],function(){openPlayer(playerName);}));
+    })(r.name);
   }
   document.getElementById("national-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
