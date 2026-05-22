@@ -21,8 +21,41 @@ body.light{
 }
 body.light nav{background:rgba(244,244,247,0.95);}
 body.light .mobile-menu{background:rgba(244,244,247,0.98);}
-body.light .nav-logo,body.light .hero h1,body.light .section-title,body.light .detail-title,body.light .pp-name,body.light .foot-logo{color:#1a1a26;}
-body.light .hero h1 span{color:var(--red);}
+/* Every element hard-coded to white #fff becomes dark in light theme */
+body.light .nav-logo,
+body.light .hero h1,
+body.light .hero h1 span,
+body.light .section-title,
+body.light .feat-card h3,
+body.light .t-name,
+body.light .stat-num,
+body.light .detail-title,
+body.light .detail-box-val,
+body.light .tour-card-body h3,
+body.light .cta-band h2,
+body.light .foot-logo,
+body.light .pp-name,
+body.light .pp-stat-num,
+body.light .pp-winrate,
+body.light .podium-name,
+body.light .shop-name,
+body.light .pp-bey-name,
+body.light .rule-block h3,
+body.light .community-name,
+body.light .rn{color:#1a1a26 !important;}
+/* keep the red accent on the hero span */
+body.light .hero h1 span{color:var(--red) !important;}
+/* keep colored numbers/podium colors as-is */
+body.light .stat-num span{color:var(--red) !important;}
+body.light .pp-stat-num.green{color:#159c6f !important;}
+body.light .pp-stat-num.red{color:#d23b3b !important;}
+body.light .pp-stat-num.gold{color:#c98908 !important;}
+body.light .rn.g{color:#c98908 !important;}
+body.light .rn.s{color:#888 !important;}
+body.light .rn.b{color:#b07a4a !important;}
+body.light .podium-card.first .podium-rank-num{color:#c98908 !important;}
+body.light .podium-card.second .podium-rank-num{color:#888 !important;}
+body.light .podium-card.third .podium-rank-num{color:#b07a4a !important;}
 body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:60px;}
 .nav-left{display:flex;align-items:center;gap:12px;}
@@ -382,11 +415,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <section class="home-section dark" style="padding-bottom:1rem;">
     <div class="section-header"><div class="section-tag">Join Us</div><div class="section-title">Community</div></div>
     <div class="community-section" style="padding-bottom:0;">
-      <div class="community-grid">
-        <a href="https://www.facebook.com/profile.php?id=61575208677752" target="_blank" class="community-card"><div class="community-icon ci-fb">&#128075;</div><div class="community-info"><div class="community-name">Facebook</div><div class="community-sub">Group</div></div></a>
-        <a href="https://discord.com/" target="_blank" class="community-card"><div class="community-icon ci-dc">&#128172;</div><div class="community-info"><div class="community-name">Discord</div><div class="community-sub">Server</div></div></a>
-        <a href="https://youtube.com/" target="_blank" class="community-card"><div class="community-icon ci-yt">&#9654;</div><div class="community-info"><div class="community-name">YouTube</div><div class="community-sub">Channel</div></div></a>
-        <a href="https://wa.me/" target="_blank" class="community-card"><div class="community-icon ci-wa">&#128241;</div><div class="community-info"><div class="community-name">WhatsApp</div><div class="community-sub">Group</div></div></a>
+      <div class="community-grid" style="max-width:300px;margin:0 auto;">
+        <a href="https://www.facebook.com/profile.php?id=61575208677752" target="_blank" class="community-card"><div class="community-icon ci-fb">&#128075;</div><div class="community-info"><div class="community-name">Facebook</div><div class="community-sub">Official Page</div></div></a>
       </div>
     </div>
   </section>
