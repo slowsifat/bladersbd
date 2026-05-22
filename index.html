@@ -14,6 +14,15 @@
   --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.13);
   --text:#f0f0f0;--muted:rgba(240,240,240,0.5);--muted2:rgba(240,240,240,0.75);
 }
+body.light{
+  --bg:#f4f4f7;--bg2:#ffffff;--bg3:#ececf2;
+  --border:rgba(0,0,0,0.10);--border2:rgba(0,0,0,0.18);
+  --text:#1a1a26;--muted:rgba(26,26,38,0.55);--muted2:rgba(26,26,38,0.78);
+}
+body.light nav{background:rgba(244,244,247,0.95);}
+body.light .mobile-menu{background:rgba(244,244,247,0.98);}
+body.light .nav-logo,body.light .hero h1,body.light .section-title,body.light .detail-title,body.light .pp-name,body.light .foot-logo{color:#1a1a26;}
+body.light .hero h1 span{color:var(--red);}
 body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:60px;}
 .nav-left{display:flex;align-items:center;gap:12px;}
@@ -254,6 +263,31 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .pp-bey-tag{font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;}
 .pp-bey.best .pp-bey-tag{color:#FAC775;}
 .pp-empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
+.theme-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.theme-btn:hover{border-color:var(--red);color:var(--red);}
+.rank-search{width:100%;max-width:400px;margin:0 auto 1.5rem;display:block;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:500;padding:11px 16px;outline:none;transition:border-color .2s;}
+.rank-search:focus{border-color:rgba(226,75,74,.5);}
+.rules-page{padding:3rem 1.5rem 5rem;max-width:760px;margin:0 auto;}
+.rule-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.5rem;margin-bottom:14px;}
+.rule-block h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1px;color:#fff;margin-bottom:.6rem;display:flex;align-items:center;gap:10px;}
+body.light .rule-block h3{color:#1a1a26;}
+.rule-block-num{width:28px;height:28px;border-radius:8px;background:var(--red-glow);border:1px solid rgba(226,75,74,.25);color:#f0a0a0;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.rule-block p{font-size:.9rem;color:var(--muted2);font-weight:500;line-height:1.7;}
+.rule-block ul{margin:.5rem 0 0 1.2rem;}
+.rule-block li{font-size:.88rem;color:var(--muted2);font-weight:500;line-height:1.8;}
+.community-section{padding:0 1.5rem 4rem;max-width:760px;margin:0 auto;}
+.community-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
+.community-card{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;text-decoration:none;transition:border-color .2s,transform .2s;}
+.community-card:hover{border-color:rgba(226,75,74,.4);transform:translateY(-2px);}
+.community-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.ci-fb{background:rgba(55,138,221,.15);}
+.ci-dc{background:rgba(127,119,221,.15);}
+.ci-yt{background:rgba(226,75,74,.15);}
+.ci-wa{background:rgba(29,158,117,.15);}
+.community-info{flex:1;}
+.community-name{font-size:.95rem;font-weight:700;color:#fff;}
+body.light .community-name{color:#1a1a26;}
+.community-sub{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.5rem;text-align:center;}
 .foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:.3rem;}
 .foot-copy{font-size:.72rem;color:rgba(255,255,255,.18);font-weight:500;}
@@ -287,7 +321,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-rankings">Rankings</button></li>
     <li><button id="nb-shops">Shops</button></li>
   </ul>
-  <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button>
+    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+  </div>
 </nav>
 
 <div class="mobile-menu" id="mobile-menu">
@@ -342,6 +379,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       </table>
     </div>
   </section>
+  <section class="home-section dark" style="padding-bottom:1rem;">
+    <div class="section-header"><div class="section-tag">Join Us</div><div class="section-title">Community</div></div>
+    <div class="community-section" style="padding-bottom:0;">
+      <div class="community-grid">
+        <a href="https://www.facebook.com/profile.php?id=61575208677752" target="_blank" class="community-card"><div class="community-icon ci-fb">&#128075;</div><div class="community-info"><div class="community-name">Facebook</div><div class="community-sub">Group</div></div></a>
+        <a href="https://discord.com/" target="_blank" class="community-card"><div class="community-icon ci-dc">&#128172;</div><div class="community-info"><div class="community-name">Discord</div><div class="community-sub">Server</div></div></a>
+        <a href="https://youtube.com/" target="_blank" class="community-card"><div class="community-icon ci-yt">&#9654;</div><div class="community-info"><div class="community-name">YouTube</div><div class="community-sub">Channel</div></div></a>
+        <a href="https://wa.me/" target="_blank" class="community-card"><div class="community-icon ci-wa">&#128241;</div><div class="community-info"><div class="community-name">WhatsApp</div><div class="community-sub">Group</div></div></a>
+      </div>
+    </div>
+  </section>
+
   <div class="cta-band">
     <div class="cta-band-bg"></div>
     <h2>READY TO <span>LET IT RIP?</span></h2>
@@ -387,6 +436,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 
     <!-- COMMUNITY (default) RANKING VIEW -->
     <div id="rank-view-local">
+      <input type="text" class="rank-search" id="rank-search-local" placeholder="Search blader by name..."/>
       <div id="podium-section" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
       <div class="last-updated" id="last-updated-label"></div>
       <div class="rank-big-table-wrap">
@@ -399,6 +449,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 
     <!-- NATIONAL RANKING VIEW -->
     <div id="rank-view-national" style="display:none;">
+      <input type="text" class="rank-search" id="rank-search-national" placeholder="Search blader by name..."/>
       <div id="national-podium" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
       <div class="last-updated" id="national-updated-label"></div>
       <div class="rank-big-table-wrap">
@@ -492,6 +543,14 @@ function bindNav(){
   document.getElementById("rt-local").addEventListener("click",function(){switchRankView("local");});
   document.getElementById("rt-national").addEventListener("click",function(){switchRankView("national");});
   document.getElementById("player-back-btn").addEventListener("click",function(){goTo("rankings");});
+  document.getElementById("theme-btn").addEventListener("click",toggleTheme);
+  document.getElementById("rank-search-local").addEventListener("input",renderFullRankings);
+  document.getElementById("rank-search-national").addEventListener("input",renderNational);
+}
+
+function toggleTheme(){
+  var isLight=document.body.classList.toggle("light");
+  document.getElementById("theme-btn").innerHTML=isLight?"&#9728;":"&#9790;";
 }
 
 // ── CSV PARSER ────────────────────────────────────────────
@@ -598,8 +657,12 @@ function renderFullRankings(){
   var tbody=document.getElementById("rank-full-tbody");
   tbody.innerHTML="";
   if(!RD.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='6'><div class='error-state'>No rankings data found.</div></td>";tbody.appendChild(tr);return;}
+  var q=(document.getElementById("rank-search-local").value||"").toLowerCase();
+  var shown=0;
   for(var i=0;i<RD.length;i++){
     var r=RD[i];
+    if(q&&(r.name||"").toLowerCase().indexOf(q)<0)continue;
+    shown++;
     (function(playerName){
       tbody.appendChild(makeRow([
         "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
@@ -609,6 +672,7 @@ function renderFullRankings(){
       ],function(){openPlayer(playerName);}));
     })(r.name);
   }
+  if(shown===0){var tr=document.createElement("tr");tr.innerHTML="<td colspan='6' style='text-align:center;color:var(--muted);padding:1.5rem'>No bladers found matching your search.</td>";tbody.appendChild(tr);}
   document.getElementById("last-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
 
@@ -820,8 +884,12 @@ function renderNational(){
   } else {podium.style.display="none";}
   // Table
   if(!ND.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3'><div class='error-state'>No national ranking data found. Columns needed: rank, name, points</div></td>";tbody.appendChild(tr);return;}
+  var q=(document.getElementById("rank-search-national").value||"").toLowerCase();
+  var shown=0;
   for(var i=0;i<ND.length;i++){
     var r=ND[i];
+    if(q&&(r.name||"").toLowerCase().indexOf(q)<0)continue;
+    shown++;
     (function(playerName){
       tbody.appendChild(makeRow([
         "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
@@ -830,6 +898,7 @@ function renderNational(){
       ],function(){openPlayer(playerName);}));
     })(r.name);
   }
+  if(shown===0){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3' style='text-align:center;color:var(--muted);padding:1.5rem'>No bladers found matching your search.</td>";tbody.appendChild(tr);}
   document.getElementById("national-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
 
