@@ -178,6 +178,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .rank-big-table tbody tr:last-child td{border-bottom:none;}
 .rank-change{font-size:.7rem;font-weight:700;}
 .rank-change.up{color:#5DCAA5;}.rank-change.down{color:#f0a0a0;}.rank-change.same{color:var(--muted);}
+.rank-toggle{display:flex;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px;max-width:400px;margin:0 auto 2.5rem;}
+.rank-toggle-btn{flex:1;background:transparent;border:none;font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);padding:10px;border-radius:7px;cursor:pointer;transition:all .2s;}
+.rank-toggle-btn.active{background:var(--red);color:#fff;}
+.rank-toggle-btn:hover:not(.active){color:#fff;}
 .last-updated{font-size:.72rem;color:var(--muted);font-weight:500;text-align:right;margin-bottom:.8rem;}
 
 /* SHOPS */
@@ -320,14 +324,35 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 <!-- RANKINGS -->
 <div id="page-rankings" class="page">
   <div class="rank-page">
-    <div class="page-header"><div class="section-tag">National Leaderboard</div><h1 class="section-title">Player Rankings</h1><p>Updated after every official Bladers Bangladesh tournament</p></div>
-    <div id="podium-section" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
-    <div class="last-updated" id="last-updated-label"></div>
-    <div class="rank-big-table-wrap">
-      <table class="rank-big-table">
-        <thead><tr><th>#</th><th>Blader</th><th>City</th><th>Best Bey</th><th>Tournaments</th><th>Points</th></tr></thead>
-        <tbody id="rank-full-tbody"><tr><td colspan="6"><div class="loading-state"><div class="loading-spinner"></div>Loading...</div></td></tr></tbody>
-      </table>
+    <div class="page-header"><div class="section-tag">Leaderboard</div><h1 class="section-title">Player Rankings</h1><p>Updated after every official Bladers Bangladesh tournament</p></div>
+
+    <div class="rank-toggle">
+      <button class="rank-toggle-btn active" id="rt-local">Community Ranking</button>
+      <button class="rank-toggle-btn" id="rt-national">National Ranking</button>
+    </div>
+
+    <!-- COMMUNITY (default) RANKING VIEW -->
+    <div id="rank-view-local">
+      <div id="podium-section" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
+      <div class="last-updated" id="last-updated-label"></div>
+      <div class="rank-big-table-wrap">
+        <table class="rank-big-table">
+          <thead><tr><th>#</th><th>Blader</th><th>City</th><th>Best Bey</th><th>Tournaments</th><th>Points</th></tr></thead>
+          <tbody id="rank-full-tbody"><tr><td colspan="6"><div class="loading-state"><div class="loading-spinner"></div>Loading...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NATIONAL RANKING VIEW -->
+    <div id="rank-view-national" style="display:none;">
+      <div id="national-podium" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
+      <div class="last-updated" id="national-updated-label"></div>
+      <div class="rank-big-table-wrap">
+        <table class="rank-big-table">
+          <thead><tr><th>#</th><th>Blader</th><th>Points</th></tr></thead>
+          <tbody id="national-tbody"><tr><td colspan="3"><div class="loading-state"><div class="loading-spinner"></div>Loading...</div></td></tr></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
@@ -353,8 +378,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
 var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
 var SCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRCmz6KUPs-OmQ9e1-VIGrfdXbquqM9pi2-z4x5CYDduM_fqJIMcGYgIC71kgkAUG9Eei4gXGsX3ULQ/pub?output=csv";
+var NCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVrKIzB0K2E1eeQ1D6ChW1J_kCW1hheoYPqlHvMwGU0sWB_CfhZH7Uu0ivupfxcoSy_xjEZuEM3xgx/pub?output=csv";
 
-var RD=[],ED=[],SD=[],TF="all";
+var RD=[],ED=[],SD=[],ND=[],TF="all",RANKVIEW="local";
 var PAGES=["home","tournaments","tour-detail","rankings","shops"];
 
 // ── ROUTING ──────────────────────────────────────────────
@@ -400,6 +426,8 @@ function bindNav(){
   document.getElementById("tf-open").addEventListener("click",function(){filterTour("open",this);});
   document.getElementById("tf-soon").addEventListener("click",function(){filterTour("soon",this);});
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
+  document.getElementById("rt-local").addEventListener("click",function(){switchRankView("local");});
+  document.getElementById("rt-national").addEventListener("click",function(){switchRankView("national");});
 }
 
 // ── CSV PARSER ────────────────────────────────────────────
@@ -424,19 +452,20 @@ function parseCSV(text){
 
 // ── FETCH ALL ─────────────────────────────────────────────
 function fetchAll(){
-  Promise.all([fetch(RCSVURL),fetch(ECSVURL),fetch(SCSVURL)]).then(function(res){
-    return Promise.all([res[0].text(),res[1].text(),res[2].text()]);
+  Promise.all([fetch(RCSVURL),fetch(ECSVURL),fetch(SCSVURL),fetch(NCSVURL)]).then(function(res){
+    return Promise.all([res[0].text(),res[1].text(),res[2].text(),res[3].text()]);
   }).then(function(texts){
     RD=parseCSV(texts[0]);
     ED=parseCSV(texts[1]);
     SD=parseCSV(texts[2]);
+    ND=parseCSV(texts[3]);
     renderAll();
   }).catch(function(err){
     var els=document.querySelectorAll(".loading-state");
     for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load data. Check your Google Sheets are published.</div>";
   });
 }
-function renderAll(){renderHomeRankings();renderHomeTournaments();renderFullRankings();renderTours();renderShops();updateStats();}
+function renderAll(){renderHomeRankings();renderHomeTournaments();renderFullRankings();renderNational();renderTours();renderShops();updateStats();}
 
 // ── HELPERS ───────────────────────────────────────────────
 function initials(n){return(n||"").split(" ").map(function(w){return w[0]||"";}).join("").slice(0,2).toUpperCase()||"??";}
@@ -613,6 +642,42 @@ function renderShops(){
       +"<div class='shop-card-footer'>"+linkBtn+"</div>";
     grid.appendChild(card);
   }
+}
+
+// -- NATIONAL RANKING --
+function renderNational(){
+  var podium=document.getElementById("national-podium");
+  var tbody=document.getElementById("national-tbody");
+  tbody.innerHTML="";
+  // Podium top 3
+  var top3=ND.slice(0,3);
+  if(top3.length>=3){
+    var f=top3[0],s=top3[1],t=top3[2];
+    podium.style.display="grid";
+    podium.innerHTML=
+      "<div class='podium-card second' style='margin-top:2rem'><div class='podium-rank-num'>2</div><div class='podium-av'>"+initials(s.name)+"</div><div class='podium-name'>"+s.name+"</div><div class='podium-pts'>"+Number(s.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card first'><div style='font-size:1.3rem;margin-bottom:.2rem'>&#127942;</div><div class='podium-rank-num'>1</div><div class='podium-av'>"+initials(f.name)+"</div><div class='podium-name'>"+f.name+"</div><div class='podium-pts'>"+Number(f.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card third' style='margin-top:2rem'><div class='podium-rank-num'>3</div><div class='podium-av'>"+initials(t.name)+"</div><div class='podium-name'>"+t.name+"</div><div class='podium-pts'>"+Number(t.points||0).toLocaleString()+" pts</div></div>";
+  } else {podium.style.display="none";}
+  // Table
+  if(!ND.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3'><div class='error-state'>No national ranking data found. Columns needed: rank, name, points</div></td>";tbody.appendChild(tr);return;}
+  for(var i=0;i<ND.length;i++){
+    var r=ND[i];
+    tbody.appendChild(makeRow([
+      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+      "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
+      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
+    ],null));
+  }
+  document.getElementById("national-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+}
+
+function switchRankView(view){
+  RANKVIEW=view;
+  document.getElementById("rt-local").classList.toggle("active",view==="local");
+  document.getElementById("rt-national").classList.toggle("active",view==="national");
+  document.getElementById("rank-view-local").style.display=(view==="local")?"block":"none";
+  document.getElementById("rank-view-national").style.display=(view==="national")?"block":"none";
 }
 
 // ── STATS ─────────────────────────────────────────────────
