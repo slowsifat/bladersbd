@@ -296,8 +296,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .pp-bey-tag{font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;}
 .pp-bey.best .pp-bey-tag{color:#FAC775;}
 .pp-empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
-.theme-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.theme-btn:hover{border-color:var(--red);color:var(--red);}
+.nav-links li .theme-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;margin-left:8px;align-self:center;border-bottom:1px solid var(--border2);}
+.nav-links li .theme-btn:hover{border-color:var(--red);color:var(--red);}
+.nav-links li{display:flex;align-items:center;}
 .rank-search{width:100%;max-width:400px;margin:0 auto 1.5rem;display:block;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:500;padding:11px 16px;outline:none;transition:border-color .2s;}
 .rank-search:focus{border-color:rgba(226,75,74,.5);}
 .rules-page{padding:3rem 1.5rem 5rem;max-width:760px;margin:0 auto;}
@@ -353,11 +354,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
     <li><button id="nb-shops">Shops</button></li>
+    <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button>
-    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
-  </div>
+  <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
 </nav>
 
 <div class="mobile-menu" id="mobile-menu">
