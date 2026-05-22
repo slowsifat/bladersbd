@@ -646,7 +646,7 @@ function renderHomeRankings(){
         "<div class='pcell'><div class='av'>"+initials(r.name)+"</div>"+(r.name||"-")+"</div>",
         r.best_bey||"-",
         "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
-      ],function(){openPlayer(playerName);}));
+      ],function(){goTo("rankings");}));
     })(r.name);
   }
 }
