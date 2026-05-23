@@ -353,7 +353,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-home">Home</button></li>
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
-    <li><button id="nb-shops">Shops</button></li>
     <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
   </ul>
   <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
@@ -363,7 +362,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <button id="mob-home">Home</button>
   <button id="mob-tournaments">Tournaments</button>
   <button id="mob-rankings">Rankings</button>
-  <button id="mob-shops">Best Price Shops</button>
 </div>
 
 <!-- HOME -->
@@ -385,7 +383,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <div class="stat-item"><div class="stat-num" id="home-blader-count">-</div><div class="stat-label">Registered Bladers</div></div>
     <div class="stat-item"><div class="stat-num" id="home-tour-count">-</div><div class="stat-label">Tournaments Held</div></div>
     <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Active Organizers</div></div>
-    <div class="stat-item"><div class="stat-num" id="home-shop-count">-</div><div class="stat-label">Partner Shops</div></div>
+    <div class="stat-item"><div class="stat-num" id="home-team-count">-</div><div class="stat-label">Tag Teams</div></div>
   </div>
   <section class="features-section">
     <div class="section-header"><div class="section-tag">What We Offer</div><div class="section-title">Everything a Blader Needs</div></div>
@@ -394,7 +392,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <div class="feat-card" id="feat-rank"><div class="feat-icon">&#128202;</div><h3>Live Rankings</h3><p>Earn points every match. Watch your national rank climb in real time.</p></div>
       <div class="feat-card"><div class="feat-icon">&#9889;</div><h3>Beyblade X Database</h3><p>Explore stats, types, and tier info for every Beyblade X top.</p></div>
       <div class="feat-card"><div class="feat-icon">&#127894;</div><h3>Organizer Tools</h3><p>Verified organizers can create brackets, award points, and manage events.</p></div>
-      <div class="feat-card" id="feat-shop"><div class="feat-icon">&#127978;</div><h3>Best Price Shops</h3><p>Find verified shops offering the best deals on Beyblade X gear near you.</p></div>
+      <div class="feat-card" id="feat-team"><div class="feat-icon">&#129309;</div><h3>Tag Team Battles</h3><p>Team up with a partner and climb the official tag team rankings.</p></div>
       <div class="feat-card"><div class="feat-icon">&#129489;&#8205;&#129309;&#8205;&#129489;</div><h3>Community</h3><p>Connect with bladers across Bangladesh. Grow the community together.</p></div>
     </div>
   </section>
@@ -403,7 +401,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <div class="t-list" id="home-tour-list"><div class="loading-state"><div class="loading-spinner"></div>Loading tournaments...</div></div>
   </section>
   <section class="home-section">
-    <div class="section-header"><div class="section-tag">Local Leaderboard</div><div class="section-title">Top Bladers</div></div>
+    <div class="section-header"><div class="section-tag">National Leaderboard</div><div class="section-title">Top Bladers</div></div>
     <div class="rank-wrap">
       <table class="rank-table">
         <thead><tr><th>#</th><th>Blader</th><th>Best Bey</th><th>Points</th></tr></thead>
@@ -459,8 +457,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <div class="page-header"><div class="section-tag">Leaderboard</div><h1 class="section-title">Player Rankings</h1><p>Updated after every official Bladers Bangladesh tournament</p></div>
 
     <div class="rank-toggle">
-      <button class="rank-toggle-btn active" id="rt-local">Local ranking</button>
+      <button class="rank-toggle-btn active" id="rt-local">Local Community</button>
       <button class="rank-toggle-btn" id="rt-national">National Ranking</button>
+      <button class="rank-toggle-btn" id="rt-team">Tag Team</button>
     </div>
 
     <!-- COMMUNITY (default) RANKING VIEW -->
@@ -488,6 +487,19 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
         </table>
       </div>
     </div>
+
+    <!-- TAG TEAM RANKING VIEW -->
+    <div id="rank-view-team" style="display:none;">
+      <input type="text" class="rank-search" id="rank-search-team" placeholder="Search team by name..."/>
+      <div id="team-podium" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
+      <div class="last-updated" id="team-updated-label"></div>
+      <div class="rank-big-table-wrap">
+        <table class="rank-big-table">
+          <thead><tr><th>#</th><th>Team</th><th>Points</th></tr></thead>
+          <tbody id="team-tbody"><tr><td colspan="3"><div class="loading-state"><div class="loading-spinner"></div>Loading...</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
 </div>
@@ -501,30 +513,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
 </div>
 
-<!-- SHOPS -->
-<div id="page-shops" class="page">
-  <div class="shops-page">
-    <div class="page-header">
-      <div class="section-tag">Verified Partners</div>
-      <h1 class="section-title">Best Price Shops</h1>
-      <p>Trusted shops offering the best deals on Beyblade X gear across Bangladesh</p>
-    </div>
-    <div class="shops-count" id="shops-count"></div>
-    <div id="shops-grid" class="shops-grid">
-      <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>Loading shops...</div>
-    </div>
-  </div>
-  <footer><div class="foot-logo">&#9889; BLADERS BANGLADESH</div><div class="foot-copy">&#169; 2025 Bladers Bangladesh</div></footer>
-</div>
-
 <script>
 var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
 var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
-var SCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRCmz6KUPs-OmQ9e1-VIGrfdXbquqM9pi2-z4x5CYDduM_fqJIMcGYgIC71kgkAUG9Eei4gXGsX3ULQ/pub?output=csv";
 var NCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVrKIzB0K2E1eeQ1D6ChW1J_kCW1hheoYPqlHvMwGU0sWB_CfhZH7Uu0ivupfxcoSy_xjEZuEM3xgx/pub?output=csv";
+var TCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYb-U3B5cPJ4Uf1QW_97cXydlLATPhgt-WSTsME7jJrt3NR9b0SJQnIuuiLpp7RgvMopdUdDM4lkdY/pub?output=csv";
 
-var RD=[],ED=[],SD=[],ND=[],TF="all",RANKVIEW="local";
-var PAGES=["home","tournaments","tour-detail","rankings","shops","player"];
+var RD=[],ED=[],ND=[],TD=[],TF="all",RANKVIEW="local";
+var PAGES=["home","tournaments","tour-detail","rankings","player"];
 
 // ── ROUTING ──────────────────────────────────────────────
 function goTo(page,push){
@@ -552,11 +548,9 @@ function bindNav(){
   document.getElementById("nb-home").addEventListener("click",function(){goTo("home");});
   document.getElementById("nb-tournaments").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
-  document.getElementById("nb-shops").addEventListener("click",function(){goTo("shops");});
   document.getElementById("mob-home").addEventListener("click",function(){goTo("home");closeMenu();});
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
-  document.getElementById("mob-shops").addEventListener("click",function(){goTo("shops");closeMenu();});
   document.getElementById("hamburger-btn").addEventListener("click",toggleMenu);
   document.getElementById("hero-tour-btn").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("hero-rank-btn").addEventListener("click",function(){goTo("rankings");});
@@ -564,13 +558,15 @@ function bindNav(){
   document.getElementById("tour-back-btn").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("feat-tour").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("feat-rank").addEventListener("click",function(){goTo("rankings");});
-  document.getElementById("feat-shop").addEventListener("click",function(){goTo("shops");});
+  document.getElementById("feat-team").addEventListener("click",function(){goTo("rankings");switchRankView("team");});
   document.getElementById("tf-all").addEventListener("click",function(){filterTour("all",this);});
   document.getElementById("tf-open").addEventListener("click",function(){filterTour("open",this);});
   document.getElementById("tf-soon").addEventListener("click",function(){filterTour("soon",this);});
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
   document.getElementById("rt-local").addEventListener("click",function(){switchRankView("local");});
   document.getElementById("rt-national").addEventListener("click",function(){switchRankView("national");});
+  document.getElementById("rt-team").addEventListener("click",function(){switchRankView("team");});
+  document.getElementById("rank-search-team").addEventListener("input",renderTagTeam);
   document.getElementById("player-back-btn").addEventListener("click",function(){goTo("rankings");});
   document.getElementById("theme-btn").addEventListener("click",toggleTheme);
   document.getElementById("rank-search-local").addEventListener("input",renderFullRankings);
@@ -604,20 +600,20 @@ function parseCSV(text){
 
 // ── FETCH ALL ─────────────────────────────────────────────
 function fetchAll(){
-  Promise.all([fetch(RCSVURL),fetch(ECSVURL),fetch(SCSVURL),fetch(NCSVURL)]).then(function(res){
+  Promise.all([fetch(RCSVURL),fetch(ECSVURL),fetch(NCSVURL),fetch(TCSVURL)]).then(function(res){
     return Promise.all([res[0].text(),res[1].text(),res[2].text(),res[3].text()]);
   }).then(function(texts){
     RD=parseCSV(texts[0]);
     ED=parseCSV(texts[1]);
-    SD=parseCSV(texts[2]);
-    ND=parseCSV(texts[3]);
+    ND=parseCSV(texts[2]);
+    TD=parseCSV(texts[3]);
     renderAll();
   }).catch(function(err){
     var els=document.querySelectorAll(".loading-state");
     for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load data. Check your Google Sheets are published.</div>";
   });
 }
-function renderAll(){renderHomeRankings();renderHomeTournaments();renderFullRankings();renderNational();renderTours();renderShops();updateStats();}
+function renderAll(){renderHomeRankings();renderHomeTournaments();renderFullRankings();renderNational();renderTagTeam();renderTours();updateStats();}
 
 // ── HELPERS ───────────────────────────────────────────────
 function initials(n){return(n||"").split(" ").map(function(w){return w[0]||"";}).join("").slice(0,2).toUpperCase()||"??";}
@@ -770,41 +766,6 @@ function openTourDetail(idx){
   goTo("tour-detail");
 }
 
-// ── SHOPS ─────────────────────────────────────────────────
-function renderShops(){
-  var grid=document.getElementById("shops-grid");
-  var countEl=document.getElementById("shops-count");
-  grid.innerHTML="";
-  if(!SD.length){
-    grid.innerHTML="<div class='error-state' style='grid-column:1/-1'>No shops data found. Check your sheet columns: name, description, location, link</div>";
-    return;
-  }
-  countEl.textContent=SD.length+" verified partner shop"+(SD.length===1?"":"s");
-  var icons=["&#127978;","&#127873;","&#129534;","&#127775;","&#127881;","&#9971;","&#127891;","&#127919;"];
-  for(var i=0;i<SD.length;i++){
-    var s=SD[i];
-    var fl=(s.link||"").trim();
-    var icon=icons[i%icons.length];
-    var card=document.createElement("div");
-    card.className="shop-card";
-    var linkBtn=fl
-      ? "<a href='"+fl+"' target='_blank' class='shop-link-btn'>Visit Shop &#8599;</a>"
-      : "<div class='shop-link-none'>Link Coming Soon</div>";
-    card.innerHTML=
-      "<div class='shop-card-top'>"
-      +"<div class='shop-icon'>"+icon+"</div>"
-      +"<div><div class='shop-name'>"+(s.name||"Unknown Shop")+"</div>"
-      +"<div class='shop-verified'>&#10003; Verified Partner</div></div>"
-      +"</div>"
-      +"<div class='shop-card-body'>"
-      +"<div class='shop-desc'>"+(s.description||"No description available.")+"</div>"
-      +"<div class='shop-location'>&#128205; "+(s.location||"Location not specified")+"</div>"
-      +"</div>"
-      +"<div class='shop-card-footer'>"+linkBtn+"</div>";
-    grid.appendChild(card);
-  }
-}
-
 // -- PLAYER PROFILE --
 var BADGES={
   champion:{icon:"&#129351;",title:"Champion",sub:"Title Winner",cls:"bg-gold"},
@@ -935,8 +896,42 @@ function switchRankView(view){
   RANKVIEW=view;
   document.getElementById("rt-local").classList.toggle("active",view==="local");
   document.getElementById("rt-national").classList.toggle("active",view==="national");
+  document.getElementById("rt-team").classList.toggle("active",view==="team");
   document.getElementById("rank-view-local").style.display=(view==="local")?"block":"none";
   document.getElementById("rank-view-national").style.display=(view==="national")?"block":"none";
+  document.getElementById("rank-view-team").style.display=(view==="team")?"block":"none";
+}
+
+// -- TAG TEAM RANKING --
+function renderTagTeam(){
+  var podium=document.getElementById("team-podium");
+  var tbody=document.getElementById("team-tbody");
+  tbody.innerHTML="";
+  var top3=TD.slice(0,3);
+  if(top3.length>=3){
+    var f=top3[0],s=top3[1],t=top3[2];
+    podium.style.display="grid";
+    podium.innerHTML=
+      "<div class='podium-card second' style='margin-top:2rem'><div class='podium-rank-num'>2</div><div class='podium-av'>"+initials(s.team_name||s.name)+"</div><div class='podium-name'>"+(s.team_name||s.name)+"</div><div class='podium-pts'>"+Number(s.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card first'><div style='font-size:1.3rem;margin-bottom:.2rem'>&#129309;</div><div class='podium-rank-num'>1</div><div class='podium-av'>"+initials(f.team_name||f.name)+"</div><div class='podium-name'>"+(f.team_name||f.name)+"</div><div class='podium-pts'>"+Number(f.points||0).toLocaleString()+" pts</div></div>"
+      +"<div class='podium-card third' style='margin-top:2rem'><div class='podium-rank-num'>3</div><div class='podium-av'>"+initials(t.team_name||t.name)+"</div><div class='podium-name'>"+(t.team_name||t.name)+"</div><div class='podium-pts'>"+Number(t.points||0).toLocaleString()+" pts</div></div>";
+  } else {podium.style.display="none";}
+  if(!TD.length){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3'><div class='error-state'>No tag team data found. Columns needed: rank, team_name, points</div></td>";tbody.appendChild(tr);return;}
+  var q=(document.getElementById("rank-search-team").value||"").toLowerCase();
+  var shown=0;
+  for(var i=0;i<TD.length;i++){
+    var r=TD[i];
+    var nm=r.team_name||r.name||"-";
+    if(q&&nm.toLowerCase().indexOf(q)<0)continue;
+    shown++;
+    tbody.appendChild(makeRow([
+      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+      "<div class='pcell'><div class='av'>"+initials(nm)+"</div>"+nm+"</div>",
+      "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
+    ],null));
+  }
+  if(shown===0){var tr=document.createElement("tr");tr.innerHTML="<td colspan='3' style='text-align:center;color:var(--muted);padding:1.5rem'>No teams found matching your search.</td>";tbody.appendChild(tr);}
+  document.getElementById("team-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
 
 // ── STATS ─────────────────────────────────────────────────
@@ -945,7 +940,6 @@ function updateStats(){
   var closed=0;
   for(var i=0;i<ED.length;i++){if((ED[i].status||"").toLowerCase()==="closed")closed++;}
   document.getElementById("home-tour-count").textContent=closed||ED.length;
-  document.getElementById("home-shop-count").innerHTML=SD.length+"<span>+</span>";
 }
 
 // ── MENU ──────────────────────────────────────────────────
