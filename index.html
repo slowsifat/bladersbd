@@ -341,6 +341,25 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   .rank-big-table th:nth-child(5),.rank-big-table td:nth-child(5){display:none;}
 }
 
+
+/* REGISTRATION */
+.register-page{max-width:760px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+.register-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2rem;box-shadow:0 18px 60px rgba(0,0,0,.18);}
+.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:.68rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);}
+.form-input,.form-select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:500;padding:12px 13px;outline:none;transition:border-color .2s,box-shadow .2s;}
+.form-input:focus,.form-select:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-glow);}
+.form-help{font-size:.75rem;color:var(--muted);line-height:1.5;}
+.register-submit{margin-top:20px;width:100%;padding:13px 20px;}
+.register-status{display:none;margin-top:15px;padding:12px 14px;border-radius:8px;font-size:.85rem;font-weight:600;}
+.register-status.show{display:block;}
+.register-status.success{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.3);color:#67d1ad;}
+.register-status.error{background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.25);color:#f0a0a0;}
+.register-note{margin-top:18px;text-align:center;color:var(--muted);font-size:.75rem;line-height:1.6;}
+@media(max-width:640px){.register-grid{grid-template-columns:1fr;}.form-group.full{grid-column:auto;}.register-card{padding:1.2rem;}}
+
 /* BUTTR additions */
 .profile-photo{width:88px;height:88px;border-radius:50%;object-fit:cover;background:rgba(226,75,74,.12);border:2px solid rgba(226,75,74,.4);}
 .rank-photo{width:30px;height:30px;border-radius:50%;object-fit:cover;background:rgba(226,75,74,.15);}
@@ -368,6 +387,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-home">Home</button></li>
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
+    <li><button id="nb-register">Register</button></li>
     <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
   </ul>
   <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
@@ -377,6 +397,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <button id="mob-home">Home</button>
   <button id="mob-tournaments">Tournaments</button>
   <button id="mob-rankings">Rankings</button>
+  <button id="mob-register">Register</button>
 </div>
 
 <!-- HOME -->
@@ -408,7 +429,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <div class="feat-card" id="feat-tour"><div class="feat-icon">&#127942;</div><h3>Tournament Hub</h3><p>See upcoming BRAC University table tennis tournaments, dates, venues and points divisions.</p></div>
       <div class="feat-card" id="feat-rank"><div class="feat-icon">&#128202;</div><h3>Player Rankings</h3><p>Follow the current standings and see who is climbing the BRACU table tennis rankings.</p></div>
       <div class="feat-card" id="feat-profile"><div class="feat-icon">&#128100;</div><h3>Player Profiles</h3><p>Click any player to see their department, points, rank and tournament record.</p></div>
-      <div class="feat-card"><div class="feat-icon">&#127941;</div><h3>Competitive Progress</h3><p>Track points earned through tournaments and build your competitive record.</p></div>
+      <div class="feat-card" id="feat-register"><div class="feat-icon">&#9997;</div><h3>Join BUTTR</h3><p>Register your BRAC University table tennis profile and enter the ranking system.</p></div>
     </div>
   </section>
 
@@ -477,6 +498,69 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
 
+
+<!-- REGISTRATION -->
+<div id="page-register" class="page">
+  <div class="register-page">
+    <div class="page-header">
+      <div class="section-tag">Join BUTTR</div>
+      <h1 class="section-title">Player Registration</h1>
+      <p>Register as a BRAC University table tennis player and appear in the BUTTR rankings.</p>
+    </div>
+
+    <div class="register-card">
+      <form id="register-form" autocomplete="on">
+        <div class="register-grid">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name *</label>
+            <input class="form-input" id="reg-name" name="name" type="text" placeholder="Your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">BRACU Email *</label>
+            <input class="form-input" id="reg-email" name="email" type="email" placeholder="student@bracu.ac.bd" required>
+            <div class="form-help">Use your official @bracu.ac.bd email.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-student-id">Student ID *</label>
+            <input class="form-input" id="reg-student-id" name="student_id" type="text" placeholder="e.g. 24101234" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-department">Department *</label>
+            <select class="form-select" id="reg-department" name="department" required>
+              <option value="">Select department</option>
+              <option>CSE</option><option>EEE</option><option>BBA</option>
+              <option>ARCH</option><option>ENG</option><option>LLB</option>
+              <option>PHR</option><option>Microbiology</option><option>Economics</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label" for="reg-picture">Profile Picture URL</label>
+            <input class="form-input" id="reg-picture" name="profile_picture" type="url" placeholder="https://...">
+            <div class="form-help">Optional. Use a direct public image URL. You can add/change it later in the ranking sheet.</div>
+          </div>
+        </div>
+
+        <button class="btn-primary register-submit" id="register-submit" type="submit">
+          Submit Registration
+        </button>
+
+        <div class="register-status" id="register-status"></div>
+      </form>
+
+      <div class="register-note">
+        By submitting this form, your player information will be added to the BUTTR ranking spreadsheet.
+        New players start with <strong>0 points</strong>.
+      </div>
+    </div>
+  </div>
+  <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
+</div>
+
 <!-- PLAYER PROFILE -->
 <div id="page-player" class="page">
   <div class="player-page">
@@ -495,9 +579,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 // organizer, points, status, description, slots, filled, form_link.
 var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
 var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
+var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 
 var RD=[],ED=[],TF="all";
-var PAGES=["home","tournaments","tour-detail","rankings","player"];
+var PAGES=["home","tournaments","tour-detail","rankings","register","player"];
 
 function goTo(page,push){
   if(push===undefined)push=true;
@@ -522,6 +607,7 @@ function bindNav(){
   document.getElementById("nb-home").addEventListener("click",function(){goTo("home");});
   document.getElementById("nb-tournaments").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
+  document.getElementById("nb-register").addEventListener("click",function(){goTo("register");});
   document.getElementById("mob-home").addEventListener("click",function(){goTo("home");closeMenu();});
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
@@ -534,12 +620,14 @@ function bindNav(){
   document.getElementById("feat-tour").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("feat-rank").addEventListener("click",function(){goTo("rankings");});
   document.getElementById("feat-profile").addEventListener("click",function(){if(RD[0])openPlayer(RD[0].name);});
+  document.getElementById("feat-register").addEventListener("click",function(){goTo("register");});
   document.getElementById("tf-all").addEventListener("click",function(){filterTour("all",this);});
   document.getElementById("tf-open").addEventListener("click",function(){filterTour("open",this);});
   document.getElementById("tf-soon").addEventListener("click",function(){filterTour("soon",this);});
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
   document.getElementById("theme-btn").addEventListener("click",toggleTheme);
   document.getElementById("rank-search").addEventListener("input",renderFullRankings);
+  document.getElementById("register-form").addEventListener("submit",submitRegistration);
 }
 function toggleTheme(){
   var isLight=document.body.classList.toggle("light");
@@ -697,6 +785,64 @@ function openPlayer(name){
   historyHTML+="</div>";
   box.innerHTML="<div class='pp-hero'>"+avatar+"<div class='pp-info'><div class='pp-name'>"+esc(p.name)+"</div><div class='pp-meta'><span>&#127979; "+esc(p.department||"-")+"</span>"+rankBadge+"</div></div></div><div class='pp-stats'><div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div><div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div><div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div><div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div></div>"+(total?"<div class='pp-winbar-wrap'><div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div><div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winrate+"%'></div></div><div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div></div>":"")+historyHTML;
   goTo("player");
+}
+
+
+function showRegisterStatus(message,type){
+  var box=document.getElementById("register-status");
+  box.className="register-status show "+(type||"");
+  box.textContent=message;
+}
+
+function submitRegistration(ev){
+  ev.preventDefault();
+
+  var form=document.getElementById("register-form");
+  var btn=document.getElementById("register-submit");
+  var name=document.getElementById("reg-name").value.trim();
+  var email=document.getElementById("reg-email").value.trim().toLowerCase();
+  var studentId=document.getElementById("reg-student-id").value.trim();
+  var department=document.getElementById("reg-department").value.trim();
+  var profilePicture=document.getElementById("reg-picture").value.trim();
+
+  if(!/@(?:[a-z0-9-]+\.)?bracu\.ac\.bd$/i.test(email)){
+    showRegisterStatus("Please use your official @bracu.ac.bd email address.","error");
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent="Submitting...";
+  showRegisterStatus("Submitting your registration...","");
+
+  var data=new URLSearchParams();
+  data.append("name",name);
+  data.append("email",email);
+  data.append("student_id",studentId);
+  data.append("department",department);
+  data.append("profile_picture",profilePicture);
+
+  fetch(REGISTER_API_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body:data.toString()
+  }).then(function(res){
+    return res.text().then(function(text){
+      try{return JSON.parse(text);}
+      catch(e){return {ok:true};}
+    });
+  }).then(function(result){
+    if(result && result.ok===false){
+      throw new Error(result.error||"Registration failed.");
+    }
+    showRegisterStatus("Registration successful! Your information has been added to BUTTR. You can now find your profile in Rankings.","success");
+    form.reset();
+    setTimeout(function(){fetchAll();},1200);
+  }).catch(function(err){
+    showRegisterStatus("Registration could not be confirmed. Please check your information and try again. If the problem continues, contact the BUTTR administrator.","error");
+  }).finally(function(){
+    btn.disabled=false;
+    btn.textContent="Submit Registration";
+  });
 }
 
 function updateStats(){
