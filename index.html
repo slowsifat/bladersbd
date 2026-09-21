@@ -148,6 +148,80 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .pcell{display:flex;align-items:center;gap:9px;}
 .av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;background:rgba(226,75,74,.2);color:#f0a0a0;}
 .pts{display:inline-block;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.18);color:#f0a0a0;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;}
+.home-champions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1100px;margin:0 auto;}
+.champion-group{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.3rem;}
+.champion-group-title{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:1.5px;color:#fff;margin-bottom:1rem;}
+.champion-group .podium{margin-bottom:0;max-width:none;}
+.champion-group .podium-card{cursor:pointer;transition:transform .2s,border-color .2s,background .2s;}
+.champion-group .podium-card:hover{transform:translateY(-3px);border-color:rgba(226,75,74,.35);}
+@media(max-width:760px){.home-champions-grid{grid-template-columns:1fr;}}
+
+
+/* Hall of Fame + Player ID + Badges */
+.hof-page{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem;}
+.hof-intro{text-align:center;margin-bottom:2.5rem;}
+.hof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.hof-group{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
+.hof-group-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:1.5px;text-align:center;color:#fff;margin-bottom:1.2rem;}
+.hof-empty{text-align:center;padding:2rem 1rem;color:var(--muted);border:1px dashed var(--border);border-radius:12px;font-size:.9rem;line-height:1.6;}
+.hof-card{display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:14px;padding:1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.015);margin-bottom:10px;}
+.hof-card:last-child{margin-bottom:0;}
+.hof-year{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--red);text-align:center;}
+.hof-name{font-weight:800;color:#fff;font-size:1rem;}
+.hof-tournament{font-size:.75rem;color:var(--muted);margin-top:3px;}
+.hof-badge{font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#ffd76a;background:rgba(255,215,106,.1);border:1px solid rgba(255,215,106,.25);padding:5px 8px;border-radius:999px;white-space:nowrap;}
+.pp-id{display:inline-flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-weight:800;letter-spacing:1px;color:#fff;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.25);padding:5px 9px;border-radius:999px;font-size:.7rem;}
+.pp-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+.player-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:.65rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;border:1px solid var(--border);background:var(--bg2);color:var(--muted);}
+.player-badge.top{color:#f0a0a0;border-color:rgba(226,75,74,.3);background:rgba(226,75,74,.08);}
+.player-badge.champ{color:#ffd76a;border-color:rgba(255,215,106,.3);background:rgba(255,215,106,.08);}
+.player-badge.podium{color:#ddd;border-color:rgba(255,255,255,.2);}
+@media(max-width:760px){.hof-grid{grid-template-columns:1fr;}.hof-card{grid-template-columns:52px 1fr;}.hof-badge{grid-column:2;justify-self:start;}}
+
+
+/* My BUTTR player dashboard */
+.my-page{max-width:1050px;margin:0 auto;padding:3rem 1.5rem 5rem;}
+.my-login-card{max-width:520px;margin:2rem auto;padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:18px;text-align:center;}
+.my-login-card h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;color:#fff;margin:.5rem 0;}
+.my-login-card p{color:var(--muted);line-height:1.6;font-size:.9rem;margin-bottom:1.5rem;}
+#my-google-button{display:flex;justify-content:center;min-height:44px;}
+.my-status{margin-top:1rem;font-size:.85rem;color:var(--muted);}
+.my-status.error{color:#ef7b7a;}
+.my-status.ok{color:#82d9a0;}
+.my-dashboard{display:none;}
+.my-dashboard.show{display:block;}
+.my-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.my-welcome{color:var(--muted);font-size:.85rem;}
+.my-welcome strong{color:#fff;}
+.my-logout{border:1px solid var(--border);background:transparent;color:var(--muted);padding:9px 14px;border-radius:9px;cursor:pointer;font-weight:700;}
+.my-logout:hover{color:#fff;border-color:rgba(255,255,255,.25);}
+.my-profile-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1.2rem;}
+.my-profile-head{display:flex;align-items:center;gap:1rem;}
+.my-avatar{width:76px;height:76px;border-radius:50%;overflow:hidden;background:#17171d;border:2px solid rgba(226,75,74,.35);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#fff;flex:none;}
+.my-avatar img{width:100%;height:100%;object-fit:cover;}
+.my-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;color:#fff;}
+.my-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px;}
+.my-pill{font-size:.68rem;font-weight:800;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 9px;}
+.my-id{color:#fff;border-color:rgba(226,75,74,.3);background:rgba(226,75,74,.08);}
+.my-rank{color:#ffd76a;border-color:rgba(255,215,106,.25);background:rgba(255,215,106,.07);}
+.my-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.2rem;}
+.my-stat{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.2rem;text-align:center;}
+.my-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#fff;}
+.my-stat-label{font-size:.65rem;color:var(--muted);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:3px;}
+.my-sections{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.my-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.3rem;}
+.my-box-title{font-family:'Bebas Neue',sans-serif;color:#fff;font-size:1.2rem;letter-spacing:1px;margin-bottom:1rem;}
+.my-row{display:flex;justify-content:space-between;gap:1rem;padding:9px 0;border-bottom:1px solid var(--border);font-size:.82rem;}
+.my-row:last-child{border-bottom:0;}
+.my-row span:first-child{color:var(--muted);}
+.my-row strong{color:#fff;text-align:right;}
+.my-empty{color:var(--muted);font-size:.82rem;line-height:1.6;}
+@media(max-width:760px){
+  .my-stats{grid-template-columns:repeat(2,1fr);}
+  .my-sections{grid-template-columns:1fr;}
+  .my-name{font-size:1.65rem;}
+}
+
 .cta-band{background:var(--bg);border-top:1px solid var(--border);padding:4rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
 .cta-band-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 50% 100%,rgba(226,75,74,.09) 0%,transparent 70%);}
 .cta-band>*{position:relative;}
@@ -405,6 +479,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-home">Home</button></li>
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
+    <li><button id="nb-hall-of-fame">Hall of Fame</button></li>
+    <li><button id="nb-my-buttr">My BUTTR</button></li>
     <li><button id="nb-register">Register</button></li>
     <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
   </ul>
@@ -415,6 +491,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <button id="mob-home">Home</button>
   <button id="mob-tournaments">Tournaments</button>
   <button id="mob-rankings">Rankings</button>
+  <button id="mob-hall-of-fame">Hall of Fame</button>
+  <button id="mob-my-buttr">My BUTTR</button>
   <button id="mob-register">Register</button>
 </div>
 
@@ -428,7 +506,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       <h1>COMPETE.<br><span>RANK. RISE.</span></h1>
       <p class="hero-sub">The player ranking and tournament platform for BRAC University table tennis.</p>
       <div class="hero-btns">
-        <button class="btn-primary" id="hero-tour-btn">View Tournaments</button>
+        
+        <button class="btn-ghost" id="hero-tour-btn">View Tournaments</button>
         <button class="btn-ghost" id="hero-rank-btn">See Rankings</button>
       </div>
     </div>
@@ -452,6 +531,20 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   </section>
 
   <section class="home-section dark">
+    <div class="section-header"><div class="section-tag">Champions</div><div class="section-title">Current Leaders</div></div>
+    <div class="home-champions-grid">
+      <div class="champion-group">
+        <div class="champion-group-title">&#128081; Men's Top 3</div>
+        <div id="home-men-podium" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
+      </div>
+      <div class="champion-group">
+        <div class="champion-group-title">&#128081; Women's Top 3</div>
+        <div id="home-women-podium" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
     <div class="section-header"><div class="section-tag">Upcoming Events</div><div class="section-title">Latest Tournaments</div></div>
     <div class="t-list" id="home-tour-list"><div class="loading-state"><div class="loading-spinner"></div>Loading tournaments...</div></div>
   </section>
@@ -470,7 +563,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <div class="cta-band-bg"></div>
     <h2>READY TO <span>CLIMB?</span></h2>
     <p>Check the current rankings and upcoming BRAC University table tennis tournaments.</p>
-    <button class="cta-main-btn" id="cta-btn">View Rankings &#8599;</button>
+    <button class="cta-main-btn" id="cta-btn">Register Now &#8599;</button>
   </div>
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
@@ -521,6 +614,85 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
 
+
+<!-- HALL OF FAME -->
+<div id="page-hall-of-fame" class="page">
+  <div class="hof-page">
+    <div class="page-header hof-intro">
+      <div class="section-tag">BUTTR History</div>
+      <h1 class="section-title">Hall of Fame</h1>
+      <p>Champions and historic tournament achievements will be preserved here.</p>
+    </div>
+    <div class="hof-grid">
+      <section class="hof-group"><div class="hof-group-title">Men's Champions</div><div id="hof-men-list"></div></section>
+      <section class="hof-group"><div class="hof-group-title">Women's Champions</div><div id="hof-women-list"></div></section>
+    </div>
+  </div>
+  <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
+</div>
+
+<!-- MY BUTTR -->
+<div id="page-my-buttr" class="page">
+  <div class="my-page">
+    <div class="page-header" style="text-align:center;">
+      <div class="section-tag">PLAYER DASHBOARD</div>
+      <h1 class="section-title">My BUTTR</h1>
+      <p>Sign in with your BRAC University account to view your personal ranking and statistics.</p>
+    </div>
+
+    <div id="my-login-card" class="my-login-card">
+      <h2>Welcome back</h2>
+      <p>Use the same BRAC University Google account connected to your BUTTR registration.</p>
+      <div id="my-google-button"></div>
+      <div id="my-login-status" class="my-status"></div>
+    </div>
+
+    <div id="my-dashboard" class="my-dashboard">
+      <div class="my-top">
+        <div class="my-welcome">Signed in as <strong id="my-account-email">-</strong></div>
+        <button class="my-logout" id="my-logout-btn">Sign out</button>
+      </div>
+
+      <div class="my-profile-card">
+        <div class="my-profile-head">
+          <div class="my-avatar" id="my-avatar">?</div>
+          <div>
+            <div class="my-name" id="my-name">Player</div>
+            <div class="my-meta">
+              <span class="my-pill my-id" id="my-player-id">BUTTR ID</span>
+              <span class="my-pill my-rank" id="my-rank">Rank</span>
+              <span class="my-pill" id="my-gender">Gender</span>
+              <span class="my-pill" id="my-department">Department</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="my-stats">
+        <div class="my-stat"><div class="my-stat-num" id="my-points">0</div><div class="my-stat-label">Points</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="my-wins">0</div><div class="my-stat-label">Wins</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="my-losses">0</div><div class="my-stat-label">Losses</div></div>
+        <div class="my-stat"><div class="my-stat-num" id="my-winrate">0%</div><div class="my-stat-label">Win Rate</div></div>
+      </div>
+
+      <div class="my-sections">
+        <div class="my-box">
+          <div class="my-box-title">My Ranking</div>
+          <div class="my-row"><span>Overall Rank</span><strong id="my-overall-rank">-</strong></div>
+          <div class="my-row"><span>Gender Rank</span><strong id="my-gender-rank">-</strong></div>
+          <div class="my-row"><span>Ranking Points</span><strong id="my-ranking-points">-</strong></div>
+        </div>
+        <div class="my-box">
+          <div class="my-box-title">Account</div>
+          <div class="my-row"><span>Name</span><strong id="my-account-name">-</strong></div>
+          <div class="my-row"><span>Student ID</span><strong id="my-student-id">-</strong></div>
+          <div class="my-row"><span>Department</span><strong id="my-account-dept">-</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
+</div>
 
 <!-- REGISTRATION -->
 <div id="page-register" class="page">
@@ -621,18 +793,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 <script>
 // ================= BUTTR DATA SOURCES =================
 // Keep your Google Sheets published CSV URLs here.
-// Ranking sheet should contain: rank, name, department, points,
-// profile_picture (optional), wins/losses (optional).
-// Tournament sheet can contain: date, month, name, location,
-// organizer, points, status, description, slots, filled, form_link.
+// Ranking sheet should contain player data plus optional Hall of Fame columns:
+// tournament_name, gender, champion (one Hall of Fame record per row).
+// Tournament sheet columns: name, date, month, location, format,
+// status, prize, points, form_link.
 var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
-var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
+var ECSVURL="https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/gviz/tq?tqx=out:csv&gid=0";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 var GOOGLE_CLIENT_ID="997367496943-k0vj03hl5b7a6s0ioiec81pkd4f5igar.apps.googleusercontent.com";
 var googleCredentialVerified=false;
 
 var RD=[],ED=[],TF="all",RANK_GENDER="Male";
-var PAGES=["home","tournaments","tour-detail","rankings","register","player"];
+var PAGES=["home","tournaments","tour-detail","rankings","hall-of-fame","my-buttr","register","player"];
 
 function goTo(page,push){
   if(push===undefined)push=true;
@@ -652,19 +824,183 @@ function goTo(page,push){
 window.addEventListener("popstate",function(e){goTo((e.state&&e.state.page)?e.state.page:"home",false);});
 function initRoute(){var h=window.location.hash.replace("#","")||"home";goTo(PAGES.indexOf(h)>=0?h:"home",false);}
 
+
+var MY_PLAYER=null;
+var MY_GOOGLE_READY=false;
+var MY_STORAGE_KEY="BUTTR_MY_ACCOUNT_EMAIL";
+
+function rememberMyAccount(email){
+  try{localStorage.setItem(MY_STORAGE_KEY,String(email||"").trim().toLowerCase());}catch(e){}
+}
+function forgetMyAccount(){
+  try{localStorage.removeItem(MY_STORAGE_KEY);}catch(e){}
+}
+function getRememberedMyAccount(){
+  try{return String(localStorage.getItem(MY_STORAGE_KEY)||"").trim().toLowerCase();}catch(e){return "";}
+}
+function restoreRememberedMyAccount(){
+  var email=getRememberedMyAccount();
+  if(!email||!RD.length)return false;
+  var player=RD.find(function(p){
+    return String(p.email||"").trim().toLowerCase()===email;
+  });
+  if(!player){
+    forgetMyAccount();
+    return false;
+  }
+  MY_PLAYER=player;
+  renderMyDashboard(player,true);
+  return true;
+}
+
+function initMyGoogleSignIn(){
+  var attempts=0;
+  function tryInit(){
+    attempts++;
+    if(window.google&&google.accounts&&google.accounts.id){
+      google.accounts.id.initialize({
+        client_id:GOOGLE_CLIENT_ID,
+        callback:handleMyGoogleCredential,
+        ux_mode:"popup",
+        auto_select:false,
+        cancel_on_tap_outside:true
+      });
+      var target=document.getElementById("my-google-button");
+      if(target){
+        target.innerHTML="";
+        google.accounts.id.renderButton(target,{
+          theme:"outline",
+          size:"large",
+          type:"standard",
+          text:"signin_with",
+          shape:"rectangular",
+          width:260
+        });
+      }
+      MY_GOOGLE_READY=true;
+      return;
+    }
+    if(attempts<30)setTimeout(tryInit,300);
+  }
+  tryInit();
+}
+
+function handleMyGoogleCredential(response){
+  var credential=response&&response.credential?response.credential:"";
+  var payload=decodeGoogleJwt(credential);
+  var status=document.getElementById("my-login-status");
+
+  if(!payload||!payload.email){
+    status.className="my-status error";
+    status.textContent="Google sign-in failed. Please try again.";
+    return;
+  }
+
+  var email=String(payload.email).toLowerCase();
+  if(!/@(?:[a-z0-9-]+\.)?bracu\.ac\.bd$/i.test(email)){
+    status.className="my-status error";
+    status.textContent="Please sign in with your BRAC University account.";
+    return;
+  }
+
+  var player=RD.find(function(p){
+    return String(p.email||"").trim().toLowerCase()===email;
+  });
+
+  if(!player){
+    status.className="my-status error";
+    status.textContent="No BUTTR registration was found for this Google account. Please register first.";
+    return;
+  }
+
+  MY_PLAYER=player;
+  rememberMyAccount(email);
+  renderMyDashboard(player,false);
+}
+
+function renderMyDashboard(p,remembered){
+  var gender=String(p.gender||"").trim().toLowerCase();
+  var genderPlayers=RD.filter(function(x){
+    return String(x.gender||"").trim().toLowerCase()===gender;
+  });
+  genderPlayers.forEach(function(x,i){x.gender_rank=i+1;});
+
+  var wins=Number(p.wins)||0;
+  var losses=Number(p.losses)||0;
+  var total=wins+losses;
+  var winrate=total?Math.round(wins/total*100):0;
+  var genderRank=p.gender_rank||"-";
+  var rankLabel=gender==="female"?"Women’s Rank #":gender==="male"?"Men’s Rank #":"Rank #";
+
+  document.getElementById("my-login-card").style.display="none";
+  document.getElementById("my-dashboard").classList.add("show");
+  document.getElementById("my-account-email").textContent=p.email||"-";
+  var myStatus=document.getElementById("my-login-status");
+  myStatus.className="my-status ok";
+  myStatus.textContent=remembered?"Account remembered on this device.":"Signed in successfully.";
+  document.getElementById("my-name").textContent=p.name||"Player";
+  document.getElementById("my-player-id").textContent=p.player_id||"BUTTR ID";
+  document.getElementById("my-rank").textContent=rankLabel+genderRank;
+  document.getElementById("my-gender").textContent=p.gender||"-";
+  document.getElementById("my-department").textContent=p.department||"-";
+  document.getElementById("my-points").textContent=Number(p.points||0).toLocaleString();
+  document.getElementById("my-wins").textContent=wins;
+  document.getElementById("my-losses").textContent=losses;
+  document.getElementById("my-winrate").textContent=winrate+"%";
+  document.getElementById("my-overall-rank").textContent="#"+(p.rank||"-");
+  document.getElementById("my-gender-rank").textContent=genderRank==="-"?"-":"#"+genderRank;
+  document.getElementById("my-ranking-points").textContent=Number(p.points||0).toLocaleString();
+  document.getElementById("my-account-name").textContent=p.name||"-";
+  document.getElementById("my-student-id").textContent=p.student_id||"-";
+  document.getElementById("my-account-dept").textContent=p.department||"-";
+
+  var avatar=document.getElementById("my-avatar");
+  if(p.profile_picture){
+    avatar.innerHTML="<img src='"+esc(p.profile_picture)+"' alt='"+esc(p.name||"Player")+"' onerror=\"this.parentElement.innerHTML='"+esc(initials(p.name||"Player"))+"'\">";
+  }else{
+    avatar.textContent=initials(p.name||"Player");
+  }
+}
+
+function openMyButtr(){
+  goTo("my-buttr");
+  if(MY_PLAYER){
+    renderMyDashboard(MY_PLAYER,true);
+  }else{
+    document.getElementById("my-login-card").style.display="block";
+    document.getElementById("my-dashboard").classList.remove("show");
+    initMyGoogleSignIn();
+  }
+}
+
+function logoutMyButtr(){
+  MY_PLAYER=null;
+  forgetMyAccount();
+  document.getElementById("my-dashboard").classList.remove("show");
+  document.getElementById("my-login-card").style.display="block";
+  document.getElementById("my-login-status").className="my-status";
+  document.getElementById("my-login-status").textContent="";
+  initMyGoogleSignIn();
+}
+
 function bindNav(){
   document.getElementById("nav-logo-btn").addEventListener("click",function(){goTo("home");});
   document.getElementById("nb-home").addEventListener("click",function(){goTo("home");});
   document.getElementById("nb-tournaments").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
+  document.getElementById("nb-hall-of-fame").addEventListener("click",function(){goTo("hall-of-fame");});
+  document.getElementById("nb-my-buttr").addEventListener("click",function(){openMyButtr();});
   document.getElementById("nb-register").addEventListener("click",function(){goTo("register");});
   document.getElementById("mob-home").addEventListener("click",function(){goTo("home");closeMenu();});
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
+  document.getElementById("mob-hall-of-fame").addEventListener("click",function(){goTo("hall-of-fame");closeMenu();});
+  document.getElementById("mob-my-buttr").addEventListener("click",function(){openMyButtr();closeMenu();});
   document.getElementById("hamburger-btn").addEventListener("click",toggleMenu);
+  
   document.getElementById("hero-tour-btn").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("hero-rank-btn").addEventListener("click",function(){goTo("rankings");});
-  document.getElementById("cta-btn").addEventListener("click",function(){goTo("rankings");});
+  document.getElementById("cta-btn").addEventListener("click",function(){goTo("register");});
   document.getElementById("tour-back-btn").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("player-back-btn").addEventListener("click",function(){goTo("rankings");});
   document.getElementById("feat-tour").addEventListener("click",function(){goTo("tournaments");});
@@ -675,6 +1011,7 @@ function bindNav(){
   document.getElementById("tf-open").addEventListener("click",function(){filterTour("open",this);});
   document.getElementById("tf-soon").addEventListener("click",function(){filterTour("soon",this);});
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
+  document.getElementById("my-logout-btn").addEventListener("click",logoutMyButtr);
   document.getElementById("theme-btn").addEventListener("click",toggleTheme);
   document.getElementById("rank-search").addEventListener("input",renderFullRankings);
   document.querySelectorAll(".ranking-tab").forEach(function(tab){
@@ -732,6 +1069,7 @@ function fetchAll(){
     ED=parseCSV(texts[1]);
     renderAll();
     populateAdminPlayers();
+    restoreRememberedMyAccount();
   })
   .catch(function(err){
     console.error(err);
@@ -740,12 +1078,84 @@ function fetchAll(){
   });
 }
 
-function renderAll(){renderHomeRankings();renderHomeTournaments();renderFullRankings();renderTours();updateStats();}
+
+function getHallOfFameRecords(){
+  /*
+    Hall of Fame is read directly from the RANKINGS spreadsheet.
+    Add these columns to the ranking sheet:
+      tournament_name | gender | champion
+
+    Each Hall of Fame row should contain one tournament, its gender,
+    and the champion's name. Other ranking/player rows are ignored.
+  */
+  var records=[];
+  RD.forEach(function(r){
+    var tournament=String(
+      r.tournament_name||r.tournament||r.tournament_name_||""
+    ).trim();
+    var gender=String(r.gender||"").trim();
+    var champion=String(
+      r.champion||r.champion_name||""
+    ).trim();
+
+    if(tournament && champion && (gender.toLowerCase()==="male" || gender.toLowerCase()==="female")){
+      records.push({
+        tournament:tournament,
+        gender:gender,
+        champion:champion,
+        year:String(r.year||r.date||"").trim()
+      });
+    }
+  });
+  return records;
+}
+
+function renderHallOfFame(){
+  var records=getHallOfFameRecords();
+
+  [{id:"hof-men-list",gender:"male"},{id:"hof-women-list",gender:"female"}].forEach(function(g){
+    var box=document.getElementById(g.id);if(!box)return;
+    box.innerHTML="";
+
+    var filtered=records.filter(function(r){
+      return r.gender.toLowerCase()===g.gender;
+    });
+
+    if(!filtered.length){
+      box.innerHTML="<div class='hof-empty'>No Hall of Fame records yet.<br><br>Add a tournament name, gender, and champion to the ranking spreadsheet.</div>";
+      return;
+    }
+
+    filtered.slice().reverse().forEach(function(r){
+      var card=document.createElement("div");
+      card.className="hof-card";
+
+      card.innerHTML=
+        "<div class='hof-year'>"+esc(r.year||"")+"</div>"+
+        "<div>"+
+          "<div class='hof-name'>"+esc(r.champion)+"</div>"+
+          "<div class='hof-tournament'>"+esc(r.tournament)+"</div>"+
+        "</div>"+
+        "<span class='hof-badge'>&#127942; Champion</span>";
+
+      box.appendChild(card);
+    });
+  });
+}
+
+function renderAll(){renderHomeRankings();renderHomeChampions();renderHomeTournaments();renderFullRankings();renderTours();renderHallOfFame();updateStats();}
 
 function initials(n){return(n||"").split(" ").map(function(w){return w[0]||"";}).join("").slice(0,2).toUpperCase()||"??";}
 function rnClass(r){if(r==1)return"g";if(r==2)return"s";if(r==3)return"b";return"";}
-function bdgCls(s){var v=(s||"").toLowerCase();if(v==="open")return"badge-open";if(v==="soon")return"badge-soon";return"badge-closed";}
-function bdgLbl(s){var v=(s||"").toLowerCase();if(v==="open")return"Open";if(v==="soon")return"Coming Soon";return"Completed";}
+function tourStatus(s){
+  var v=(s||"").trim().toLowerCase();
+  if(v==="open")return"open";
+  if(v==="soon"||v==="coming soon")return"soon";
+  if(v==="close"||v==="closed"||v==="past"||v==="completed")return"closed";
+  return v;
+}
+function bdgCls(s){var v=tourStatus(s);if(v==="open")return"badge-open";if(v==="soon")return"badge-soon";return"badge-closed";}
+function bdgLbl(s){var v=tourStatus(s);if(v==="open")return"Open";if(v==="soon")return"Coming Soon";return"Completed";}
 function esc(v){return String(v??"").replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
 function photoHTML(p,cls){var u=(p.profile_picture||"").trim();return u?"<img class='"+cls+"' src='"+esc(u)+"' alt='"+esc(p.name||"Player")+"' onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\"/><div class='av' style='display:none'>"+initials(p.name)+"</div>":"<div class='av'>"+initials(p.name)+"</div>";}
 function makeRow(cells,clickFn){
@@ -769,17 +1179,56 @@ function renderHomeRankings(){
   });
 }
 
-function renderHomeTournaments(){
-  var list=document.getElementById("home-tour-list");list.innerHTML="";
-  var upcoming=ED.filter(function(e){var s=(e.status||"").toLowerCase();return s==="open"||s==="soon";}).slice(0,3);
-  if(!upcoming.length){list.innerHTML="<p style='text-align:center;color:var(--muted);font-size:.9rem;padding:1rem'>No upcoming tournaments right now.</p>";return;}
-  upcoming.forEach(function(e){
-    var idx=ED.indexOf(e),div=document.createElement("div");div.className="t-card";
-    div.innerHTML="<div class='t-date-box'><div class='t-date-day'>"+esc(e.date||"?")+"</div><div class='t-date-mon'>"+esc(e.month||"")+"</div></div><div class='t-info'><div class='t-name'>"+esc(e.name||"Unnamed")+"</div><div class='t-meta'>&#128205; "+esc(e.location||"-")+" &middot; "+esc(e.points||"Points TBD")+"</div></div><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span>";
-    div.addEventListener("click",function(){openTourDetail(idx);});list.appendChild(div);
+function renderHomeChampions(){
+  renderChampionPodium("home-men-podium","Male");
+  renderChampionPodium("home-women-podium","Female");
+}
+
+function renderChampionPodium(id,gender){
+  var podium=document.getElementById(id);
+  if(!podium)return;
+  var players=RD.filter(function(p){return (p.gender||"").trim().toLowerCase()===gender.toLowerCase();});
+  players.forEach(function(p,i){p.gender_rank=i+1;});
+  var top3=players.slice(0,3);
+  if(!top3.length){
+    podium.innerHTML="<div class='loading-state' style='grid-column:1/-1;padding:1rem'>No "+(gender==="Male"?"men's":"women's")+" ranking data yet.</div>";
+    return;
+  }
+  var ordered=top3.slice();
+  var html=ordered.map(function(p){
+    var cls=p.gender_rank===1?" first":p.gender_rank===2?" second":" third";
+    var crown=p.gender_rank===1?"<div style='font-size:1.1rem;margin-bottom:.15rem'>&#127942;</div>":"";
+    return "<div class='podium-card"+cls+"' data-player='"+esc(p.name)+"'><div class='podium-rank-num'>"+p.gender_rank+"</div>"+crown+photoHTML(p,"rank-photo")+"<div class='podium-name'>"+esc(p.name||"Player")+"</div><div class='podium-pts'>"+Number(p.points||0).toLocaleString()+" pts</div></div>";
+  }).join("");
+  podium.innerHTML=html;
+  podium.querySelectorAll(".podium-card").forEach(function(card){
+    card.addEventListener("click",function(){openPlayer(this.getAttribute("data-player"));});
   });
 }
 
+function renderHomeTournaments(){
+  var list=document.getElementById("home-tour-list");list.innerHTML="";
+  var upcoming=ED.filter(function(e){
+    var s=tourStatus(e.status);
+    return s==="open"||s==="soon";
+  }).slice(0,3);
+  if(!upcoming.length){
+    list.innerHTML="<p style='text-align:center;color:var(--muted);font-size:.9rem;padding:1rem'>No upcoming tournaments right now.</p>";
+    return;
+  }
+  upcoming.forEach(function(e){
+    var idx=ED.indexOf(e),div=document.createElement("div");
+    div.className="t-card";
+    div.innerHTML=
+      "<div class='t-date-box'><div class='t-date-day'>"+esc(e.date||"?")+"</div><div class='t-date-mon'>"+esc(e.month||"")+"</div></div>"+
+      "<div class='t-info'><div class='t-name'>"+esc(e.name||"Unnamed")+"</div>"+
+      "<div class='t-meta'>&#128205; "+esc(e.location||"-")+" &middot; "+esc(e.format||"-")+"</div>"+
+      "<div class='t-meta'>&#127942; "+esc(e.points||"-")+" points &middot; &#128176; "+esc(e.prize||"-")+"</div></div>"+
+      "<span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span>";
+    div.addEventListener("click",function(){openTourDetail(idx);});
+    list.appendChild(div);
+  });
+}
 function renderFullRankings(){
   var podium=document.getElementById("podium-section");
   var gender=RANK_GENDER;
@@ -819,23 +1268,80 @@ function filterTour(f,btn){
 }
 function renderTours(){
   var grid=document.getElementById("tour-grid");grid.innerHTML="";
-  var filtered=TF==="all"?ED:ED.filter(function(e){return(e.status||"").toLowerCase()===TF;});
-  if(!filtered.length){grid.innerHTML="<div style='grid-column:1/-1;text-align:center;color:var(--muted);padding:2rem'>No tournaments in this category.</div>";return;}
+  var filtered=TF==="all"?ED:ED.filter(function(e){return tourStatus(e.status)===TF;});
+  if(!filtered.length){
+    grid.innerHTML="<div style='grid-column:1/-1;text-align:center;color:var(--muted);padding:2rem'>No tournaments in this category.</div>";
+    return;
+  }
+
   filtered.forEach(function(e){
-    var idx=ED.indexOf(e),slots=parseInt(e.slots)||0,filled=parseInt(e.filled)||0,pct=slots?Math.min(100,Math.round(filled/slots*100)):0,status=(e.status||"").toLowerCase(),fl=(e.form_link||"").trim(),card=document.createElement("div");card.className="tour-card-big";
-    var rb=status==="open"&&fl?"<a href='"+esc(fl)+"' target='_blank' rel='noopener' class='reg-btn' id='rb"+idx+"'>Register &#8599;</a>":status==="open"?"<span class='reg-btn-muted'>Link Soon</span>":"<span class='reg-btn-muted'>"+(status==="soon"?"Not Open":"Completed")+"</span>";
-    card.innerHTML="<div class='tour-card-top'><div><div class='tour-card-date'>"+esc(e.date||"?")+"</div><div class='tour-card-mon'>"+esc(e.month||"")+"</div></div><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span></div><div class='tour-card-body'><h3>"+esc(e.name||"Unnamed")+"</h3><span class='tour-meta-item'>&#128205; "+esc(e.location||"-")+"</span><span class='tour-meta-item'>&#127942; "+esc(e.points||"-")+" &middot; &#128101; "+esc(e.organizer||"-")+"</span></div><div class='tour-card-footer'><div class='slots-bar-wrap'><div class='slots-label'>"+(slots?filled+" / "+slots+" slots":"Details inside")+"</div><div class='slots-bar'><div class='slots-fill' style='width:"+pct+"%'></div></div></div>"+rb+"</div>";
-    card.addEventListener("click",function(ev){if(ev.target&&ev.target.id==="rb"+idx)return;openTourDetail(idx);});grid.appendChild(card);
+    var idx=ED.indexOf(e),
+        status=tourStatus(e.status),
+        fl=(e.form_link||"").trim(),
+        card=document.createElement("div");
+    card.className="tour-card-big";
+
+    var rb=status==="open"&&fl
+      ?"<a href='"+esc(fl)+"' target='_blank' rel='noopener' class='reg-btn' id='rb"+idx+"'>Register &#8599;</a>"
+      :status==="open"
+        ?"<span class='reg-btn-muted'>Link Soon</span>"
+        :"<span class='reg-btn-muted'>"+(status==="soon"?"Not Open":"Completed")+"</span>";
+
+    card.innerHTML=
+      "<div class='tour-card-top'><div>"+
+        "<div class='tour-card-date'>"+esc(e.date||"?")+"</div>"+
+        "<div class='tour-card-mon'>"+esc(e.month||"")+"</div>"+
+      "</div><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span></div>"+
+      "<div class='tour-card-body'>"+
+        "<h3>"+esc(e.name||"Unnamed")+"</h3>"+
+        "<span class='tour-meta-item'>&#128205; "+esc(e.location||"-")+"</span>"+
+        "<span class='tour-meta-item'>&#127919; Format: "+esc(e.format||"-")+"</span>"+
+        "<span class='tour-meta-item'>&#127942; Points: "+esc(e.points||"-")+"</span>"+
+        "<span class='tour-meta-item'>&#128176; Prize: "+esc(e.prize||"-")+"</span>"+
+      "</div>"+
+      "<div class='tour-card-footer'><div class='slots-label'>"+(status==="open"?"Registration open":"")+" </div>"+rb+"</div>";
+
+    card.addEventListener("click",function(ev){
+      if(ev.target&&ev.target.id==="rb"+idx)return;
+      openTourDetail(idx);
+    });
+    grid.appendChild(card);
   });
 }
-
 function openTourDetail(idx){
-  var e=ED[idx];if(!e)return;var slots=parseInt(e.slots)||0,filled=parseInt(e.filled)||0,pct=slots?Math.min(100,Math.round(filled/slots*100)):0,status=(e.status||"").toLowerCase(),fl=(e.form_link||"").trim();
-  var regSec=status==="open"&&fl?"<a href='"+esc(fl)+"' target='_blank' rel='noopener' class='detail-reg-btn'>&#9889; Register for This Tournament &#8599;</a>":status==="open"?"<div class='detail-reg-soon'>Registration link coming soon</div>":"<div class='detail-reg-soon'>"+(status==="soon"?"Registration not open yet - check back soon!":"Tournament completed")+"</div>";
-  document.getElementById("tour-detail-content").innerHTML="<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:.8rem'><h1 class='detail-title'>"+esc(e.name||"Unnamed")+"</h1><span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span></div><div class='detail-meta'><span>&#128205; "+esc(e.location||"-")+"</span><span>&#128197; "+esc((e.date||"?")+" "+(e.month||""))+"</span><span>&#127942; "+esc(e.points||"-")+"</span></div><div class='detail-desc'>"+esc(e.description||"No description available.")+"</div><div class='detail-grid'><div class='detail-box'><div class='detail-box-label'>Organizer</div><div class='detail-box-val'>"+esc(e.organizer||"-")+"</div></div><div class='detail-box'><div class='detail-box-label'>Points Division</div><div class='detail-box-val'>"+esc(e.points||"-")+"</div></div><div class='detail-box'><div class='detail-box-label'>Slots Filled</div><div class='detail-box-val'>"+(slots?filled+" / "+slots+" ("+pct+"%)":"-")+"</div></div><div class='detail-box'><div class='detail-box-label'>Format</div><div class='detail-box-val'>"+esc(e.format||"-")+"</div></div></div>"+regSec;
+  var e=ED[idx];
+  if(!e)return;
+
+  var status=tourStatus(e.status),
+      fl=(e.form_link||"").trim();
+
+  var regSec=status==="open"&&fl
+    ?"<a href='"+esc(fl)+"' target='_blank' rel='noopener' class='detail-reg-btn'>&#9889; Register for This Tournament &#8599;</a>"
+    :status==="open"
+      ?"<div class='detail-reg-soon'>Registration link coming soon</div>"
+      :"<div class='detail-reg-soon'>"+(status==="soon"?"Registration not open yet - check back soon!":"Tournament completed")+"</div>";
+
+  document.getElementById("tour-detail-content").innerHTML=
+    "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:.8rem'>"+
+      "<h1 class='detail-title'>"+esc(e.name||"Unnamed")+"</h1>"+
+      "<span class='badge "+bdgCls(e.status)+"'>"+bdgLbl(e.status)+"</span>"+
+    "</div>"+
+    "<div class='detail-meta'>"+
+      "<span>&#128205; "+esc(e.location||"-")+"</span>"+
+      "<span>&#128197; "+esc((e.date||"?")+" "+(e.month||""))+"</span>"+
+      "<span>&#127919; "+esc(e.format||"-")+"</span>"+
+      "<span>&#127942; "+esc(e.points||"-")+" points</span>"+
+    "</div>"+
+    "<div class='detail-grid'>"+
+      "<div class='detail-box'><div class='detail-box-label'>Format</div><div class='detail-box-val'>"+esc(e.format||"-")+"</div></div>"+
+      "<div class='detail-box'><div class='detail-box-label'>Prize</div><div class='detail-box-val'>"+esc(e.prize||"-")+"</div></div>"+
+      "<div class='detail-box'><div class='detail-box-label'>Ranking Points</div><div class='detail-box-val'>"+esc(e.points||"-")+"</div></div>"+
+      "<div class='detail-box'><div class='detail-box-label'>Location</div><div class='detail-box-val'>"+esc(e.location||"-")+"</div></div>"+
+    "</div>"+
+    regSec;
+
   goTo("tour-detail");
 }
-
 function findPlayer(name){
   var target=(name||"").trim().toLowerCase();
   return RD.find(function(p){return(p.name||"").trim().toLowerCase()===target;});
@@ -850,6 +1356,13 @@ function openPlayer(name){
   var displayRank=p.gender_rank||p.rank||"-";
   var rankLabel=genderKey==="female"?"Women’s Rank #":genderKey==="male"?"Men’s Rank #":"Rank #";
   var rankBadge="<span class='pp-rank-badge'>&#127942; "+rankLabel+displayRank+"</span>";
+  var playerId=(p.player_id||"").trim()||"Pending ID";
+  var badges="<div class='pp-badges'><span class='player-badge'>&#10003; Registered Player</span>";
+  var numericRank=Number(displayRank)||999999;
+  if(numericRank<=3)badges+="<span class='player-badge podium'>&#127941; Top 3</span>";
+  if(numericRank<=10)badges+="<span class='player-badge top'>&#128293; Top 10</span>";
+  if(playerTournamentResults(p).some(function(h){return isChampionResult(h.result);}))badges+="<span class='player-badge champ'>&#127942; Champion</span>";
+  badges+="</div>";
   var photo=(p.profile_picture||"").trim();
   var avatar=photo?"<img class='profile-photo' src='"+esc(photo)+"' alt='"+esc(p.name)+"' onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\"/><div class='pp-avatar' style='display:none'>"+initials(p.name)+"</div>":"<div class='pp-avatar'>"+initials(p.name)+"</div>";
   var history=[];
@@ -858,7 +1371,7 @@ function openPlayer(name){
   if(history.length){historyHTML+="<div class='history-row history-head'><div>Tournament</div><div>Result</div><div>Points</div></div>";history.slice().reverse().forEach(function(h){historyHTML+="<div class='history-row'><div>"+esc(h.tournament||"-")+"</div><div>"+esc(h.result||"-")+"</div><div>"+esc(h.points||0)+"</div></div>";});}
   else historyHTML+="<div class='pp-empty'>Tournament results will appear here when tournament result data is added.</div>";
   historyHTML+="</div>";
-  box.innerHTML="<div class='pp-hero'>"+avatar+"<div class='pp-info'><div class='pp-name'>"+esc(p.name)+"</div><div class='pp-meta'><span>&#127979; "+esc(p.department||"-")+"</span><span>&#128100; "+esc(p.gender||"-")+"</span>"+rankBadge+"</div></div></div><div class='pp-stats'><div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div><div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div><div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div><div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div></div>"+(total?"<div class='pp-winbar-wrap'><div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div><div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winrate+"%'></div></div><div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div></div>":"")+historyHTML;
+  box.innerHTML="<div class='pp-hero'>"+avatar+"<div class='pp-info'><div class='pp-name'>"+esc(p.name)+"</div><div class='pp-meta'><span>&#127979; "+esc(p.department||"-")+"</span><span>&#128100; "+esc(p.gender||"-")+"</span>"+rankBadge+"<span class='pp-id'>&#127922; "+esc(playerId)+"</span></div>"+badges+"</div></div><div class='pp-stats'><div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div><div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div><div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div><div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div></div>"+(total?"<div class='pp-winbar-wrap'><div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div><div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winrate+"%'></div></div><div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div></div>":"")+historyHTML;
   goTo("player");
 }
 
