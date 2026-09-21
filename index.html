@@ -300,6 +300,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .nav-links li .theme-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;margin-left:8px;align-self:center;border-bottom:1px solid var(--border2);}
 .nav-links li .theme-btn:hover{border-color:var(--red);color:var(--red);}
 .nav-links li{display:flex;align-items:center;}
+
+.ranking-tabs{display:flex;justify-content:center;gap:8px;margin:0 auto 10px;flex-wrap:wrap;}
+.ranking-tab{background:var(--bg2);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .2s;}
+.ranking-tab.active,.ranking-tab:hover{background:rgba(226,75,74,.12);border-color:rgba(226,75,74,.3);color:#f0a0a0;}
+.ranking-note{text-align:center;color:var(--muted);font-size:.75rem;font-weight:600;margin-bottom:1rem;}
 .rank-search{width:100%;max-width:400px;margin:0 auto 1.5rem;display:block;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:500;padding:11px 16px;outline:none;transition:border-color .2s;}
 .rank-search:focus{border-color:rgba(226,75,74,.5);}
 .rules-page{padding:3rem 1.5rem 5rem;max-width:760px;margin:0 auto;}
@@ -373,6 +378,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 .history-row:last-child{border-bottom:none;border-radius:0 0 10px 10px;}
 .history-head{background:var(--bg3);font-size:.65rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);}
 @media(max-width:640px){.history-row{grid-template-columns:1fr 80px 65px;}}
+
+
 </style>
 </head>
 <body>
@@ -484,7 +491,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 <!-- RANKINGS -->
 <div id="page-rankings" class="page">
   <div class="rank-page">
-    <div class="page-header"><div class="section-tag">Leaderboard</div><h1 class="section-title">Player Rankings</h1><p>Current BRAC University table tennis standings</p></div>
+    <div class="page-header"><div class="section-tag">Leaderboard</div><h1 class="section-title">Player Rankings</h1><p>Separate BRAC University rankings for male and female players</p></div>
+    <div class="ranking-tabs" id="ranking-tabs">
+      <button class="ranking-tab active" data-gender="Male">Men's Ranking</button>
+      <button class="ranking-tab" data-gender="Female">Women's Ranking</button>
+    </div>
+    <div class="ranking-note" id="ranking-note">Showing the men's ranking.</div>
     <input type="text" class="rank-search" id="rank-search" placeholder="Search player by name..."/>
     <div id="podium-section" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
     <div class="last-updated" id="last-updated-label"></div>
@@ -505,7 +517,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <div class="page-header">
       <div class="section-tag">Join BUTTR</div>
       <h1 class="section-title">Player Registration</h1>
-      <p>Register as a BRAC University table tennis player and appear in the BUTTR rankings.</p>
+      <p>Register as a BRAC University table tennis player and appear in the BUTTR rankings. Choose your gender to be placed in the correct ranking.</p>
     </div>
 
     <div class="register-card">
@@ -541,6 +553,15 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
               <option>ARCH</option><option>ENG</option><option>LLB</option>
               <option>PHR</option><option>Microbiology</option><option>Economics</option>
               <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-gender">Gender *</label>
+            <select class="form-select" id="reg-gender" name="gender" required>
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
           </div>
 
@@ -587,7 +608,7 @@ var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNL
 var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 
-var RD=[],ED=[],TF="all";
+var RD=[],ED=[],TF="all",RANK_GENDER="Male";
 var PAGES=["home","tournaments","tour-detail","rankings","register","player"];
 
 function goTo(page,push){
@@ -633,6 +654,14 @@ function bindNav(){
   document.getElementById("tf-closed").addEventListener("click",function(){filterTour("closed",this);});
   document.getElementById("theme-btn").addEventListener("click",toggleTheme);
   document.getElementById("rank-search").addEventListener("input",renderFullRankings);
+  document.querySelectorAll(".ranking-tab").forEach(function(tab){
+    tab.addEventListener("click",function(){
+      RANK_GENDER=this.getAttribute("data-gender")||"Male";
+      document.querySelectorAll(".ranking-tab").forEach(function(t){t.classList.remove("active");});
+      this.classList.add("active");
+      renderFullRankings();
+    });
+  });
   document.getElementById("register-form").addEventListener("submit",submitRegistration);
 }
 function toggleTheme(){
@@ -677,6 +706,7 @@ function fetchAll(){
     RD.forEach(function(p,i){p.rank=i+1;});
     ED=parseCSV(texts[1]);
     renderAll();
+    populateAdminPlayers();
   })
   .catch(function(err){
     console.error(err);
@@ -726,26 +756,39 @@ function renderHomeTournaments(){
 }
 
 function renderFullRankings(){
-  var podium=document.getElementById("podium-section"),top3=RD.slice(0,3);
+  var podium=document.getElementById("podium-section");
+  var gender=RANK_GENDER;
+  var genderPlayers=RD.filter(function(p){return (p.gender||"").trim().toLowerCase()===gender.toLowerCase();});
+  genderPlayers.forEach(function(p,i){p.gender_rank=i+1;});
+  var top3=genderPlayers.slice(0,3);
   if(top3.length>=3){
     var f=top3[0],s=top3[1],t=top3[2];podium.style.display="grid";
     podium.innerHTML="<div class='podium-card second' style='margin-top:2rem'><div class='podium-rank-num'>2</div>"+photoHTML(s,"rank-photo")+"<div class='podium-name'>"+esc(s.name)+"</div><div class='podium-pts'>"+Number(s.points||0).toLocaleString()+" pts</div></div><div class='podium-card first'><div style='font-size:1.3rem;margin-bottom:.2rem'>&#127942;</div><div class='podium-rank-num'>1</div>"+photoHTML(f,"rank-photo")+"<div class='podium-name'>"+esc(f.name)+"</div><div class='podium-pts'>"+Number(f.points||0).toLocaleString()+" pts</div></div><div class='podium-card third' style='margin-top:2rem'><div class='podium-rank-num'>3</div>"+photoHTML(t,"rank-photo")+"<div class='podium-name'>"+esc(t.name)+"</div><div class='podium-pts'>"+Number(t.points||0).toLocaleString()+" pts</div></div>";
-  } else podium.style.display="none";
+  } else if(top3.length){
+    podium.style.display="grid";
+    podium.innerHTML=top3.map(function(p){return "<div class='podium-card'><div class='podium-rank-num'>"+p.gender_rank+"</div>"+photoHTML(p,"rank-photo")+"<div class='podium-name'>"+esc(p.name)+"</div><div class='podium-pts'>"+Number(p.points||0).toLocaleString()+" pts</div></div>";}).join("");
+  } else {
+    podium.style.display="none";
+  }
+
   var tbody=document.getElementById("rank-full-tbody");tbody.innerHTML="";
   var q=(document.getElementById("rank-search").value||"").toLowerCase(),shown=0;
-  RD.forEach(function(r){
+  genderPlayers.forEach(function(r){
     if(q&&(r.name||"").toLowerCase().indexOf(q)<0)return;shown++;
     tbody.appendChild(makeRow([
-      "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
+      "<span class='rn "+rnClass(r.gender_rank)+"'>"+r.gender_rank+"</span>",
       "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span>"+esc(r.name||"-")+"</span></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ],function(){openPlayer(r.name);}));
   });
-  if(!shown)tbody.innerHTML="<tr><td colspan='4' style='text-align:center;color:var(--muted);padding:1.5rem'>No players found matching your search.</td></tr>";
+  if(!shown){
+    var msg=genderPlayers.length?"No players found matching your search.":"No "+(gender.toLowerCase()==="female"?"female":"male")+" players have registered yet.";
+    tbody.innerHTML="<tr><td colspan='4' style='text-align:center;color:var(--muted);padding:1.5rem'>"+msg+"</td></tr>";
+  }
+  document.getElementById("ranking-note").textContent=gender==="Female"?"Showing the women's ranking.":"Showing the men's ranking.";
   document.getElementById("last-updated-label").textContent="Last updated: "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
 }
-
 function filterTour(f,btn){
   TF=f;document.querySelectorAll("#page-tournaments .filter-btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");renderTours();
 }
@@ -776,22 +819,24 @@ function openPlayer(name){
   var p=findPlayer(name),box=document.getElementById("player-content");
   if(!p){box.innerHTML="<div class='pp-empty'>Player profile not found.</div>";goTo("player");return;}
   var wins=parseInt(p.wins)||0,losses=parseInt(p.losses)||0,total=wins+losses,winrate=total?Math.round(wins/total*100):0;
-  var rankBadge="<span class='pp-rank-badge'>&#127942; Rank #"+p.rank+"</span>";
+  var genderKey=(p.gender||"").trim().toLowerCase();
+  var genderPlayers=RD.filter(function(x){return (x.gender||"").trim().toLowerCase()===genderKey;});
+  genderPlayers.forEach(function(x,i){x.gender_rank=i+1;});
+  var displayRank=p.gender_rank||p.rank||"-";
+  var rankLabel=genderKey==="female"?"Women’s Rank #":genderKey==="male"?"Men’s Rank #":"Rank #";
+  var rankBadge="<span class='pp-rank-badge'>&#127942; "+rankLabel+displayRank+"</span>";
   var photo=(p.profile_picture||"").trim();
   var avatar=photo?"<img class='profile-photo' src='"+esc(photo)+"' alt='"+esc(p.name)+"' onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\"/><div class='pp-avatar' style='display:none'>"+initials(p.name)+"</div>":"<div class='pp-avatar'>"+initials(p.name)+"</div>";
   var history=[];
-  for(var i=0;i<ED.length;i++){
-    var h=ED[i];
-    var participant=(h.player||h.player_name||"").trim().toLowerCase();
-    if(participant && participant===p.name.trim().toLowerCase())history.push(h);
-  }
+  try{history=JSON.parse(p.tournament_results||"[]");if(!Array.isArray(history))history=[];}catch(e){history=[];}
   var historyHTML="<div class='pp-section-title'>Tournament Results</div><div class='profile-history'>";
-  if(history.length){historyHTML+="<div class='history-row history-head'><div>Tournament</div><div>Result</div><div>Points</div></div>";history.forEach(function(h){historyHTML+="<div class='history-row'><div>"+esc(h.name||"-")+"</div><div>"+esc(h.result||"-")+"</div><div>"+esc(h.points_earned||h.points||"-")+"</div></div>";});}
-  else historyHTML+="<div class='pp-empty'>Tournament results will appear here when result data is added to the Google Sheet.</div>";
+  if(history.length){historyHTML+="<div class='history-row history-head'><div>Tournament</div><div>Result</div><div>Points</div></div>";history.slice().reverse().forEach(function(h){historyHTML+="<div class='history-row'><div>"+esc(h.tournament||"-")+"</div><div>"+esc(h.result||"-")+"</div><div>"+esc(h.points||0)+"</div></div>";});}
+  else historyHTML+="<div class='pp-empty'>Tournament results will appear here when tournament result data is added.</div>";
   historyHTML+="</div>";
-  box.innerHTML="<div class='pp-hero'>"+avatar+"<div class='pp-info'><div class='pp-name'>"+esc(p.name)+"</div><div class='pp-meta'><span>&#127979; "+esc(p.department||"-")+"</span>"+rankBadge+"</div></div></div><div class='pp-stats'><div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div><div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div><div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div><div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div></div>"+(total?"<div class='pp-winbar-wrap'><div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div><div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winrate+"%'></div></div><div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div></div>":"")+historyHTML;
+  box.innerHTML="<div class='pp-hero'>"+avatar+"<div class='pp-info'><div class='pp-name'>"+esc(p.name)+"</div><div class='pp-meta'><span>&#127979; "+esc(p.department||"-")+"</span><span>&#128100; "+esc(p.gender||"-")+"</span>"+rankBadge+"</div></div></div><div class='pp-stats'><div class='pp-stat'><div class='pp-stat-num gold'>"+Number(p.points||0).toLocaleString()+"</div><div class='pp-stat-label'>Points</div></div><div class='pp-stat'><div class='pp-stat-num green'>"+wins+"</div><div class='pp-stat-label'>Wins</div></div><div class='pp-stat'><div class='pp-stat-num red'>"+losses+"</div><div class='pp-stat-label'>Losses</div></div><div class='pp-stat'><div class='pp-stat-num'>"+total+"</div><div class='pp-stat-label'>Matches</div></div></div>"+(total?"<div class='pp-winbar-wrap'><div class='pp-winbar-top'><span class='w'>"+wins+" Wins</span><span class='l'>"+losses+" Losses</span></div><div class='pp-winbar'><div class='pp-winbar-fill' style='width:"+winrate+"%'></div></div><div class='pp-winrate'>"+winrate+"% <span>Win Rate</span></div></div>":"")+historyHTML;
   goTo("player");
 }
+
 
 
 function showRegisterStatus(message,type){
@@ -809,8 +854,9 @@ function submitRegistration(ev){
   var email=document.getElementById("reg-email").value.trim().toLowerCase();
   var studentId=document.getElementById("reg-student-id").value.trim();
   var department=document.getElementById("reg-department").value.trim();
+  var gender=document.getElementById("reg-gender").value.trim();
 
-  if(!name || !email || !studentId || !department){
+  if(!name || !email || !studentId || !department || !gender){
     showRegisterStatus("Please complete all required fields.","error");
     return;
   }
