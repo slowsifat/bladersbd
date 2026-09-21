@@ -177,6 +177,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .my-status{margin-top:1rem;font-size:.85rem;color:var(--muted);}
 .my-status.error{color:#ef7b7a;}
 .my-status.ok{color:#82d9a0;}
+.profile-register-btn{margin-top:12px;border:1px solid rgba(226,75,74,.35);background:rgba(226,75,74,.08);color:#f0a0a0;padding:10px 16px;border-radius:9px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:800;letter-spacing:.5px;}
+.profile-register-btn:hover{background:rgba(226,75,74,.15);color:#fff;}
 .my-dashboard{display:none;}
 .my-dashboard.show{display:block;}
 .my-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
@@ -482,8 +484,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-home">Home</button></li>
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
-    <li><button id="nb-my-buttr">My BUTTR</button></li>
-    <li><button id="nb-register">Register</button></li>
+    <li><button id="nb-my-buttr">Profile</button></li>
     <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
   </ul>
   <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
@@ -493,8 +494,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <button id="mob-home">Home</button>
   <button id="mob-tournaments">Tournaments</button>
   <button id="mob-rankings">Rankings</button>
-  <button id="mob-my-buttr">My BUTTR</button>
-  <button id="mob-register">Register</button>
+  <button id="mob-my-buttr">Profile</button>
 </div>
 
 <!-- HOME -->
@@ -620,15 +620,16 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 <div id="page-my-buttr" class="page">
   <div class="my-page">
     <div class="page-header" style="text-align:center;">
-      <div class="section-tag">PLAYER DASHBOARD</div>
-      <h1 class="section-title">My BUTTR</h1>
-      <p>Sign in with your BRAC University account to view your personal ranking and statistics.</p>
+      <div class="section-tag">PLAYER PROFILE</div>
+      <h1 class="section-title">MY PROFILE</h1>
+      <p>Sign in once with your BRAC University account. Your profile will be remembered on this device.</p>
     </div>
 
     <div id="my-login-card" class="my-login-card">
       <h2>Welcome back</h2>
-      <p>Use the same BRAC University Google account connected to your BUTTR registration.</p>
+      <p>Use the same BRAC University Google account connected to your BUTTR registration. Once signed in, this device will remember your profile.</p>
       <div id="my-google-button"></div>
+      <button type="button" class="profile-register-btn" id="profile-register-btn">New to BUTTR? Register</button>
       <div id="my-login-status" class="my-status"></div>
     </div>
 
@@ -822,15 +823,24 @@ var MY_PLAYER=null;
 var MY_GOOGLE_READY=false;
 var MY_GOOGLE_CREDENTIAL="";
 var MY_STORAGE_KEY="BUTTR_MY_ACCOUNT_EMAIL";
+var MY_SESSION_KEY="BUTTR_PROFILE_SESSION";
 
 function rememberMyAccount(email){
-  try{localStorage.setItem(MY_STORAGE_KEY,String(email||"").trim().toLowerCase());}catch(e){}
+  var value=String(email||"").trim().toLowerCase();
+  try{
+    if(value){
+      localStorage.setItem(MY_STORAGE_KEY,value);
+      localStorage.setItem(MY_SESSION_KEY,value);
+    }
+  }catch(e){}
 }
 function forgetMyAccount(){
-  try{localStorage.removeItem(MY_STORAGE_KEY);}catch(e){}
+  try{localStorage.removeItem(MY_STORAGE_KEY);localStorage.removeItem(MY_SESSION_KEY);}catch(e){}
 }
 function getRememberedMyAccount(){
-  try{return String(localStorage.getItem(MY_STORAGE_KEY)||"").trim().toLowerCase();}catch(e){return "";}
+  try{
+    return String(localStorage.getItem(MY_SESSION_KEY)||localStorage.getItem(MY_STORAGE_KEY)||"").trim().toLowerCase();
+  }catch(e){return "";}
 }
 function restoreRememberedMyAccount(){
   var email=getRememberedMyAccount();
@@ -856,7 +866,7 @@ function initMyGoogleSignIn(){
         client_id:GOOGLE_CLIENT_ID,
         callback:handleMyGoogleCredential,
         ux_mode:"popup",
-        auto_select:false,
+        auto_select:true,
         cancel_on_tap_outside:true
       });
       var target=document.getElementById("my-google-button");
@@ -1080,11 +1090,12 @@ function openMyButtr(){
   goTo("my-buttr");
   if(MY_PLAYER){
     renderMyDashboard(MY_PLAYER,true);
-  }else{
-    document.getElementById("my-login-card").style.display="block";
-    document.getElementById("my-dashboard").classList.remove("show");
-    initMyGoogleSignIn();
+    return;
   }
+  if(restoreRememberedMyAccount())return;
+  document.getElementById("my-login-card").style.display="block";
+  document.getElementById("my-dashboard").classList.remove("show");
+  initMyGoogleSignIn();
 }
 
 function logoutMyButtr(){
@@ -1104,7 +1115,7 @@ function bindNav(){
   document.getElementById("nb-tournaments").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
   document.getElementById("nb-my-buttr").addEventListener("click",function(){openMyButtr();});
-  document.getElementById("nb-register").addEventListener("click",function(){goTo("register");});
+  document.getElementById("profile-register-btn").addEventListener("click",function(){goTo("register");});
   document.getElementById("my-photo-input").addEventListener("change",function(){
     if(this.files&&this.files[0])uploadMyPhoto(this.files[0]);
     this.value="";
@@ -1113,7 +1124,6 @@ function bindNav(){
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
   document.getElementById("mob-my-buttr").addEventListener("click",function(){openMyButtr();closeMenu();});
-  document.getElementById("mob-register").addEventListener("click",function(){goTo("register");closeMenu();});
   document.getElementById("hamburger-btn").addEventListener("click",toggleMenu);
   
   document.getElementById("hero-tour-btn").addEventListener("click",function(){goTo("tournaments");});
@@ -1601,8 +1611,17 @@ function submitRegistration(ev){
     btn.disabled=false;
     btn.textContent="Submit Registration";
 
+    rememberMyAccount(email);
     setTimeout(function(){
       fetchAll();
+      setTimeout(function(){
+        var registered=RD.find(function(p){return String(p.email||"").trim().toLowerCase()===email;});
+        if(registered){
+          MY_PLAYER=registered;
+          renderMyDashboard(registered,true);
+          goTo("my-buttr");
+        }
+      },1800);
     },2000);
 
     submitted=false;
