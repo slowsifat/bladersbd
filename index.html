@@ -887,9 +887,9 @@ function handleMyGoogleCredential(response){
 }
 
 function renderMyDashboard(p,remembered){
-  var gender=String(p.gender||"").trim().toLowerCase();
+  var gender=normalizeGender(p.gender);
   var genderPlayers=RD.filter(function(x){
-    return String(x.gender||"").trim().toLowerCase()===gender;
+    return normalizeGender(x.gender)===gender;
   });
   genderPlayers.forEach(function(x,i){x.gender_rank=i+1;});
 
@@ -1047,6 +1047,13 @@ function fetchAll(){
 
 function renderAll(){renderHomeRankings();renderHomeChampions();renderHomeTournaments();renderFullRankings();renderTours();updateStats();}
 
+
+function normalizeGender(v){
+  var g=String(v||"").trim().toLowerCase();
+  if(g==="m"||g==="male"||g==="man"||g==="men"||g==="boy"||g==="boys")return"male";
+  if(g==="f"||g==="female"||g==="woman"||g==="women"||g==="girl"||g==="girls")return"female";
+  return g;
+}
 function initials(n){return(n||"").split(" ").map(function(w){return w[0]||"";}).join("").slice(0,2).toUpperCase()||"??";}
 function rnClass(r){if(r==1)return"g";if(r==2)return"s";if(r==3)return"b";return"";}
 function tourStatus(s){
@@ -1089,7 +1096,7 @@ function renderHomeChampions(){
 function renderChampionPodium(id,gender){
   var podium=document.getElementById(id);
   if(!podium)return;
-  var players=RD.filter(function(p){return (p.gender||"").trim().toLowerCase()===gender.toLowerCase();});
+  var players=RD.filter(function(p){return normalizeGender(p.gender)===normalizeGender(gender);});
   players.forEach(function(p,i){p.gender_rank=i+1;});
   var top3=players.slice(0,3);
   if(!top3.length){
@@ -1134,7 +1141,7 @@ function renderHomeTournaments(){
 function renderFullRankings(){
   var podium=document.getElementById("podium-section");
   var gender=RANK_GENDER;
-  var genderPlayers=RD.filter(function(p){return (p.gender||"").trim().toLowerCase()===gender.toLowerCase();});
+  var genderPlayers=RD.filter(function(p){return normalizeGender(p.gender)===normalizeGender(gender);});
   genderPlayers.forEach(function(p,i){p.gender_rank=i+1;});
   var top3=genderPlayers.slice(0,3);
   if(top3.length>=3){
@@ -1252,8 +1259,8 @@ function openPlayer(name){
   var p=findPlayer(name),box=document.getElementById("player-content");
   if(!p){box.innerHTML="<div class='pp-empty'>Player profile not found.</div>";goTo("player");return;}
   var wins=parseInt(p.wins)||0,losses=parseInt(p.losses)||0,total=wins+losses,winrate=total?Math.round(wins/total*100):0;
-  var genderKey=(p.gender||"").trim().toLowerCase();
-  var genderPlayers=RD.filter(function(x){return (x.gender||"").trim().toLowerCase()===genderKey;});
+  var genderKey=normalizeGender(p.gender);
+  var genderPlayers=RD.filter(function(x){return normalizeGender(x.gender)===genderKey;});
   genderPlayers.forEach(function(x,i){x.gender_rank=i+1;});
   var displayRank=p.gender_rank||p.rank||"-";
   var rankLabel=genderKey==="female"?"Women’s Rank #":genderKey==="male"?"Men’s Rank #":"Rank #";
