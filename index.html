@@ -188,6 +188,15 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .my-profile-head{display:flex;align-items:center;gap:1rem;}
 .my-avatar{width:76px;height:76px;border-radius:50%;overflow:hidden;background:#17171d;border:2px solid rgba(226,75,74,.35);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#fff;flex:none;}
 .my-avatar img{width:100%;height:100%;object-fit:cover;}
+.my-photo-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.my-photo-btn{border:1px solid rgba(226,75,74,.35);background:rgba(226,75,74,.08);color:#f0a0a0;padding:8px 12px;border-radius:9px;cursor:pointer;font-weight:800;font-size:.78rem;}
+.my-photo-btn:hover{background:rgba(226,75,74,.14);color:#fff;}
+.my-photo-input{display:none;}
+.my-photo-status{font-size:.76rem;color:var(--muted);}
+.my-photo-status.ok{color:#82d9a0;}
+.my-photo-status.error{color:#ef7b7a;}
+.my-upload-google{display:none;margin-top:8px;}
+.my-upload-google.show{display:block;}
 .my-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;color:#fff;}
 .my-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px;}
 .my-pill{font-size:.68rem;font-weight:800;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 9px;}
@@ -642,6 +651,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
             </div>
           </div>
         </div>
+        <div class="my-photo-tools">
+          <label class="my-photo-btn" for="my-photo-input">&#128247; Change Photo</label>
+          <input class="my-photo-input" id="my-photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+          <span class="my-photo-status" id="my-photo-status">JPG, PNG or WebP · max 5 MB</span>
+        </div>
+        <div class="my-upload-google" id="my-upload-google">
+          <div id="my-upload-google-button"></div>
+        </div>
       </div>
 
       <div class="my-stats">
@@ -667,6 +684,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
       </div>
     </div>
   </div>
+  <iframe name="buttr-photo-upload-iframe" id="buttr-photo-upload-iframe" style="display:none" title="Photo upload response"></iframe>
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
 
@@ -802,6 +820,7 @@ function initRoute(){var h=window.location.hash.replace("#","")||"home";goTo(PAG
 
 var MY_PLAYER=null;
 var MY_GOOGLE_READY=false;
+var MY_GOOGLE_CREDENTIAL="";
 var MY_STORAGE_KEY="BUTTR_MY_ACCOUNT_EMAIL";
 
 function rememberMyAccount(email){
@@ -852,6 +871,18 @@ function initMyGoogleSignIn(){
           width:260
         });
       }
+      var uploadTarget=document.getElementById("my-upload-google-button");
+      if(uploadTarget){
+        uploadTarget.innerHTML="";
+        google.accounts.id.renderButton(uploadTarget,{
+          theme:"outline",
+          size:"medium",
+          type:"standard",
+          text:"continue_with",
+          shape:"rectangular",
+          width:240
+        });
+      }
       MY_GOOGLE_READY=true;
       return;
     }
@@ -887,6 +918,12 @@ function handleMyGoogleCredential(response){
     status.textContent="No BUTTR registration was found for this Google account. Please register first.";
     return;
   }
+
+  MY_GOOGLE_CREDENTIAL=credential;
+  var uploadBox=document.getElementById("my-upload-google");
+  if(uploadBox)uploadBox.classList.remove("show");
+  var photoStatus=document.getElementById("my-photo-status");
+  if(photoStatus && MY_PLAYER)photoStatus.textContent="Google account verified. You can change your photo.";
 
   MY_PLAYER=player;
   rememberMyAccount(email);
@@ -929,12 +966,114 @@ function renderMyDashboard(p,remembered){
   document.getElementById("my-student-id").textContent=p.student_id||"-";
   document.getElementById("my-account-dept").textContent=p.department||"-";
 
+  var uploadBox=document.getElementById("my-upload-google");
+  if(uploadBox){
+    if(MY_GOOGLE_CREDENTIAL)uploadBox.classList.remove("show");
+    else uploadBox.classList.add("show");
+  }
+
   var avatar=document.getElementById("my-avatar");
   if(p.profile_picture){
     avatar.innerHTML="<img src='"+esc(p.profile_picture)+"' alt='"+esc(p.name||"Player")+"' onerror=\"this.parentElement.innerHTML='"+esc(initials(p.name||"Player"))+"'\">";
   }else{
     avatar.textContent=initials(p.name||"Player");
   }
+}
+
+function showMyPhotoStatus(message,type){
+  var el=document.getElementById("my-photo-status");
+  if(!el)return;
+  el.className="my-photo-status"+(type?" "+type:"");
+  el.textContent=message;
+}
+
+function compressMyPhoto(file,done){
+  if(!file||!file.type||file.type.indexOf("image/")!==0){
+    done(null,"Please choose an image file.");
+    return;
+  }
+  if(file.size>5*1024*1024){
+    done(null,"Photo must be 5 MB or smaller.");
+    return;
+  }
+  var reader=new FileReader();
+  reader.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var max=1000;
+      var scale=Math.min(1,max/Math.max(img.width,img.height));
+      var w=Math.max(1,Math.round(img.width*scale));
+      var h=Math.max(1,Math.round(img.height*scale));
+      var canvas=document.createElement("canvas");
+      canvas.width=w;canvas.height=h;
+      var ctx=canvas.getContext("2d");
+      ctx.drawImage(img,0,0,w,h);
+      var dataUrl=canvas.toDataURL("image/jpeg",0.82);
+      done(dataUrl,null);
+    };
+    img.onerror=function(){done(null,"Could not read that image.");};
+    img.src=reader.result;
+  };
+  reader.onerror=function(){done(null,"Could not read that file.");};
+  reader.readAsDataURL(file);
+}
+
+function uploadMyPhoto(file){
+  if(!MY_PLAYER){showMyPhotoStatus("Please sign in first.","error");return;}
+  if(!MY_GOOGLE_CREDENTIAL){
+    showMyPhotoStatus("Verify your Google account below before uploading.","error");
+    var box=document.getElementById("my-upload-google");
+    if(box)box.classList.add("show");
+    return;
+  }
+
+  showMyPhotoStatus("Preparing photo...","");
+  compressMyPhoto(file,function(dataUrl,error){
+    if(error){showMyPhotoStatus(error,"error");return;}
+
+    var form=document.createElement("form");
+    form.method="POST";
+    form.action=REGISTER_API_URL;
+    form.target="buttr-photo-upload-iframe";
+    form.style.display="none";
+
+    var fields={
+      action:"upload_profile_photo",
+      google_credential:MY_GOOGLE_CREDENTIAL,
+      player_id:String(MY_PLAYER.player_id||""),
+      email:String(MY_PLAYER.email||""),
+      image_data:dataUrl.split(",")[1],
+      file_name:(String(MY_PLAYER.player_id||"BUTTR")+".jpg"),
+      mime_type:"image/jpeg"
+    };
+    Object.keys(fields).forEach(function(key){
+      var input=document.createElement("input");
+      input.type="hidden";input.name=key;input.value=fields[key];
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+
+    var iframe=document.getElementById("buttr-photo-upload-iframe");
+    var submitted=false;
+    iframe.onload=function(){
+      if(!submitted)return;
+      submitted=false;
+      showMyPhotoStatus("Photo uploaded. Updating your profile...","ok");
+      setTimeout(function(){
+        fetchAll();
+        setTimeout(function(){
+          if(MY_PLAYER){
+            var fresh=RD.find(function(p){return String(p.email||"").toLowerCase()===String(MY_PLAYER.email||"").toLowerCase();});
+            if(fresh){MY_PLAYER=fresh;renderMyDashboard(fresh,true);showMyPhotoStatus("Profile photo updated successfully.","ok");}
+          }
+        },1200);
+      },1800);
+      setTimeout(function(){try{form.remove();}catch(e){}},5000);
+    };
+    submitted=true;
+    form.submit();
+    showMyPhotoStatus("Uploading photo...","");
+  });
 }
 
 function openMyButtr(){
@@ -950,6 +1089,7 @@ function openMyButtr(){
 
 function logoutMyButtr(){
   MY_PLAYER=null;
+  MY_GOOGLE_CREDENTIAL="";
   forgetMyAccount();
   document.getElementById("my-dashboard").classList.remove("show");
   document.getElementById("my-login-card").style.display="block";
@@ -965,6 +1105,10 @@ function bindNav(){
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
   document.getElementById("nb-my-buttr").addEventListener("click",function(){openMyButtr();});
   document.getElementById("nb-register").addEventListener("click",function(){goTo("register");});
+  document.getElementById("my-photo-input").addEventListener("change",function(){
+    if(this.files&&this.files[0])uploadMyPhoto(this.files[0]);
+    this.value="";
+  });
   document.getElementById("mob-home").addEventListener("click",function(){goTo("home");closeMenu();});
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
