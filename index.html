@@ -519,7 +519,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
           <div class="form-group">
             <label class="form-label" for="reg-email">BRACU Email *</label>
             <input class="form-input" id="reg-email" name="email" type="email" placeholder="student@bracu.ac.bd" required>
-            <div class="form-help">Use your official @bracu.ac.bd email.</div>
+            <div class="form-help">Use your official BRAC University email, e.g. student@bracu.ac.bd or student@g.bracu.ac.bd.</div>
           </div>
 
           <div class="form-group">
@@ -827,18 +827,34 @@ function submitRegistration(ev){
     body:data.toString()
   }).then(function(res){
     return res.text().then(function(text){
-      try{return JSON.parse(text);}
-      catch(e){return {ok:true};}
+      var result;
+      try {
+        result = JSON.parse(text);
+      } catch(e) {
+        throw new Error("The registration server returned an invalid response.");
+      }
+
+      if (!result || result.ok !== true) {
+        throw new Error(
+          (result && result.error) ? result.error : "Registration failed."
+        );
+      }
+
+      return result;
     });
   }).then(function(result){
-    if(result && result.ok===false){
-      throw new Error(result.error||"Registration failed.");
-    }
-    showRegisterStatus("Registration successful! Your information has been added to BUTTR. You can now find your profile in Rankings.","success");
+    showRegisterStatus(
+      "Registration successful! Your information has been added to BUTTR. Player ID: " +
+      result.player_id,
+      "success"
+    );
     form.reset();
     setTimeout(function(){fetchAll();},1200);
   }).catch(function(err){
-    showRegisterStatus("Registration could not be confirmed. Please check your information and try again. If the problem continues, contact the BUTTR administrator.","error");
+    showRegisterStatus(
+      "Registration failed: " + (err && err.message ? err.message : String(err)),
+      "error"
+    );
   }).finally(function(){
     btn.disabled=false;
     btn.textContent="Submit Registration";
