@@ -509,7 +509,13 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     </div>
 
     <div class="register-card">
-      <form id="register-form" autocomplete="on">
+      <iframe
+          name="buttr-registration-iframe"
+          id="buttr-registration-iframe"
+          style="display:none;"
+          title="Registration response">
+        </iframe>
+        <form id="register-form" autocomplete="on">
         <div class="register-grid">
           <div class="form-group">
             <label class="form-label" for="reg-name">Full Name *</label>
@@ -803,10 +809,17 @@ function submitRegistration(ev){
   var email=document.getElementById("reg-email").value.trim().toLowerCase();
   var studentId=document.getElementById("reg-student-id").value.trim();
   var department=document.getElementById("reg-department").value.trim();
-  var profilePicture=document.getElementById("reg-picture").value.trim();
+
+  if(!name || !email || !studentId || !department){
+    showRegisterStatus("Please complete all required fields.","error");
+    return;
+  }
 
   if(!/@(?:[a-z0-9-]+\.)?bracu\.ac\.bd$/i.test(email)){
-    showRegisterStatus("Please use your official @bracu.ac.bd email address.","error");
+    showRegisterStatus(
+      "Please use your official BRAC University email address.",
+      "error"
+    );
     return;
   }
 
@@ -814,51 +827,40 @@ function submitRegistration(ev){
   btn.textContent="Submitting...";
   showRegisterStatus("Submitting your registration...","");
 
-  var data=new URLSearchParams();
-  data.append("name",name);
-  data.append("email",email);
-  data.append("student_id",studentId);
-  data.append("department",department);
-  data.append("profile_picture",profilePicture);
+  // Use a normal HTML form POST into a hidden iframe.
+  // This avoids cross-origin fetch/CORS response problems with
+  // Google Apps Script web apps.
+  form.action=REGISTER_API_URL;
+  form.method="POST";
+  form.target="buttr-registration-iframe";
 
-  fetch(REGISTER_API_URL,{
-    method:"POST",
-    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-    body:data.toString()
-  }).then(function(res){
-    return res.text().then(function(text){
-      var result;
-      try {
-        result = JSON.parse(text);
-      } catch(e) {
-        throw new Error("The registration server returned an invalid response.");
-      }
+  var submitted=false;
+  var iframe=document.getElementById("buttr-registration-iframe");
 
-      if (!result || result.ok !== true) {
-        throw new Error(
-          (result && result.error) ? result.error : "Registration failed."
-        );
-      }
+  iframe.onload=function(){
+    if(!submitted) return;
 
-      return result;
-    });
-  }).then(function(result){
     showRegisterStatus(
-      "Registration successful! Your information has been added to BUTTR. Player ID: " +
-      result.player_id,
+      "Registration submitted successfully! Your information has been sent to BUTTR. Please check Rankings in a few seconds.",
       "success"
     );
+
     form.reset();
-    setTimeout(function(){fetchAll();},1200);
-  }).catch(function(err){
-    showRegisterStatus(
-      "Registration failed: " + (err && err.message ? err.message : String(err)),
-      "error"
-    );
-  }).finally(function(){
+
     btn.disabled=false;
     btn.textContent="Submit Registration";
-  });
+
+    setTimeout(function(){
+      fetchAll();
+    },2000);
+
+    submitted=false;
+  };
+
+  submitted=true;
+
+  // Bypass this submit event handler and perform a real browser form POST.
+  HTMLFormElement.prototype.submit.call(form);
 }
 
 function updateStats(){
