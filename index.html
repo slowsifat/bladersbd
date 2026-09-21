@@ -363,6 +363,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 .register-status.success{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.3);color:#67d1ad;}
 .register-status.error{background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.25);color:#f0a0a0;}
 .register-note{margin-top:18px;text-align:center;color:var(--muted);font-size:.75rem;line-height:1.6;}
+.google-auth-box{border:1px solid var(--border2);background:var(--bg3);border-radius:10px;padding:16px;margin-bottom:20px;}
+.google-auth-title{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.5px;margin-bottom:5px;}
+.google-auth-help{color:var(--muted);font-size:.78rem;line-height:1.5;margin-bottom:12px;}
+.google-auth-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.google-auth-status{font-size:.8rem;font-weight:600;}
+.google-auth-status.ok{color:#67d1ad;}
+.google-auth-status.error{color:#f0a0a0;}
+#register-form.is-locked .register-grid{opacity:.55;}
+#register-form.is-locked .register-submit{opacity:.5;cursor:not-allowed;}
+.form-input[readonly]{opacity:.8;cursor:not-allowed;}
+
 @media(max-width:640px){.register-grid{grid-template-columns:1fr;}.form-group.full{grid-column:auto;}.register-card{padding:1.2rem;}}
 
 /* BUTTR additions */
@@ -527,7 +538,16 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
           style="display:none;"
           title="Registration response">
         </iframe>
-        <form id="register-form" autocomplete="on">
+        <form id="register-form" autocomplete="on" class="is-locked">
+        <div class="google-auth-box">
+          <div class="google-auth-title">Step 1 — Verify your BRAC University account</div>
+          <div class="google-auth-help">Sign in with your BRAC University Google account first. Only verified BRACU accounts can submit a player registration.</div>
+          <div class="google-auth-row">
+            <div id="google-signin-button"></div>
+            <div id="google-auth-status" class="google-auth-status">Not verified</div>
+          </div>
+        </div>
+        <input type="hidden" id="google-credential" name="google_credential" value="">
         <div class="register-grid">
           <div class="form-group">
             <label class="form-label" for="reg-name">Full Name *</label>
@@ -536,7 +556,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 
           <div class="form-group">
             <label class="form-label" for="reg-email">BRACU Email *</label>
-            <input class="form-input" id="reg-email" name="email" type="email" placeholder="student@bracu.ac.bd" required>
+            <input class="form-input" id="reg-email" name="email" type="email" placeholder="student@bracu.ac.bd" required readonly>
             <div class="form-help">Use your official BRAC University email, e.g. student@bracu.ac.bd or student@g.bracu.ac.bd.</div>
           </div>
 
@@ -597,6 +617,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
 
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 // ================= BUTTR DATA SOURCES =================
 // Keep your Google Sheets published CSV URLs here.
@@ -607,6 +628,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
 var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
+var GOOGLE_CLIENT_ID="997367496943-k0vj03hl5b7a6s0ioiec81pkd4f5igar.apps.googleusercontent.com";
+var googleCredentialVerified=false;
 
 var RD=[],ED=[],TF="all",RANK_GENDER="Male";
 var PAGES=["home","tournaments","tour-detail","rankings","register","player"];
@@ -663,6 +686,8 @@ function bindNav(){
     });
   });
   document.getElementById("register-form").addEventListener("submit",submitRegistration);
+  lockRegistrationForm(true);
+  initGoogleSignIn();
 }
 function toggleTheme(){
   var isLight=document.body.classList.toggle("light");
@@ -839,6 +864,101 @@ function openPlayer(name){
 
 
 
+function setRegisterControlsDisabled(disabled){
+  var form=document.getElementById("register-form");
+  var controls=form.querySelectorAll("input,select,button");
+  for(var i=0;i<controls.length;i++){
+    if(controls[i].id==="google-credential") continue;
+    if(controls[i].id==="register-submit") controls[i].disabled=disabled;
+    else if(controls[i].id!=="google-signin-button") controls[i].disabled=disabled;
+  }
+}
+
+function lockRegistrationForm(locked){
+  var form=document.getElementById("register-form");
+  if(!form)return;
+  if(locked){
+    form.classList.add("is-locked");
+    setRegisterControlsDisabled(true);
+    document.getElementById("reg-email").readOnly=true;
+  }else{
+    form.classList.remove("is-locked");
+    setRegisterControlsDisabled(false);
+    document.getElementById("reg-email").disabled=false;
+    document.getElementById("reg-email").readOnly=true;
+    document.getElementById("register-submit").disabled=false;
+  }
+}
+
+function decodeGoogleJwt(token){
+  try{
+    var part=String(token).split(".")[1];
+    var b64=part.replace(/-/g,"+").replace(/_/g,"/");
+    while(b64.length%4)b64+="=";
+    return JSON.parse(decodeURIComponent(atob(b64).split("").map(function(c){return "%"+("00"+c.charCodeAt(0).toString(16)).slice(-2);}).join("")));
+  }catch(e){return null;}
+}
+
+function handleGoogleCredential(response){
+  var credential=response&&response.credential?response.credential:"";
+  var payload=decodeGoogleJwt(credential);
+  var status=document.getElementById("google-auth-status");
+  if(!credential||!payload||!payload.email){
+    googleCredentialVerified=false;
+    document.getElementById("google-credential").value="";
+    lockRegistrationForm(true);
+    status.className="google-auth-status error";
+    status.textContent="Google verification failed. Please try again.";
+    return;
+  }
+
+  var email=String(payload.email).toLowerCase();
+  if(!/@(?:[a-z0-9-]+\.)?bracu\.ac\.bd$/i.test(email)){
+    googleCredentialVerified=false;
+    document.getElementById("google-credential").value="";
+    lockRegistrationForm(true);
+    status.className="google-auth-status error";
+    status.textContent="Please sign in with your BRAC University account.";
+    return;
+  }
+
+  googleCredentialVerified=true;
+  document.getElementById("google-credential").value=credential;
+  document.getElementById("reg-email").value=email;
+  if(payload.name)document.getElementById("reg-name").value=payload.name;
+  if(payload.picture)document.getElementById("reg-picture").value=payload.picture;
+  lockRegistrationForm(false);
+  status.className="google-auth-status ok";
+  status.textContent="✓ BRACU account verified";
+}
+
+function initGoogleSignIn(){
+  var attempts=0;
+  function tryInit(){
+    attempts++;
+    if(window.google&&google.accounts&&google.accounts.id){
+      google.accounts.id.initialize({
+        client_id:GOOGLE_CLIENT_ID,
+        callback:handleGoogleCredential,
+        ux_mode:"popup",
+        auto_select:false,
+        cancel_on_tap_outside:true
+      });
+      google.accounts.id.renderButton(document.getElementById("google-signin-button"),{
+        theme:"outline",
+        size:"large",
+        type:"standard",
+        text:"signin_with",
+        shape:"rectangular",
+        width:240
+      });
+      return;
+    }
+    if(attempts<30)setTimeout(tryInit,300);
+  }
+  tryInit();
+}
+
 function showRegisterStatus(message,type){
   var box=document.getElementById("register-status");
   box.className="register-status show "+(type||"");
@@ -855,6 +975,12 @@ function submitRegistration(ev){
   var studentId=document.getElementById("reg-student-id").value.trim();
   var department=document.getElementById("reg-department").value.trim();
   var gender=document.getElementById("reg-gender").value.trim();
+  var googleCredential=document.getElementById("google-credential").value.trim();
+
+  if(!googleCredentialVerified || !googleCredential){
+    showRegisterStatus("Please verify your BRAC University Google account first.","error");
+    return;
+  }
 
   if(!name || !email || !studentId || !department || !gender){
     showRegisterStatus("Please complete all required fields.","error");
@@ -892,6 +1018,11 @@ function submitRegistration(ev){
     );
 
     form.reset();
+    googleCredentialVerified=false;
+    document.getElementById("google-credential").value="";
+    document.getElementById("google-auth-status").className="google-auth-status";
+    document.getElementById("google-auth-status").textContent="Not verified";
+    lockRegistrationForm(true);
 
     btn.disabled=false;
     btn.textContent="Submit Registration";
