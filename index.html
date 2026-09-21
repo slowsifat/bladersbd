@@ -77,6 +77,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .mobile-menu button{background:none;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;padding:12px 0;cursor:pointer;text-align:left;border-bottom:1px solid var(--border);transition:color .2s;}
 .mobile-menu button:last-child{border-bottom:none;}
 .mobile-menu button:hover{color:#fff;}
+.mobile-menu #mob-register{color:#fff;background:var(--red);border:0;border-radius:7px;padding:12px 14px;margin-top:6px;text-align:center;}
+.mobile-menu #mob-register:hover{background:var(--red-dark);}
 .page{display:none;animation:fadeIn .25s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
@@ -261,7 +263,12 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 /* RANKINGS */
 .rank-page{padding:3rem 1.5rem 5rem;}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:580px;margin:0 auto 2.5rem;}
-.podium-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1rem;text-align:center;}
+.podium-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:185px;}
+.podium-rank-num{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.15rem;}
+.podium-crown-slot{height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:.15rem;}
+.podium-card .rank-photo,.podium-card .av{flex:0 0 44px;}
+.podium-card .podium-name{min-height:22px;display:flex;align-items:center;justify-content:center;}
+.podium-card .podium-pts{min-height:18px;display:flex;align-items:center;}
 .podium-card.first{border-color:rgba(239,159,39,.3);background:rgba(239,159,39,.04);}
 .podium-card.second{border-color:rgba(200,200,200,.18);}
 .podium-card.third{border-color:rgba(200,149,108,.18);}
@@ -962,6 +969,7 @@ function bindNav(){
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
   document.getElementById("mob-my-buttr").addEventListener("click",function(){openMyButtr();closeMenu();});
+  document.getElementById("mob-register").addEventListener("click",function(){goTo("register");closeMenu();});
   document.getElementById("hamburger-btn").addEventListener("click",toggleMenu);
   
   document.getElementById("hero-tour-btn").addEventListener("click",function(){goTo("tournaments");});
@@ -1106,8 +1114,8 @@ function renderChampionPodium(id,gender){
   var ordered=top3.slice();
   var html=ordered.map(function(p){
     var cls=p.gender_rank===1?" first":p.gender_rank===2?" second":" third";
-    var crown=p.gender_rank===1?"<div style='font-size:1.1rem;margin-bottom:.15rem'>&#127942;</div>":"";
-    return "<div class='podium-card"+cls+"' data-player='"+esc(p.name)+"'><div class='podium-rank-num'>"+p.gender_rank+"</div>"+crown+photoHTML(p,"rank-photo")+"<div class='podium-name'>"+esc(p.name||"Player")+"</div><div class='podium-pts'>"+Number(p.points||0).toLocaleString()+" pts</div></div>";
+    var crown=p.gender_rank===1?"&#127942;":"";
+    return "<div class='podium-card"+cls+"' data-player='"+esc(p.name)+"'><div class='podium-rank-num'>"+p.gender_rank+"</div><div class='podium-crown-slot'>"+crown+"</div>"+photoHTML(p,"rank-photo")+"<div class='podium-name'>"+esc(p.name||"Player")+"</div><div class='podium-pts'>"+Number(p.points||0).toLocaleString()+" pts</div></div>";
   }).join("");
   podium.innerHTML=html;
   podium.querySelectorAll(".podium-card").forEach(function(card){
