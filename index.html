@@ -157,26 +157,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 @media(max-width:760px){.home-champions-grid{grid-template-columns:1fr;}}
 
 
-/* Hall of Fame + Player ID + Badges */
-.hof-page{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem;}
-.hof-intro{text-align:center;margin-bottom:2.5rem;}
-.hof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
-.hof-group{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
-.hof-group-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:1.5px;text-align:center;color:#fff;margin-bottom:1.2rem;}
-.hof-empty{text-align:center;padding:2rem 1rem;color:var(--muted);border:1px dashed var(--border);border-radius:12px;font-size:.9rem;line-height:1.6;}
-.hof-card{display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:14px;padding:1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.015);margin-bottom:10px;}
-.hof-card:last-child{margin-bottom:0;}
-.hof-year{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--red);text-align:center;}
-.hof-name{font-weight:800;color:#fff;font-size:1rem;}
-.hof-tournament{font-size:.75rem;color:var(--muted);margin-top:3px;}
-.hof-badge{font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#ffd76a;background:rgba(255,215,106,.1);border:1px solid rgba(255,215,106,.25);padding:5px 8px;border-radius:999px;white-space:nowrap;}
+/* Player ID + Badges */
 .pp-id{display:inline-flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-weight:800;letter-spacing:1px;color:#fff;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.25);padding:5px 9px;border-radius:999px;font-size:.7rem;}
 .pp-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
 .player-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:.65rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;border:1px solid var(--border);background:var(--bg2);color:var(--muted);}
 .player-badge.top{color:#f0a0a0;border-color:rgba(226,75,74,.3);background:rgba(226,75,74,.08);}
 .player-badge.champ{color:#ffd76a;border-color:rgba(255,215,106,.3);background:rgba(255,215,106,.08);}
 .player-badge.podium{color:#ddd;border-color:rgba(255,255,255,.2);}
-@media(max-width:760px){.hof-grid{grid-template-columns:1fr;}.hof-card{grid-template-columns:52px 1fr;}.hof-badge{grid-column:2;justify-self:start;}}
 
 
 /* My BUTTR player dashboard */
@@ -479,7 +466,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     <li><button id="nb-home">Home</button></li>
     <li><button id="nb-tournaments">Tournaments</button></li>
     <li><button id="nb-rankings">Rankings</button></li>
-    <li><button id="nb-hall-of-fame">Hall of Fame</button></li>
     <li><button id="nb-my-buttr">My BUTTR</button></li>
     <li><button id="nb-register">Register</button></li>
     <li><button class="theme-btn" id="theme-btn" title="Toggle theme">&#9790;</button></li>
@@ -491,7 +477,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <button id="mob-home">Home</button>
   <button id="mob-tournaments">Tournaments</button>
   <button id="mob-rankings">Rankings</button>
-  <button id="mob-hall-of-fame">Hall of Fame</button>
   <button id="mob-my-buttr">My BUTTR</button>
   <button id="mob-register">Register</button>
 </div>
@@ -614,22 +599,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
   <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
 </div>
 
-
-<!-- HALL OF FAME -->
-<div id="page-hall-of-fame" class="page">
-  <div class="hof-page">
-    <div class="page-header hof-intro">
-      <div class="section-tag">BUTTR History</div>
-      <h1 class="section-title">Hall of Fame</h1>
-      <p>Champions and historic tournament achievements will be preserved here.</p>
-    </div>
-    <div class="hof-grid">
-      <section class="hof-group"><div class="hof-group-title">Men's Champions</div><div id="hof-men-list"></div></section>
-      <section class="hof-group"><div class="hof-group-title">Women's Champions</div><div id="hof-women-list"></div></section>
-    </div>
-  </div>
-  <footer><div class="foot-logo">BUTTR</div><div class="foot-copy">&#169; 2026 BRAC University Table Tennis</div></footer>
-</div>
 
 <!-- MY BUTTR -->
 <div id="page-my-buttr" class="page">
@@ -793,18 +762,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 <script>
 // ================= BUTTR DATA SOURCES =================
 // Keep your Google Sheets published CSV URLs here.
-// Ranking sheet should contain player data plus optional Hall of Fame columns:
-// tournament_name, gender, champion (one Hall of Fame record per row).
+// Ranking sheet contains player ranking/registration data.
 // Tournament sheet columns: name, date, month, location, format,
 // status, prize, points, form_link.
-var RCSVURL="https://docs.google.com/spreadsheets/d/16UGTIDFEfVs4r0e915xSkCDiXQEE0xwytQG9NEvLhkU/gviz/tq?tqx=out:csv&gid=0";
-var ECSVURL="https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/gviz/tq?tqx=out:csv&gid=0";
+var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
+var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 var GOOGLE_CLIENT_ID="997367496943-k0vj03hl5b7a6s0ioiec81pkd4f5igar.apps.googleusercontent.com";
 var googleCredentialVerified=false;
 
 var RD=[],ED=[],TF="all",RANK_GENDER="Male";
-var PAGES=["home","tournaments","tour-detail","rankings","hall-of-fame","my-buttr","register","player"];
+var PAGES=["home","tournaments","tour-detail","rankings","my-buttr","register","player"];
 
 function goTo(page,push){
   if(push===undefined)push=true;
@@ -988,13 +956,11 @@ function bindNav(){
   document.getElementById("nb-home").addEventListener("click",function(){goTo("home");});
   document.getElementById("nb-tournaments").addEventListener("click",function(){goTo("tournaments");});
   document.getElementById("nb-rankings").addEventListener("click",function(){goTo("rankings");});
-  document.getElementById("nb-hall-of-fame").addEventListener("click",function(){goTo("hall-of-fame");});
   document.getElementById("nb-my-buttr").addEventListener("click",function(){openMyButtr();});
   document.getElementById("nb-register").addEventListener("click",function(){goTo("register");});
   document.getElementById("mob-home").addEventListener("click",function(){goTo("home");closeMenu();});
   document.getElementById("mob-tournaments").addEventListener("click",function(){goTo("tournaments");closeMenu();});
   document.getElementById("mob-rankings").addEventListener("click",function(){goTo("rankings");closeMenu();});
-  document.getElementById("mob-hall-of-fame").addEventListener("click",function(){goTo("hall-of-fame");closeMenu();});
   document.getElementById("mob-my-buttr").addEventListener("click",function(){openMyButtr();closeMenu();});
   document.getElementById("hamburger-btn").addEventListener("click",toggleMenu);
   
@@ -1079,71 +1045,7 @@ function fetchAll(){
 }
 
 
-function getHallOfFameRecords(){
-  /*
-    Hall of Fame is read directly from the RANKINGS spreadsheet.
-    Add these columns to the ranking sheet:
-      tournament_name | gender | champion
-
-    Each Hall of Fame row should contain one tournament, its gender,
-    and the champion's name. Other ranking/player rows are ignored.
-  */
-  var records=[];
-  RD.forEach(function(r){
-    var tournament=String(
-      r.tournament_name||r.tournament||r.tournament_name_||""
-    ).trim();
-    var gender=String(r.gender||"").trim();
-    var champion=String(
-      r.champion||r.champion_name||""
-    ).trim();
-
-    if(tournament && champion && (gender.toLowerCase()==="male" || gender.toLowerCase()==="female")){
-      records.push({
-        tournament:tournament,
-        gender:gender,
-        champion:champion,
-        year:String(r.year||r.date||"").trim()
-      });
-    }
-  });
-  return records;
-}
-
-function renderHallOfFame(){
-  var records=getHallOfFameRecords();
-
-  [{id:"hof-men-list",gender:"male"},{id:"hof-women-list",gender:"female"}].forEach(function(g){
-    var box=document.getElementById(g.id);if(!box)return;
-    box.innerHTML="";
-
-    var filtered=records.filter(function(r){
-      return r.gender.toLowerCase()===g.gender;
-    });
-
-    if(!filtered.length){
-      box.innerHTML="<div class='hof-empty'>No Hall of Fame records yet.<br><br>Add a tournament name, gender, and champion to the ranking spreadsheet.</div>";
-      return;
-    }
-
-    filtered.slice().reverse().forEach(function(r){
-      var card=document.createElement("div");
-      card.className="hof-card";
-
-      card.innerHTML=
-        "<div class='hof-year'>"+esc(r.year||"")+"</div>"+
-        "<div>"+
-          "<div class='hof-name'>"+esc(r.champion)+"</div>"+
-          "<div class='hof-tournament'>"+esc(r.tournament)+"</div>"+
-        "</div>"+
-        "<span class='hof-badge'>&#127942; Champion</span>";
-
-      box.appendChild(card);
-    });
-  });
-}
-
-function renderAll(){renderHomeRankings();renderHomeChampions();renderHomeTournaments();renderFullRankings();renderTours();renderHallOfFame();updateStats();}
+function renderAll(){renderHomeRankings();renderHomeChampions();renderHomeTournaments();renderFullRankings();renderTours();updateStats();}
 
 function initials(n){return(n||"").split(" ").map(function(w){return w[0]||"";}).join("").slice(0,2).toUpperCase()||"??";}
 function rnClass(r){if(r==1)return"g";if(r==2)return"s";if(r==3)return"b";return"";}
