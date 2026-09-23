@@ -150,6 +150,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .pcell{display:flex;align-items:center;gap:9px;}
 .player-name-link{color:var(--text);font-weight:700;cursor:pointer;text-decoration:none;transition:color .18s ease;text-align:left;}
 .player-name-link:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.rank-click-cell{cursor:pointer;user-select:none;}
+.rank-click-cell:hover{background:rgba(226,75,74,.07);}
+.player-name-link{display:inline-block;}
 
 .av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;background:rgba(226,75,74,.2);color:#f0a0a0;}
 .pts{display:inline-block;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.18);color:#f0a0a0;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;}
@@ -795,8 +798,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 // Ranking sheet contains player ranking/registration data.
 // Tournament sheet columns: name, date, month, location, format,
 // status, prize, points, form_link.
-var RCSVURL="https://docs.google.com/spreadsheets/d/16UGTIDFEfVs4r0e915xSkCDiXQEE0xwytQG9NEvLhkU/gviz/tq?tqx=out:csv&gid=0";
-var ECSVURL="https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/gviz/tq?tqx=out:csv&gid=0";
+var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
+var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 var GOOGLE_CLIENT_ID="997367496943-k0vj03hl5b7a6s0ioiec81pkd4f5igar.apps.googleusercontent.com";
 var googleCredentialVerified=false;
@@ -1189,36 +1192,8 @@ function parseCSV(text){
 }
 
 function fetchAll(){
-  function loadCSV(urls){
-  var list=Array.isArray(urls)?urls:[urls];
-  var i=0;
-  function next(){
-    if(i>=list.length)return Promise.reject(new Error("All CSV sources failed"));
-    var url=list[i++];
-    return fetch(url,{cache:"no-store"}).then(function(res){
-      if(!res.ok)throw new Error("HTTP "+res.status);
-      return res.text();
-    }).then(function(text){
-      if(!text || text.trim().length<2)throw new Error("Empty CSV");
-      return text;
-    }).catch(function(){return next();});
-  }
-  return next();
-}
-
-var RANK_CSV_SOURCES=[
-  RCSVURL,
-  "https://docs.google.com/spreadsheets/d/16UGTIDFEfVs4r0e915xSkCDiXQEE0xwytQG9NEvLhkU/export?format=csv&gid=0"
-];
-var TOUR_CSV_SOURCES=[
-  ECSVURL,
-  "https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/export?format=csv&gid=0"
-];
-
-Promise.all([loadCSV(RANK_CSV_SOURCES),loadCSV(TOUR_CSV_SOURCES).catch(function(err){
-  console.warn("Tournament sheet could not be loaded:",err);
-  return "";
-})])
+  Promise.all([fetch(RCSVURL),fetch(ECSVURL)])
+  .then(function(res){return Promise.all([res[0].text(),res[1].text()]);})
   .then(function(texts){
     RD=parseCSV(texts[0]).map(function(p,i){
       p.points=Number(p.points||0);
@@ -1226,15 +1201,15 @@ Promise.all([loadCSV(RANK_CSV_SOURCES),loadCSV(TOUR_CSV_SOURCES).catch(function(
       return p;
     }).sort(function(a,b){return b.points-a.points;});
     RD.forEach(function(p,i){p.rank=i+1;});
-    ED=texts[1]?parseCSV(texts[1]):[];
+    ED=parseCSV(texts[1]);
     renderAll();
     populateAdminPlayers();
     restoreRememberedMyAccount();
   })
   .catch(function(err){
-    console.error("Ranking sheet failed to load:",err);
+    console.error(err);
     var els=document.querySelectorAll(".loading-state");
-    for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load ranking data. Please make sure the Rankings Google Sheet is shared/published for web access.</div>";
+    for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load data. Make sure your Google Sheets are published to the web as CSV.</div>";
   });
 }
 
@@ -1270,16 +1245,16 @@ function makeRow(cells,clickFn){
   for(var i=0;i<cells.length;i++){
     var td=document.createElement("td");
     td.innerHTML=cells[i];
+    if(i===0 && clickFn){
+      td.classList.add("rank-click-cell");
+      td.title="Click to view player profile";
+      td.addEventListener("click",function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        clickFn(ev);
+      });
+    }
     tr.appendChild(td);
-  }
-  // Make the entire Rank column an explicit profile click target.
-  if(clickFn && tr.cells[0]){
-    tr.cells[0].style.cursor="pointer";
-    tr.cells[0].addEventListener("click",function(ev){
-      ev.preventDefault();
-      ev.stopPropagation();
-      clickFn(ev);
-    });
   }
   return tr;
 }
@@ -1291,7 +1266,7 @@ function renderHomeRankings(){
   top5.forEach(function(r){
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<a class='player-name-link' href='#player' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</a></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ] ,function(){openPlayer(r.name);}));
@@ -1370,7 +1345,7 @@ function renderFullRankings(){
     if(q&&(r.name||"").toLowerCase().indexOf(q)<0)return;shown++;
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.gender_rank)+"'>"+r.gender_rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<a class='player-name-link' href='#player' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</a></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ],function(){openPlayer(r.name);}));
