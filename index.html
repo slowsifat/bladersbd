@@ -795,8 +795,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
 // Ranking sheet contains player ranking/registration data.
 // Tournament sheet columns: name, date, month, location, format,
 // status, prize, points, form_link.
-var RCSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd4oD0UPEzdfmGCtNLLgAe_ILhjf1Ch_xY6LtTJcffuESrHx8eUkgREtl1mZCg4OW763B__qcO2YJa/pub?output=csv";
-var ECSVURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtzhPaYQ9VUbntMF0la-TTK0b_BkrUXNqyWnkon047qDp0lMespYnrJsSfwZRhqMQ1jODc2EIUG1nu/pub?output=csv";
+var RCSVURL="https://docs.google.com/spreadsheets/d/16UGTIDFEfVs4r0e915xSkCDiXQEE0xwytQG9NEvLhkU/gviz/tq?tqx=out:csv&gid=0";
+var ECSVURL="https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/gviz/tq?tqx=out:csv&gid=0";
 var REGISTER_API_URL="https://script.google.com/macros/s/AKfycbzGQRvNShUAFWr-CKhvaHH0ZcdmIk5Sqq6MXpl5oPNk_5GmTMxwcHCu6Axawb04lfNb/exec";
 var GOOGLE_CLIENT_ID="997367496943-k0vj03hl5b7a6s0ioiec81pkd4f5igar.apps.googleusercontent.com";
 var googleCredentialVerified=false;
@@ -1235,8 +1235,24 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,function(c){return{"&":"
 function photoHTML(p,cls){var u=(p.profile_picture||"").trim();return u?"<img class='"+cls+"' src='"+esc(u)+"' alt='"+esc(p.name||"Player")+"' onerror=\"this.style.display='none';this.nextElementSibling.style.display='flex';\"/><div class='av' style='display:none'>"+initials(p.name)+"</div>":"<div class='av'>"+initials(p.name)+"</div>";}
 function makeRow(cells,clickFn){
   var tr=document.createElement("tr");
-  if(clickFn){tr.style.cursor="pointer";tr.addEventListener("click",clickFn);}
-  for(var i=0;i<cells.length;i++){var td=document.createElement("td");td.innerHTML=cells[i];tr.appendChild(td);}
+  if(clickFn){
+    tr.style.cursor="pointer";
+    tr.addEventListener("click",clickFn);
+  }
+  for(var i=0;i<cells.length;i++){
+    var td=document.createElement("td");
+    td.innerHTML=cells[i];
+    tr.appendChild(td);
+  }
+  // Make the entire Rank column an explicit profile click target.
+  if(clickFn && tr.cells[0]){
+    tr.cells[0].style.cursor="pointer";
+    tr.cells[0].addEventListener("click",function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      clickFn(ev);
+    });
+  }
   return tr;
 }
 
