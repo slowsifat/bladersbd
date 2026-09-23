@@ -148,6 +148,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,15,0.95);backdrop-fi
 .rn{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--muted);}
 .rn.g{color:var(--gold)}.rn.s{color:#ccc}.rn.b{color:#c8956c}
 .pcell{display:flex;align-items:center;gap:9px;}
+.player-name-link{color:var(--text);font-weight:700;cursor:pointer;text-decoration:none;transition:color .18s ease;text-align:left;}
+.player-name-link:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+
 .av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;background:rgba(226,75,74,.2);color:#f0a0a0;}
 .pts{display:inline-block;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.18);color:#f0a0a0;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;}
 .home-champions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1100px;margin:0 auto;}
@@ -603,6 +606,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.8rem 1.
     </div>
     <div class="ranking-note" id="ranking-note">Showing the men's ranking.</div>
     <input type="text" class="rank-search" id="rank-search" placeholder="Search player by name..."/>
+    <div style="text-align:center;color:var(--muted);font-size:.78rem;margin:-4px 0 14px;">Click a player name to view their profile.</div>
     <div id="podium-section" class="podium"><div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div></div></div>
     <div class="last-updated" id="last-updated-label"></div>
     <div class="rank-big-table-wrap">
@@ -1243,7 +1247,7 @@ function renderHomeRankings(){
   top5.forEach(function(r){
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' title='View player profile'>"+esc(r.name||"-")+"</span></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ] ,function(){openPlayer(r.name);}));
@@ -1322,7 +1326,7 @@ function renderFullRankings(){
     if(q&&(r.name||"").toLowerCase().indexOf(q)<0)return;shown++;
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.gender_rank)+"'>"+r.gender_rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' title='View player profile'>"+esc(r.name||"-")+"</span></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ],function(){openPlayer(r.name);}));
