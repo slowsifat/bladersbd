@@ -1247,7 +1247,7 @@ function renderHomeRankings(){
   top5.forEach(function(r){
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.rank)+"'>"+r.rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' title='View player profile'>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</span></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ] ,function(){openPlayer(r.name);}));
@@ -1326,10 +1326,17 @@ function renderFullRankings(){
     if(q&&(r.name||"").toLowerCase().indexOf(q)<0)return;shown++;
     tbody.appendChild(makeRow([
       "<span class='rn "+rnClass(r.gender_rank)+"'>"+r.gender_rank+"</span>",
-      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' title='View player profile'>"+esc(r.name||"-")+"</span></div>",
+      "<div class='pcell'>"+photoHTML(r,"small-photo")+"<span class='player-name-link' data-player="+JSON.stringify(r.name||"")+" title='View player profile'>"+esc(r.name||"-")+"</span></div>",
       "<span class='department-pill'>"+esc(r.department||"-")+"</span>",
       "<span class='pts'>"+Number(r.points||0).toLocaleString()+"</span>"
     ],function(){openPlayer(r.name);}));
+  });
+  tbody.querySelectorAll(".player-name-link").forEach(function(el){
+    el.addEventListener("click",function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      openPlayer(this.getAttribute("data-player")||this.textContent);
+    });
   });
   if(!shown){
     var msg=genderPlayers.length?"No players found matching your search.":"No "+(gender.toLowerCase()==="female"?"female":"male")+" players have registered yet.";
