@@ -1189,8 +1189,36 @@ function parseCSV(text){
 }
 
 function fetchAll(){
-  Promise.all([fetch(RCSVURL),fetch(ECSVURL)])
-  .then(function(res){return Promise.all([res[0].text(),res[1].text()]);})
+  function loadCSV(urls){
+  var list=Array.isArray(urls)?urls:[urls];
+  var i=0;
+  function next(){
+    if(i>=list.length)return Promise.reject(new Error("All CSV sources failed"));
+    var url=list[i++];
+    return fetch(url,{cache:"no-store"}).then(function(res){
+      if(!res.ok)throw new Error("HTTP "+res.status);
+      return res.text();
+    }).then(function(text){
+      if(!text || text.trim().length<2)throw new Error("Empty CSV");
+      return text;
+    }).catch(function(){return next();});
+  }
+  return next();
+}
+
+var RANK_CSV_SOURCES=[
+  RCSVURL,
+  "https://docs.google.com/spreadsheets/d/16UGTIDFEfVs4r0e915xSkCDiXQEE0xwytQG9NEvLhkU/export?format=csv&gid=0"
+];
+var TOUR_CSV_SOURCES=[
+  ECSVURL,
+  "https://docs.google.com/spreadsheets/d/1IGNPbhI9pBdZH3KOGWDLpmyKuCW_NB_Y-z0p2T9TkGs/export?format=csv&gid=0"
+];
+
+Promise.all([loadCSV(RANK_CSV_SOURCES),loadCSV(TOUR_CSV_SOURCES).catch(function(err){
+  console.warn("Tournament sheet could not be loaded:",err);
+  return "";
+})])
   .then(function(texts){
     RD=parseCSV(texts[0]).map(function(p,i){
       p.points=Number(p.points||0);
@@ -1198,15 +1226,15 @@ function fetchAll(){
       return p;
     }).sort(function(a,b){return b.points-a.points;});
     RD.forEach(function(p,i){p.rank=i+1;});
-    ED=parseCSV(texts[1]);
+    ED=texts[1]?parseCSV(texts[1]):[];
     renderAll();
     populateAdminPlayers();
     restoreRememberedMyAccount();
   })
   .catch(function(err){
-    console.error(err);
+    console.error("Ranking sheet failed to load:",err);
     var els=document.querySelectorAll(".loading-state");
-    for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load data. Make sure your Google Sheets are published to the web as CSV.</div>";
+    for(var i=0;i<els.length;i++)els[i].innerHTML="<div class='error-state'>Could not load ranking data. Please make sure the Rankings Google Sheet is shared/published for web access.</div>";
   });
 }
 
